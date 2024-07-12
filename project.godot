@@ -1,0 +1,33 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Godot Scene Manager"
+run/main_scene="res://Scene_A.tscn"
+config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[autoload]
+
+ScenesManagerController="*res://addons/ScenesManager/ScenesManager.cs"
+
+[dotnet]
+
+project/assembly_name="Godot Scene Manager"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/ScenesManager/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
