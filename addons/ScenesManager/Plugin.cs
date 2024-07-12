@@ -1,7 +1,6 @@
 #if TOOLS
 using Godot;
 using MoF.Addons.ScenesManager.Extensions;
-using System;
 
 namespace MoF.Addons.ScenesManager
 {
@@ -14,10 +13,7 @@ namespace MoF.Addons.ScenesManager
 			Resource currentScript = (Resource)GetScript();
 			var script = GD.Load<Script>(currentScript.GetPath() + "ScenesManager.cs");
 			var texture = GD.Load<Texture2D>(currentScript.GetPath() + "/Assets/Icons/scenes-manager-icon.svg");
-			AddCustomType("Control", "Node", script, texture);
-			var scriptSceneGraphNode = GD.Load<Script>(currentScript.GetPath() + "/Scripts/Editor/SceneGraphNode.cs");
-			var textureSceneGraphNode = GD.Load<Texture2D>(currentScript.GetPath() + "/Assets/Icons/scenes-manager-icon.svg");
-			AddCustomType("GraphNode", "Node", scriptSceneGraphNode, textureSceneGraphNode);
+			AddCustomType("ScenesManager", "Node", script, texture);
 			var editorScene = GD.Load<PackedScene>(currentScript.GetPath() + "/Assets/Scenes/ScenesManagerEditor.tscn");
 			instantiatedEditorScene = editorScene.Instantiate<ScenesManagerEditor>();
 			AddControlToBottomPanel(instantiatedEditorScene, "Scenes Manager");
