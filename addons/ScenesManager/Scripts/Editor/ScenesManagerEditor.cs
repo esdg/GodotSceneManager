@@ -94,10 +94,10 @@ namespace MoF.Addons.ScenesManager
 					OpenGraph();
 					break;
 				case 3:
-					Save(saveFilePath);
+					SaveSchema(saveFilePath);
 					break;
 				case 4:
-					SaveAs();
+					SaveSchemaAs();
 					break;
 			}
 		}
@@ -120,16 +120,11 @@ namespace MoF.Addons.ScenesManager
 			// Implement New Graph logic here
 		}
 
-		private void OpenGraph()
-		{
-			// Implement Open Graph logic here
-		}
-
-		private void Save(string path)
+		private void SaveSchema(string path)
 		{
 			if (path == "")
 			{
-				SaveAs();
+				SaveSchemaAs();
 				return;
 			}
 			// TODO : delete file if exist before saving
@@ -140,7 +135,8 @@ namespace MoF.Addons.ScenesManager
 				{
 					SceneManagerItem sceneManagerItem = new()
 					{
-						Scene = sceneGraphNode.Scene
+						Scene = sceneGraphNode.Scene,
+						Position = sceneGraphNode.PositionOffset,
 					};
 					SetSceneManagerItem(sceneGraphNode, sceneManagerItem);
 				}
@@ -180,7 +176,94 @@ namespace MoF.Addons.ScenesManager
 			sceneManagerSchema.Items.Add(sceneManagerBaseItem);
 		}
 
-		private void SaveAs()
+		private void OpenGraph(string path)
+		{
+			// Load the SceneManagerSchema from the provided path
+			var loadedSchema = ResourceLoader.Load<SceneManagerSchema>(path);
+			if (loadedSchema == null)
+			{
+				GD.PrintErr("Failed to load SceneManagerSchema from path: " + path);
+				return;
+			}
+
+			// Clear existing nodes and connections
+			graphEdit.ClearConnections();
+			foreach (Node child in graphEdit.GetChildren())
+			{
+				if (child is GraphNode)
+				{
+					child.QueueFree();
+				}
+			}
+
+			// Populate graphEdit with nodes from the loaded schema
+			foreach (var item in loadedSchema.Items)
+			{
+				ScenesManagerBaseGraphNode node;
+				if (item is SceneManagerItem sceneManagerItem)
+				{
+					SceneGraphNode sceneNode = new()
+					{
+						Scene = sceneManagerItem.Scene,
+					};
+
+					node = sceneNode;
+				}
+				else if (item is StartAppSceneManagerItem startAppItem)
+				{
+					node = new StartAppGraphNode();
+				}
+				else
+				{
+					GD.PrintErr("Unknown SceneManagerItem type: " + item.GetType().Name);
+					continue;
+				}
+
+				node.GraphNodeReady += () => RestoreConnections(item, node);
+
+				node.OutSignalsToLoad = item.OutSignals;
+				// Set node position and add to graphEdit
+				node.PositionOffset = item.Position;
+				graphEdit.AddChild(node);
+
+				GD.Print(node.OutSignals); GD.Print(item.OutSignals);
+
+
+
+			}
+		}
+
+		private void RestoreConnections(SceneManagerBaseItem item, ScenesManagerBaseGraphNode node)
+		{
+			// Restore connections
+			foreach (var signal in item.OutSignals)
+			{
+				var targetNode = graphEdit.GetChildren().OfType<SceneGraphNode>()
+					.FirstOrDefault(n => n.Scene == signal.TargetPackedScene);
+				if (targetNode != null && node.OutSignals.Count > 0)
+				{
+					var fromPort = node.OutSignals.IndexOf(signal.OutSlotSignalName);
+					var toPort = 0; // Assuming single input port for simplicity
+					graphEdit.ConnectNode(node.Name, fromPort, targetNode.Name, toPort);
+				}
+			}
+		}
+
+		private void OpenGraph()
+		{
+			FileDialog fileDialog = new()
+			{
+				Filters = new string[] { "*.tres" },
+				DialogHideOnOk = true,
+				FileMode = FileDialog.FileModeEnum.OpenFile,
+				Size = new Vector2I((int)GetViewport().GetVisibleRect().Size.X / 3, (int)GetViewport().GetVisibleRect().Size.Y / 3),
+				InitialPosition = Window.WindowInitialPosition.CenterPrimaryScreen,
+			};
+			AddChild(fileDialog);
+			fileDialog.Popup();
+			fileDialog.FileSelected += (string path) => OnDialogFileSelected(path, FileDialog.FileModeEnum.OpenFile);
+		}
+		private void SaveSchemaAs()
 		{
 			FileDialog fileDialog = new()
 			{
@@ -191,13 +274,21 @@ namespace MoF.Addons.ScenesManager
 			};
 			AddChild(fileDialog);
 			fileDialog.Popup();
-			fileDialog.FileSelected += (string path) => OnSaveDialogFileSelected(path);
+			fileDialog.FileSelected += (string path) => OnDialogFileSelected(path, FileDialog.FileModeEnum.SaveFile);
 		}
 
-		private void OnSaveDialogFileSelected(string path)
+		private void OnDialogFileSelected(string path, FileDialog.FileModeEnum fileMode)
 		{
 			saveFilePath = path;
-			Save(path);
+			switch (fileMode)
+			{
+				case FileDialog.FileModeEnum.SaveFile:
+					SaveSchema(path);
+					break;
+				case FileDialog.FileModeEnum.OpenFile:
+					OpenGraph(path);
+					break;
+			}
 		}
 
 		private void CreateSceneNode()

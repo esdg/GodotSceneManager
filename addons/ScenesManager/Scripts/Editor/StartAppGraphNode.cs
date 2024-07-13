@@ -50,6 +50,7 @@ namespace MoF.Addons.ScenesManager
             };
             AddChild(textureRect);
             SetSlot(textureRect.GetIndex(), false, 0, Colors.White, true, 0, AddonConstants.GraphNode.OutSlotColor);
+            EmitSignal(SignalName.GraphNodeReady);
         }
     }
 }

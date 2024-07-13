@@ -7,6 +7,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Resources
     public partial class SceneManagerBaseItem : Resource
     {
         [Export] public Array<SceneManagerOutSlotSignal> OutSignals { get; set; } = new();
+        [Export] public Vector2 Position { get; set; } = new();
     }
 
 }
