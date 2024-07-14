@@ -12,7 +12,7 @@ namespace MoF.Addons.ScenesManager
         private static StyleBoxFlat startingAppGraphNodeStyleTitlebar;
         private Node outSlot;
 
-        public override Array<string> OutSignals
+        public override Array<string> OutSignalsNames
         {
             get
             {
@@ -50,6 +50,7 @@ namespace MoF.Addons.ScenesManager
             };
             AddChild(textureRect);
             SetSlot(textureRect.GetIndex(), false, 0, Colors.White, true, 0, AddonConstants.GraphNode.OutSlotColor);
+            EmitSignal(SignalName.GraphNodeReady);
         }
     }
 }

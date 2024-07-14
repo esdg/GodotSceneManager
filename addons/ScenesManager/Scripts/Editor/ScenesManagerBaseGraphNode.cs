@@ -1,12 +1,18 @@
 using Godot;
 using Godot.Collections;
+using MoF.Addons.ScenesManager.Scripts.Resources;
 
 namespace MoF.Addons.ScenesManager
 {
     public abstract partial class ScenesManagerBaseGraphNode : GraphNode
     {
+        [Signal] public delegate void GraphNodeReadyEventHandler();
 
-        public abstract Array<string> OutSignals { get; }
+        public abstract Array<string> OutSignalsNames { get; }
+
+        public Array<SceneManagerOutSlotSignal> OutSignalsToLoad { get; set; } = new();
+
+        public string GraphNodeName = "";
 
         public sealed override void _Ready()
         {

@@ -9,9 +9,17 @@ namespace MoF.Addons.ScenesManager
 	[Tool, GlobalClass]
 	public partial class SceneGraphNode : ScenesManagerBaseGraphNode
 	{
-		public PackedScene Scene { get; set; }
 
-		public override Array<string> OutSignals
+		public PackedScene Scene
+		{
+			get => scene;
+			set
+			{
+				scene = value;
+			}
+		}
+
+		public override Array<string> OutSignalsNames
 		{
 			get
 			{
@@ -27,10 +35,13 @@ namespace MoF.Addons.ScenesManager
 			}
 		}
 
+
 		private Node sceneRootNode;
 		private Node inSlotNode;
 		private Array<Node> outSlotNodes = new();
 		private Button addOutSlotButton;
+		private EditorResourcePicker sceneResourcePicker;
+		private PackedScene scene;
 
 		private static Texture2D signalIconTexture;
 		private static Texture2D trashCanIconTexture;
@@ -61,15 +72,22 @@ namespace MoF.Addons.ScenesManager
 
 		private void CreateSceneResourcePicker()
 		{
-			var sceneResourcePicker = new EditorResourcePicker
+			sceneResourcePicker = new EditorResourcePicker
 			{
 				BaseType = nameof(PackedScene)
 			};
-			sceneResourcePicker.ResourceChanged += OnSceneResourcePickerChanged;
 			AddChild(sceneResourcePicker);
+
+			if (Scene != null)
+			{
+				sceneResourcePicker.EditedResource = Scene;
+				SetScene(Scene);
+			}
+			sceneResourcePicker.ResourceChanged += OnSceneResourcePickerChanged;
+
 		}
 
-		private void InitializeScene()
+		private void InitializeGraphNode()
 		{
 			if (inSlotNode != null)
 			{
@@ -91,9 +109,20 @@ namespace MoF.Addons.ScenesManager
 		private void SetScene(PackedScene packedScene)
 		{
 			sceneRootNode = packedScene.Instantiate<Node>();
-			Title = sceneRootNode.Name;
+			Title = packedScene.ResourcePath;//sceneRootNode.Name;
 			CreateInSlotNode();
 			CreateAddOutSlotButton();
+			SetSignalsSlot();
+			UpdateAddOutSlotButtonState();
+			EmitSignal(SignalName.GraphNodeReady);
+		}
+
+		private void SetSignalsSlot()
+		{
+			foreach (var outSignals in OutSignalsToLoad)
+			{
+				CreateOutSlotNode(outSignals.OutSlotSignalName);
+			}
 		}
 
 		private void CreateInSlotNode()
@@ -113,7 +142,7 @@ namespace MoF.Addons.ScenesManager
 			AddChild(addOutSlotButton);
 		}
 
-		private void CreateOutSlotNode()
+		private void CreateOutSlotNode(string signalName = "")
 		{
 			var outSignalNode = new HBoxContainer();
 			var deleteButton = new Button
@@ -121,6 +150,17 @@ namespace MoF.Addons.ScenesManager
 				Icon = trashCanIconTexture
 			};
 			var signalsSelectBox = CreateSignalsSelectBox();
+
+			if (signalName != "")
+			{
+				for (int i = 0; i < signalsSelectBox.ItemCount; i++)
+				{
+					if (signalsSelectBox.GetItemText(i) == signalName)
+					{
+						signalsSelectBox.Select(i);
+					}
+				}
+			}
 
 			deleteButton.Pressed += () => OnDeleteOutSignalNode(outSignalNode);
 
@@ -162,13 +202,13 @@ namespace MoF.Addons.ScenesManager
 		{
 			if (resource is PackedScene packedScene)
 			{
-				Scene = packedScene;
-				InitializeScene();
+				scene = packedScene;
+				InitializeGraphNode();
 				SetScene(packedScene);
 			}
 			else
 			{
-				InitializeScene();
+				InitializeGraphNode();
 			}
 		}
 
