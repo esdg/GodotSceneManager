@@ -7,29 +7,6 @@ namespace MoF.Addons.ScenesManager.Helpers
 {
     public static class GodotHelpers
     {
-        public static PopupMenu CreatePopupMenu(string name, string[] items, PopupMenu.IndexPressedEventHandler indexPressedHandler = null)
-        {
-            int itemIndex = 0;
-            var menu = new PopupMenu { Name = name };
-            foreach (var item in items)
-            {
-                if (item == AddonConstants.PopupMenuSeparator)
-                {
-                    menu.AddSeparator();
-                }
-                else
-                {
-                    menu.AddItem(item, itemIndex);
-                    itemIndex++;
-                }
-            }
-            if (indexPressedHandler != null)
-            {
-                menu.IndexPressed += indexPressedHandler;
-            }
-            return menu;
-        }
-
         public static FileDialog CreateFileDialog(FileDialog.FileModeEnum mode, string title, Action<FileDialog, string, FileDialog.FileModeEnum> onFileSelected, Control parent)
         {
             FileDialog fileDialog = new FileDialog
@@ -54,11 +31,11 @@ namespace MoF.Addons.ScenesManager.Helpers
             ScenesManagerBaseGraphNode node = null;
             if (item is SceneManagerItem sceneManagerItem)
             {
-                node = new SceneGraphNode { Scene = sceneManagerItem.Scene, Name = sceneManagerItem.Name };
+                node = new SceneGraphNode { Scene = sceneManagerItem.Scene, GraphNodeName = sceneManagerItem.Name };
             }
             else if (item is StartAppSceneManagerItem startAppSceneManagerItem)
             {
-                node = new StartAppGraphNode { Name = startAppSceneManagerItem.Name };
+                node = new StartAppGraphNode { GraphNodeName = startAppSceneManagerItem.Name };
             }
             else
             {
@@ -75,5 +52,6 @@ namespace MoF.Addons.ScenesManager.Helpers
             };
             ResourceSaver.Save(sceneManagerSettings, AddonConstants.SettingsFilePath);
         }
+
     }
 }

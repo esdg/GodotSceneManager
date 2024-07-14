@@ -4,6 +4,7 @@ using Godot;
 using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Helpers;
 using MoF.Addons.ScenesManager.Scripts.Resources;
+using static Godot.PopupMenu;
 using static MoF.Addons.ScenesManager.ScenesManagerBaseGraphNode;
 
 namespace MoF.Addons.ScenesManager
@@ -18,7 +19,7 @@ namespace MoF.Addons.ScenesManager
 		private GraphNode selectedNode;
 		private SceneManagerSchema sceneManagerSchema = new();
 
-		private GraphNodeReadyEventHandler graphNodeReadyEventHandler;
+		private static GraphNodeReadyEventHandler graphNodeReadyEventHandler;
 
 		private string saveFilePath = "";
 
@@ -52,34 +53,8 @@ namespace MoF.Addons.ScenesManager
 		private void CreateTopMenuBar()
 		{
 			MenuBar mainMenuBar = GetNode<MenuBar>("%MenuBar");
-			CreateGraphMenu(mainMenuBar);
-			CreateNodesMenu(mainMenuBar);
-		}
-
-		private void CreateGraphMenu(MenuBar mainMenuBar)
-		{
-			PopupMenu menuGraph = GodotHelpers.CreatePopupMenu("Graph", new string[]
-			{
-				"New Graph",
-				"Open Graph...",
-				AddonConstants.PopupMenuSeparator,
-				"Save Graph",
-				"Save Graph As..."
-			}, OnGraphMenuItemPressed);
-			mainMenuBar.AddChild(menuGraph);
-		}
-
-		private void CreateNodesMenu(MenuBar mainMenuBar)
-		{
-			PopupMenu menuItemNodes = GodotHelpers.CreatePopupMenu("Nodes", Array.Empty<string>());
-			PopupMenu nodesAddSubMenuItem = GodotHelpers.CreatePopupMenu("NodesAddSubMenu", new string[]
-			{
-				"Add Scene Node",
-				"Add Transition Node"
-			}, OnNodesSubMenuItemPressed);
-			menuItemNodes.AddSubmenuItem("Add", nodesAddSubMenuItem.Name);
-			menuItemNodes.AddChild(nodesAddSubMenuItem);
-			mainMenuBar.AddChild(menuItemNodes);
+			MenuHelpers.CreateGraphMenu(mainMenuBar, OnGraphMenuItemPressed);
+			MenuHelpers.CreateNodesMenu(mainMenuBar, OnNodesSubMenuItemPressed);
 		}
 
 		private void NewGraph()
@@ -115,7 +90,7 @@ namespace MoF.Addons.ScenesManager
 				{
 					Scene = sceneGraphNode.Scene,
 					Position = sceneGraphNode.PositionOffset,
-					Name = sceneGraphNode.Name,
+					Name = sceneGraphNode.GraphNodeName,
 				};
 				SetSceneManagerItemForSchema(sceneGraphNode, sceneManagerItem);
 			}
@@ -143,7 +118,7 @@ namespace MoF.Addons.ScenesManager
 				if (toNodeInstance is SceneGraphNode toSceneGraphNode)
 				{
 					sceneManagerOutSlotSignal.TargetScene.PackedScene = toSceneGraphNode.Scene;
-					sceneManagerOutSlotSignal.TargetScene.graphNodeName = toSceneGraphNode.Name;
+					sceneManagerOutSlotSignal.TargetScene.graphNodeName = toSceneGraphNode.GraphNodeName;
 				}
 				sceneManagerBaseItem.OutSignals.Add(sceneManagerOutSlotSignal);
 			}
@@ -166,12 +141,13 @@ namespace MoF.Addons.ScenesManager
 		private void ClearGraphNodes()
 		{
 			graphEdit.ClearConnections();
+			nodeCount = 0;
 			foreach (Node child in graphEdit.GetChildren())
 			{
-				if (child is GraphNode)
+				if (child is ScenesManagerBaseGraphNode graphNode)
 				{
-					child.Name += "_todelete";
-					child.CallDeferred(MethodName.QueueFree);
+					graphNode.GraphNodeName += "_todelete";
+					graphNode.CallDeferred(MethodName.QueueFree);
 				}
 			}
 		}
@@ -180,38 +156,50 @@ namespace MoF.Addons.ScenesManager
 		{
 			foreach (var item in schema.Items)
 			{
-				CallDeferred(MethodName.AddNodeFromSchemaItem, item);
+				CallDeferred(MethodName.AddNodeFromSchemaItem, item, schema);
 			}
-			CallDeferred(MethodName.RestoreConnections, schema);
+
 		}
 
-		private void AddNodeFromSchemaItem(SceneManagerBaseItem item)
+		private void AddNodeFromSchemaItem(SceneManagerBaseItem item, SceneManagerSchema schema)
 		{
 			ScenesManagerBaseGraphNode node = GodotHelpers.CreateGraphNodeFromItem(item);
 			if (node == null) return;
 
 			node.OutSignalsToLoad = item.OutSignals;
 			node.PositionOffset = item.Position;
+			graphNodeReadyEventHandler = () => NodeReady(node, graphNodeReadyEventHandler, schema);
+			node.GraphNodeReady += graphNodeReadyEventHandler;
 			graphEdit.AddChild(node);
-			node.Name = item.Name;
+			nodeCount++;
+		}
+
+		private void NodeReady(ScenesManagerBaseGraphNode node, GraphNodeReadyEventHandler e, SceneManagerSchema schema)
+		{
+			node.GraphNodeReady -= e;
+			if (nodeCount == schema.Items.Count)
+			{
+				CallDeferred(MethodName.RestoreConnections, schema);
+			}
 		}
 
 		private void RestoreConnections(SceneManagerSchema schema)
 		{
 			foreach (var item in schema.Items)
 			{
-				var node = graphEdit.GetChildren().OfType<ScenesManagerBaseGraphNode>().FirstOrDefault(o => o.Name == item.Name);
+				var node = graphEdit.GetChildren().OfType<ScenesManagerBaseGraphNode>().FirstOrDefault(o => o.GraphNodeName == item.Name);
+
 				if (node == null) return;
 
 				foreach (SceneManagerOutSlotSignal signal in item.OutSignals)
 				{
 					var index = node.OutSignalsNames.IndexOf(signal.OutSlotSignalName);
+					var targetNode = graphEdit.GetChildren().OfType<ScenesManagerBaseGraphNode>().FirstOrDefault(o => o.GraphNodeName == signal.TargetScene.graphNodeName);
 					if (signal?.TargetScene?.graphNodeName != null && node.OutSignalsNames.Count > 0 && index >= 0)
 					{
 						var fromPort = index;
 						var toPort = 0;
-						GD.Print($"{node.Name}, {fromPort}, {signal.TargetScene.graphNodeName}, {toPort}");
-						graphEdit.ConnectNode(node.Name, fromPort, signal.TargetScene.graphNodeName, toPort);
+						graphEdit.ConnectNode(node.Name, fromPort, targetNode.Name, toPort);
 					}
 				}
 			}
@@ -232,7 +220,7 @@ namespace MoF.Addons.ScenesManager
 			var node = new StartAppGraphNode();
 			node.PositionOffset += new Vector2(100, 100);
 			graphEdit.AddChild(node);
-			CallDeferred(MethodName.UpdateName, node);
+			node.GraphNodeName = node.Name;
 		}
 
 		private void CreateSceneNode()
@@ -240,13 +228,8 @@ namespace MoF.Addons.ScenesManager
 			var node = new SceneGraphNode();
 			node.PositionOffset += new Vector2(40, 40) + (nodeCount * new Vector2(30, 30));
 			graphEdit.AddChild(node);
-			CallDeferred(MethodName.UpdateName, node);
+			node.GraphNodeName = node.Name;
 			nodeCount++;
-		}
-
-		private static void UpdateName(Node node)
-		{
-			node.Name = node.Name.ToString().Replace('@', '_');
 		}
 
 		private void CreateTransitionNode()
@@ -336,4 +319,9 @@ namespace MoF.Addons.ScenesManager
 			mainContextualMenuBar.Visible = false;
 		}
 	}
+
+	internal class OnGraphMenuItemPressed
+	{
+	}
+
 }

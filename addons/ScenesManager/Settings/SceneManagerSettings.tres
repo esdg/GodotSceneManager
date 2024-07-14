@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SceneManagerSettings" load_steps=2 format=3 uid="uid://c2g02auwq04ls"]
 
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSettings.cs" id="1_5n6mq"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSettings.cs" id="1_uenfy"]
 
 [resource]
-script = ExtResource("1_5n6mq")
-SceneManagerSchemaPath = "D:/Development/GodotSceneManager/test 21.tres"
+script = ExtResource("1_uenfy")
+SceneManagerSchemaPath = "D:/Development/GodotSceneManager/test.tres"

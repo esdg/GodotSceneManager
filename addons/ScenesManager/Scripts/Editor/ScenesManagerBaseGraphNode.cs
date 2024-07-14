@@ -12,6 +12,8 @@ namespace MoF.Addons.ScenesManager
 
         public Array<SceneManagerOutSlotSignal> OutSignalsToLoad { get; set; } = new();
 
+        public string GraphNodeName = "";
+
         public sealed override void _Ready()
         {
             CallDeferred(MethodName._LoadResources);
