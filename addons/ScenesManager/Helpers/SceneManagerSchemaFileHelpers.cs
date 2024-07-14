@@ -39,7 +39,6 @@ namespace MoF.Addons.ScenesManager.Helpers
             node.GraphNodeReady -= e;
             if (nodeCount == schema.Items.Count)
             {
-                GD.Print("ddd");
                 RestoreConnections(graphEdit, schema);
             }
         }
