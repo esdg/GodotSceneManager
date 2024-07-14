@@ -45,6 +45,15 @@ namespace MoF.Addons.ScenesManager.Constants
                 public const string StartingAppIconTexturePath = "res://addons/ScenesManager/Assets/Icons/starting-app-icon.svg";
                 public static readonly Vector2 InitialSize = new(250, 10);
             }
+
+            public static partial class QuitAppGraphNode
+            {
+                public const string Title = "Quit App Node";
+                public const string GraphNodeStylePanelPath = "res://addons/ScenesManager/Assets/Styles/QuitAppGraphNodeStylePanel.tres";
+                public const string GraphNodeStyleTitlebarPath = "res://addons/ScenesManager/Assets/Styles/QuitAppGraphNodeStyleTitlebar.tres";
+                public const string StartingAppIconTexturePath = "res://addons/ScenesManager/Assets/Icons/quit-app-icon.svg";
+                public static readonly Vector2 InitialSize = new(250, 10);
+            }
         }
     }
 }
