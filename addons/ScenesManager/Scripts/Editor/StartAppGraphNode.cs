@@ -39,8 +39,6 @@ namespace MoF.Addons.ScenesManager
 
         public override void _ReadyNode()
         {
-            Selectable = false;
-            Draggable = false;
             TextureRect textureRect = new()
             {
                 Texture = startingAppIconTexture,
