@@ -21,10 +21,10 @@ TargetScene = SubResource("Resource_w4s7d")
 
 [sub_resource type="Resource" id="Resource_4dwqo"]
 script = ExtResource("7_lox1w")
+Scene = ExtResource("6_30vn1")
 Name = "@GraphNode@20618"
 OutSignals = [SubResource("Resource_0ordd")]
 Position = Vector2(1360, 100)
-Scene = ExtResource("6_30vn1")
 
 [sub_resource type="Resource" id="Resource_8oja6"]
 script = ExtResource("2_qkiub")
@@ -48,10 +48,10 @@ TargetScene = SubResource("Resource_lamfx")
 
 [sub_resource type="Resource" id="Resource_0ds2g"]
 script = ExtResource("7_lox1w")
+Scene = ExtResource("5_877yp")
 Name = "@GraphNode@20611"
 OutSignals = [SubResource("Resource_2jnld"), SubResource("Resource_hx28o")]
 Position = Vector2(840, 60)
-Scene = ExtResource("5_877yp")
 
 [sub_resource type="Resource" id="Resource_igfky"]
 script = ExtResource("2_qkiub")
@@ -65,10 +65,10 @@ TargetScene = SubResource("Resource_igfky")
 
 [sub_resource type="Resource" id="Resource_wej5w"]
 script = ExtResource("7_lox1w")
+Scene = ExtResource("1_nrow6")
 Name = "@GraphNode@19060"
 OutSignals = [SubResource("Resource_fwxgq")]
 Position = Vector2(420, 40)
-Scene = ExtResource("1_nrow6")
 
 [sub_resource type="Resource" id="Resource_devyj"]
 script = ExtResource("2_qkiub")

@@ -23,7 +23,7 @@ namespace MoF.Addons.ScenesManager.Helpers
         }
         private static void AddNodeFromSchemaItem(GraphEdit graphEdit, SceneManagerBaseItem item, SceneManagerSchema schema)
         {
-            ScenesManagerBaseGraphNode node = GodotHelpers.CreateGraphNodeFromItem(item);
+            ScenesManagerBaseGraphNode node = CreateGraphNodeFromItem(item);
             if (node == null) return;
 
             node.OutSignalsToLoad = item.OutSignals;
@@ -31,6 +31,27 @@ namespace MoF.Addons.ScenesManager.Helpers
             graphNodeReadyEventHandler = () => NodeReady(graphEdit, node, graphNodeReadyEventHandler, schema);
             node.GraphNodeReady += graphNodeReadyEventHandler;
             graphEdit.AddChild(node);
+        }
+        public static ScenesManagerBaseGraphNode CreateGraphNodeFromItem(SceneManagerBaseItem item)
+        {
+            ScenesManagerBaseGraphNode node = null;
+            if (item is SceneManagerItem sceneManagerItem)
+            {
+                node = new SceneGraphNode { Scene = sceneManagerItem.Scene, GraphNodeName = sceneManagerItem.Name };
+            }
+            else if (item is StartAppSceneManagerItem startAppSceneManagerItem)
+            {
+                node = new StartAppGraphNode { GraphNodeName = startAppSceneManagerItem.Name };
+            }
+            else if (item is QuitAppSceneManagerItem quitAppSceneManagerItem)
+            {
+                node = new QuitAppGraphNode { GraphNodeName = quitAppSceneManagerItem.Name };
+            }
+            else
+            {
+                GD.PrintErr("Unknown SceneManagerItem type: " + item.GetType().Name);
+            }
+            return node;
         }
 
         private static void NodeReady(GraphEdit graphEdit, ScenesManagerBaseGraphNode node, GraphNodeReadyEventHandler e, SceneManagerSchema schema)
@@ -100,6 +121,14 @@ namespace MoF.Addons.ScenesManager.Helpers
                     };
                     SetSceneManagerItemForSchema(startAppGraphNode, startAppSceneManagerItem, graphEdit, schema);
                     break;
+                case QuitAppGraphNode quitAppGraphNode:
+                    QuitAppSceneManagerItem quitAppSceneManagerItem = new()
+                    {
+                        Name = quitAppGraphNode.Name,
+                        Position = quitAppGraphNode.PositionOffset,
+                    };
+                    SetSceneManagerItemForSchema(quitAppGraphNode, quitAppSceneManagerItem, graphEdit, schema);
+                    break;
             }
         }
 
@@ -120,7 +149,11 @@ namespace MoF.Addons.ScenesManager.Helpers
                 if (toNodeInstance is SceneGraphNode toSceneGraphNode)
                 {
                     sceneManagerOutSlotSignal.TargetScene.PackedScene = toSceneGraphNode.Scene;
-                    sceneManagerOutSlotSignal.TargetScene.graphNodeName = toSceneGraphNode.GraphNodeName;
+                }
+
+                if (toNodeInstance is not StartAppGraphNode)
+                {
+                    sceneManagerOutSlotSignal.TargetScene.graphNodeName = toNodeInstance.GraphNodeName;
                 }
 
                 sceneManagerBaseItem.OutSignals.Add(sceneManagerOutSlotSignal);

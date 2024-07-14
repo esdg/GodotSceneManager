@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="SceneManagerSchema" load_steps=10 format=3 uid="uid://cp48exmapb7jc"]
+
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/TargetScene.cs" id="1_gitva"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerOutSlotSignal.cs" id="2_4gp0d"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/StartAppSceneManagerItem.cs" id="3_xggb4"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/QuitAppSceneManagerItem.cs" id="4_4wnjv"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="4_gvgmj"]
+
+[sub_resource type="Resource" id="Resource_6a8hy"]
+script = ExtResource("1_gitva")
+graphNodeName = "@GraphNode@18818"
+
+[sub_resource type="Resource" id="Resource_rxj8a"]
+script = ExtResource("2_4gp0d")
+OutSlotSignalName = "Starting App Out slot"
+TargetScene = SubResource("Resource_6a8hy")
+
+[sub_resource type="Resource" id="Resource_vil6o"]
+script = ExtResource("3_xggb4")
+Name = "@GraphNode@18798"
+OutSignals = [SubResource("Resource_rxj8a")]
+Position = Vector2(100, 100)
+
+[sub_resource type="Resource" id="Resource_xqywp"]
+script = ExtResource("4_4wnjv")
+Name = "@GraphNode@18818"
+OutSignals = []
+Position = Vector2(600, 100)
+
+[resource]
+script = ExtResource("4_gvgmj")
+Items = [SubResource("Resource_vil6o"), SubResource("Resource_xqywp")]

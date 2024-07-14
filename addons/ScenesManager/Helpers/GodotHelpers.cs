@@ -25,25 +25,6 @@ namespace MoF.Addons.ScenesManager.Helpers
             return fileDialog;
         }
 
-        public static ScenesManagerBaseGraphNode CreateGraphNodeFromItem(SceneManagerBaseItem item)
-        {
-
-            ScenesManagerBaseGraphNode node = null;
-            if (item is SceneManagerItem sceneManagerItem)
-            {
-                node = new SceneGraphNode { Scene = sceneManagerItem.Scene, GraphNodeName = sceneManagerItem.Name };
-            }
-            else if (item is StartAppSceneManagerItem startAppSceneManagerItem)
-            {
-                node = new StartAppGraphNode { GraphNodeName = startAppSceneManagerItem.Name };
-            }
-            else
-            {
-                GD.PrintErr("Unknown SceneManagerItem type: " + item.GetType().Name);
-            }
-            return node;
-        }
-
         public static void SaveSceneManagerSettings(string path)
         {
             SceneManagerSettings sceneManagerSettings = new()

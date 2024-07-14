@@ -101,7 +101,7 @@ namespace MoF.Addons.ScenesManager
 			{
 				if (child is ScenesManagerBaseGraphNode graphNode)
 				{
-					graphNode.GraphNodeName += "_is_freeing";
+					graphNode.Name += "_is_freeing";
 					graphNode.GraphNodeName += "_is_freeing";
 					graphNode.CallDeferred(MethodName.QueueFree);
 				}
