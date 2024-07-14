@@ -19,7 +19,7 @@ namespace MoF.Addons.ScenesManager
 			}
 		}
 
-		public override Array<string> OutSignals
+		public override Array<string> OutSignalsNames
 		{
 			get
 			{
@@ -158,7 +158,6 @@ namespace MoF.Addons.ScenesManager
 					if (signalsSelectBox.GetItemText(i) == signalName)
 					{
 						signalsSelectBox.Select(i);
-						GD.Print(signalsSelectBox.GetItemText(i));
 					}
 				}
 			}

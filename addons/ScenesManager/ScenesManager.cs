@@ -47,7 +47,7 @@ namespace MoF.Addons.ScenesManager
 					if (sceneManagerBaseItem is StartAppSceneManagerItem startAppSceneManagerItem)
 					{
 						GD.Print("call switch to scene");
-						CallDeferred(MethodName.SwitchToScene, new Variant[] { startAppSceneManagerItem.OutSignals[0].TargetPackedScene });
+						CallDeferred(MethodName.SwitchToScene, new Variant[] { startAppSceneManagerItem.OutSignals[0].TargetScene.PackedScene });
 					}
 				}
 			}
@@ -80,7 +80,7 @@ namespace MoF.Addons.ScenesManager
 		{
 			GD.Print("signal emitted");
 			//sourceNode.Disconnect(sceneManagerOutSlotSignal.OutSlotSignalName, new Callable(d));
-			SwitchToScene(sceneManagerOutSlotSignal.TargetPackedScene);
+			SwitchToScene(sceneManagerOutSlotSignal.TargetScene.PackedScene);
 		}
 
 		private static void LoadSettings()

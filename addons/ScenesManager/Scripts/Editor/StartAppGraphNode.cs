@@ -12,7 +12,7 @@ namespace MoF.Addons.ScenesManager
         private static StyleBoxFlat startingAppGraphNodeStyleTitlebar;
         private Node outSlot;
 
-        public override Array<string> OutSignals
+        public override Array<string> OutSignalsNames
         {
             get
             {

@@ -7,7 +7,8 @@ namespace MoF.Addons.ScenesManager
     public abstract partial class ScenesManagerBaseGraphNode : GraphNode
     {
         [Signal] public delegate void GraphNodeReadyEventHandler();
-        public abstract Array<string> OutSignals { get; }
+
+        public abstract Array<string> OutSignalsNames { get; }
 
         public Array<SceneManagerOutSlotSignal> OutSignalsToLoad { get; set; } = new();
 
