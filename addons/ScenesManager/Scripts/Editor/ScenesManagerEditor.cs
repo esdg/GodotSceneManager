@@ -188,8 +188,9 @@ namespace MoF.Addons.ScenesManager
 
 		private void OnNodeSelected(Node node)
 		{
-			selectedNode = node as GraphNode;
-			mainContextualMenuBar.Visible = true;
+			selectedNode = node as ScenesManagerBaseGraphNode;
+			if (selectedNode is not StartAppGraphNode)
+				mainContextualMenuBar.Visible = true;
 		}
 
 		private void OnNodeDeselected(Node node)

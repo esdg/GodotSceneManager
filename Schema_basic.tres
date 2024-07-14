@@ -1,0 +1,91 @@
+[gd_resource type="Resource" script_class="SceneManagerSchema" load_steps=23 format=3 uid="uid://dqpmxg6sovyhv"]
+
+[ext_resource type="PackedScene" uid="uid://cgmbwovvih6mf" path="res://Scene_A.tscn" id="1_nrow6"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/TargetScene.cs" id="2_qkiub"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerOutSlotSignal.cs" id="3_2nrk4"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/StartAppSceneManagerItem.cs" id="4_hdlk6"]
+[ext_resource type="PackedScene" uid="uid://cn1obwdrx5x5w" path="res://Scene_C.tscn" id="5_877yp"]
+[ext_resource type="PackedScene" uid="uid://5ngv11d5jkdx" path="res://Scene_B.tscn" id="6_30vn1"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerItem.cs" id="7_lox1w"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="8_7myeb"]
+
+[sub_resource type="Resource" id="Resource_w4s7d"]
+script = ExtResource("2_qkiub")
+PackedScene = ExtResource("5_877yp")
+graphNodeName = "@GraphNode@20611"
+
+[sub_resource type="Resource" id="Resource_0ordd"]
+script = ExtResource("3_2nrk4")
+OutSlotSignalName = "GoToPreviousScene"
+TargetScene = SubResource("Resource_w4s7d")
+
+[sub_resource type="Resource" id="Resource_4dwqo"]
+script = ExtResource("7_lox1w")
+Scene = ExtResource("6_30vn1")
+Name = "@GraphNode@20618"
+OutSignals = [SubResource("Resource_0ordd")]
+Position = Vector2(1360, 100)
+
+[sub_resource type="Resource" id="Resource_8oja6"]
+script = ExtResource("2_qkiub")
+PackedScene = ExtResource("6_30vn1")
+graphNodeName = "@GraphNode@20618"
+
+[sub_resource type="Resource" id="Resource_2jnld"]
+script = ExtResource("3_2nrk4")
+OutSlotSignalName = "GoToNextScene"
+TargetScene = SubResource("Resource_8oja6")
+
+[sub_resource type="Resource" id="Resource_lamfx"]
+script = ExtResource("2_qkiub")
+PackedScene = ExtResource("1_nrow6")
+graphNodeName = "@GraphNode@19060"
+
+[sub_resource type="Resource" id="Resource_hx28o"]
+script = ExtResource("3_2nrk4")
+OutSlotSignalName = "GoToPreviousScene"
+TargetScene = SubResource("Resource_lamfx")
+
+[sub_resource type="Resource" id="Resource_0ds2g"]
+script = ExtResource("7_lox1w")
+Scene = ExtResource("5_877yp")
+Name = "@GraphNode@20611"
+OutSignals = [SubResource("Resource_2jnld"), SubResource("Resource_hx28o")]
+Position = Vector2(840, 60)
+
+[sub_resource type="Resource" id="Resource_igfky"]
+script = ExtResource("2_qkiub")
+PackedScene = ExtResource("5_877yp")
+graphNodeName = "@GraphNode@20611"
+
+[sub_resource type="Resource" id="Resource_fwxgq"]
+script = ExtResource("3_2nrk4")
+OutSlotSignalName = "GoToNextScene"
+TargetScene = SubResource("Resource_igfky")
+
+[sub_resource type="Resource" id="Resource_wej5w"]
+script = ExtResource("7_lox1w")
+Scene = ExtResource("1_nrow6")
+Name = "@GraphNode@19060"
+OutSignals = [SubResource("Resource_fwxgq")]
+Position = Vector2(420, 40)
+
+[sub_resource type="Resource" id="Resource_devyj"]
+script = ExtResource("2_qkiub")
+PackedScene = ExtResource("1_nrow6")
+graphNodeName = "@GraphNode@19060"
+
+[sub_resource type="Resource" id="Resource_md47m"]
+script = ExtResource("3_2nrk4")
+OutSlotSignalName = "Starting App Out slot"
+TargetScene = SubResource("Resource_devyj")
+
+[sub_resource type="Resource" id="Resource_373yr"]
+script = ExtResource("4_hdlk6")
+Name = "@GraphNode@18262"
+OutSignals = [SubResource("Resource_md47m")]
+Position = Vector2(-40, 360)
+
+[resource]
+script = ExtResource("8_7myeb")
+Items = [SubResource("Resource_4dwqo"), SubResource("Resource_0ds2g"), SubResource("Resource_wej5w"), SubResource("Resource_373yr")]

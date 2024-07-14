@@ -88,14 +88,15 @@ namespace MoF.Addons.ScenesManager.Helpers
                     {
                         Scene = sceneGraphNode.Scene,
                         Position = sceneGraphNode.PositionOffset,
-                        Name = sceneGraphNode.GraphNodeName
+                        Name = sceneGraphNode.GraphNodeName,
                     };
                     SetSceneManagerItemForSchema(sceneGraphNode, sceneManagerItem, graphEdit, schema);
                     break;
                 case StartAppGraphNode startAppGraphNode:
                     StartAppSceneManagerItem startAppSceneManagerItem = new()
                     {
-                        Name = startAppGraphNode.Name
+                        Name = startAppGraphNode.Name,
+                        Position = startAppGraphNode.PositionOffset,
                     };
                     SetSceneManagerItemForSchema(startAppGraphNode, startAppSceneManagerItem, graphEdit, schema);
                     break;
