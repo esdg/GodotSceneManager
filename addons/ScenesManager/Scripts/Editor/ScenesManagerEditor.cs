@@ -17,7 +17,7 @@ namespace MoF.Addons.ScenesManager
 		private Texture2D trashCanIconTexture;
 		private MenuBar mainContextualMenuBar;
 		private GraphNode selectedNode;
-		private SceneManagerSchema sceneManagerSchema = new();
+		private SceneManagerSchema currentSceneManagerSchema = new();
 
 		private static GraphNodeReadyEventHandler graphNodeReadyEventHandler;
 
@@ -72,58 +72,12 @@ namespace MoF.Addons.ScenesManager
 				return;
 			}
 
-			sceneManagerSchema.Items.Clear();
-			foreach (var node in graphEdit.GetChildren().OfType<ScenesManagerBaseGraphNode>())
-			{
-				AddNodeToSchema(node);
-			}
+			currentSceneManagerSchema = SceneManagerSchemaFileHelpers.PrepareSchemaForSave(graphEdit);
 
-			ResourceSaver.Save(sceneManagerSchema, path);
+			ResourceSaver.Save(currentSceneManagerSchema, path);
 			GodotHelpers.SaveSceneManagerSettings(path);
 		}
 
-		private void AddNodeToSchema(ScenesManagerBaseGraphNode node)
-		{
-			if (node is SceneGraphNode sceneGraphNode)
-			{
-				SceneManagerItem sceneManagerItem = new()
-				{
-					Scene = sceneGraphNode.Scene,
-					Position = sceneGraphNode.PositionOffset,
-					Name = sceneGraphNode.GraphNodeName,
-				};
-				SetSceneManagerItemForSchema(sceneGraphNode, sceneManagerItem);
-			}
-			else if (node is StartAppGraphNode startAppGraphNode)
-			{
-				StartAppSceneManagerItem startAppSceneManagerItem = new()
-				{
-					Name = startAppGraphNode.Name,
-				};
-				SetSceneManagerItemForSchema(startAppGraphNode, startAppSceneManagerItem);
-			}
-		}
-
-		private void SetSceneManagerItemForSchema(ScenesManagerBaseGraphNode node, SceneManagerBaseItem sceneManagerBaseItem)
-		{
-			var connections = graphEdit.GetConnectionList().Where(o => (string)o["from_node"] == node.Name);
-			foreach (var connection in connections)
-			{
-				var fromNodeInstance = graphEdit.GetNode<ScenesManagerBaseGraphNode>((string)connection["from_node"]);
-				var toNodeInstance = graphEdit.GetNode<ScenesManagerBaseGraphNode>((string)connection["to_node"]);
-				SceneManagerOutSlotSignal sceneManagerOutSlotSignal = new()
-				{
-					OutSlotSignalName = fromNodeInstance.OutSignalsNames[(int)connection["from_port"]],
-				};
-				if (toNodeInstance is SceneGraphNode toSceneGraphNode)
-				{
-					sceneManagerOutSlotSignal.TargetScene.PackedScene = toSceneGraphNode.Scene;
-					sceneManagerOutSlotSignal.TargetScene.graphNodeName = toSceneGraphNode.GraphNodeName;
-				}
-				sceneManagerBaseItem.OutSignals.Add(sceneManagerOutSlotSignal);
-			}
-			sceneManagerSchema.Items.Add(sceneManagerBaseItem);
-		}
 
 		private void OpenSchema(string path)
 		{
@@ -134,8 +88,8 @@ namespace MoF.Addons.ScenesManager
 				return;
 			}
 
-			CallDeferred(MethodName.ClearGraphNodes);
-			CallDeferred(MethodName.LoadGraphNodesFromSchema, loadedSchema);
+			ClearGraphNodes();
+			nodeCount = SceneManagerSchemaFileHelpers.LoadGraphNodesFromSchema(graphEdit, loadedSchema);
 		}
 
 		private void ClearGraphNodes()
@@ -146,61 +100,9 @@ namespace MoF.Addons.ScenesManager
 			{
 				if (child is ScenesManagerBaseGraphNode graphNode)
 				{
-					graphNode.GraphNodeName += "_todelete";
+					graphNode.GraphNodeName += "_is_freeing";
+					graphNode.GraphNodeName += "_is_freeing";
 					graphNode.CallDeferred(MethodName.QueueFree);
-				}
-			}
-		}
-
-		private void LoadGraphNodesFromSchema(SceneManagerSchema schema)
-		{
-			foreach (var item in schema.Items)
-			{
-				CallDeferred(MethodName.AddNodeFromSchemaItem, item, schema);
-			}
-
-		}
-
-		private void AddNodeFromSchemaItem(SceneManagerBaseItem item, SceneManagerSchema schema)
-		{
-			ScenesManagerBaseGraphNode node = GodotHelpers.CreateGraphNodeFromItem(item);
-			if (node == null) return;
-
-			node.OutSignalsToLoad = item.OutSignals;
-			node.PositionOffset = item.Position;
-			graphNodeReadyEventHandler = () => NodeReady(node, graphNodeReadyEventHandler, schema);
-			node.GraphNodeReady += graphNodeReadyEventHandler;
-			graphEdit.AddChild(node);
-			nodeCount++;
-		}
-
-		private void NodeReady(ScenesManagerBaseGraphNode node, GraphNodeReadyEventHandler e, SceneManagerSchema schema)
-		{
-			node.GraphNodeReady -= e;
-			if (nodeCount == schema.Items.Count)
-			{
-				CallDeferred(MethodName.RestoreConnections, schema);
-			}
-		}
-
-		private void RestoreConnections(SceneManagerSchema schema)
-		{
-			foreach (var item in schema.Items)
-			{
-				var node = graphEdit.GetChildren().OfType<ScenesManagerBaseGraphNode>().FirstOrDefault(o => o.GraphNodeName == item.Name);
-
-				if (node == null) return;
-
-				foreach (SceneManagerOutSlotSignal signal in item.OutSignals)
-				{
-					var index = node.OutSignalsNames.IndexOf(signal.OutSlotSignalName);
-					var targetNode = graphEdit.GetChildren().OfType<ScenesManagerBaseGraphNode>().FirstOrDefault(o => o.GraphNodeName == signal.TargetScene.graphNodeName);
-					if (signal?.TargetScene?.graphNodeName != null && node.OutSignalsNames.Count > 0 && index >= 0)
-					{
-						var fromPort = index;
-						var toPort = 0;
-						graphEdit.ConnectNode(node.Name, fromPort, targetNode.Name, toPort);
-					}
 				}
 			}
 		}
@@ -319,9 +221,4 @@ namespace MoF.Addons.ScenesManager
 			mainContextualMenuBar.Visible = false;
 		}
 	}
-
-	internal class OnGraphMenuItemPressed
-	{
-	}
-
 }
