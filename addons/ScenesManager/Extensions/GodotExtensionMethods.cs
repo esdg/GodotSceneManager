@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using Godot;
-#nullable enable
+
 namespace MoF.Addons.ScenesManager.Extensions
 {
 	public static class GodotExtensionMethodsNode
@@ -21,6 +21,7 @@ namespace MoF.Addons.ScenesManager.Extensions
 			return resource.ResourcePath.Substr(0, resource.ResourcePath.Length - resource.ResourcePath.Split("/").Last().Length);
 		}
 
+#nullable enable
 		public static void ConnectToStaticDelegate<T>(this GodotObject source, object targetInstance, string signalName, string staticTargetMethodName, params object?[]? args)
 		{
 			EventInfo? eventInfo = source?.GetType().GetEvent(signalName);
@@ -80,4 +81,5 @@ namespace MoF.Addons.ScenesManager.Extensions
 			}
 		}
 	}
+#nullable disable
 }

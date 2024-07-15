@@ -149,11 +149,18 @@ namespace MoF.Addons.ScenesManager.Helpers
                 if (toNodeInstance is SceneGraphNode toSceneGraphNode)
                 {
                     sceneManagerOutSlotSignal.TargetScene.PackedScene = toSceneGraphNode.Scene;
+                    sceneManagerOutSlotSignal.TargetSceneType = 1;
+                }
+
+                if (toNodeInstance is QuitAppGraphNode)
+                {
+                    sceneManagerOutSlotSignal.TargetSceneType = 2;
                 }
 
                 if (toNodeInstance is not StartAppGraphNode)
                 {
                     sceneManagerOutSlotSignal.TargetScene.graphNodeName = toNodeInstance.GraphNodeName;
+
                 }
 
                 sceneManagerBaseItem.OutSignals.Add(sceneManagerOutSlotSignal);

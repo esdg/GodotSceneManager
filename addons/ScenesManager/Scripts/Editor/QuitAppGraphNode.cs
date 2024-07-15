@@ -16,7 +16,7 @@ namespace MoF.Addons.ScenesManager
         {
             get
             {
-                var signals = new Array<string> { "Starting App Out slot" };
+                var signals = new Array<string> { "Quit App Out slot" };
                 return signals;
             }
         }
