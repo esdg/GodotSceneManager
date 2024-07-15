@@ -9,83 +9,88 @@
 [ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerItem.cs" id="7_lox1w"]
 [ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="8_7myeb"]
 
-[sub_resource type="Resource" id="Resource_w4s7d"]
+[sub_resource type="Resource" id="Resource_313ow"]
 script = ExtResource("2_qkiub")
 PackedScene = ExtResource("5_877yp")
 graphNodeName = "@GraphNode@20611"
 
-[sub_resource type="Resource" id="Resource_0ordd"]
+[sub_resource type="Resource" id="Resource_6n0f6"]
 script = ExtResource("3_2nrk4")
 OutSlotSignalName = "GoToPreviousScene"
-TargetScene = SubResource("Resource_w4s7d")
+TargetScene = SubResource("Resource_313ow")
+TargetSceneType = 1
 
-[sub_resource type="Resource" id="Resource_4dwqo"]
+[sub_resource type="Resource" id="Resource_xqw2t"]
 script = ExtResource("7_lox1w")
 Scene = ExtResource("6_30vn1")
 Name = "@GraphNode@20618"
-OutSignals = [SubResource("Resource_0ordd")]
+OutSignals = [SubResource("Resource_6n0f6")]
 Position = Vector2(1360, 100)
 
-[sub_resource type="Resource" id="Resource_8oja6"]
+[sub_resource type="Resource" id="Resource_utqnu"]
 script = ExtResource("2_qkiub")
 PackedScene = ExtResource("6_30vn1")
 graphNodeName = "@GraphNode@20618"
 
-[sub_resource type="Resource" id="Resource_2jnld"]
+[sub_resource type="Resource" id="Resource_i660l"]
 script = ExtResource("3_2nrk4")
 OutSlotSignalName = "GoToNextScene"
-TargetScene = SubResource("Resource_8oja6")
+TargetScene = SubResource("Resource_utqnu")
+TargetSceneType = 1
 
-[sub_resource type="Resource" id="Resource_lamfx"]
+[sub_resource type="Resource" id="Resource_hc2mk"]
 script = ExtResource("2_qkiub")
 PackedScene = ExtResource("1_nrow6")
 graphNodeName = "@GraphNode@19060"
 
-[sub_resource type="Resource" id="Resource_hx28o"]
+[sub_resource type="Resource" id="Resource_qko55"]
 script = ExtResource("3_2nrk4")
 OutSlotSignalName = "GoToPreviousScene"
-TargetScene = SubResource("Resource_lamfx")
+TargetScene = SubResource("Resource_hc2mk")
+TargetSceneType = 1
 
-[sub_resource type="Resource" id="Resource_0ds2g"]
+[sub_resource type="Resource" id="Resource_njo6x"]
 script = ExtResource("7_lox1w")
 Scene = ExtResource("5_877yp")
 Name = "@GraphNode@20611"
-OutSignals = [SubResource("Resource_2jnld"), SubResource("Resource_hx28o")]
+OutSignals = [SubResource("Resource_i660l"), SubResource("Resource_qko55")]
 Position = Vector2(840, 60)
 
-[sub_resource type="Resource" id="Resource_igfky"]
+[sub_resource type="Resource" id="Resource_1a1tj"]
 script = ExtResource("2_qkiub")
 PackedScene = ExtResource("5_877yp")
 graphNodeName = "@GraphNode@20611"
 
-[sub_resource type="Resource" id="Resource_fwxgq"]
+[sub_resource type="Resource" id="Resource_psrh4"]
 script = ExtResource("3_2nrk4")
 OutSlotSignalName = "GoToNextScene"
-TargetScene = SubResource("Resource_igfky")
+TargetScene = SubResource("Resource_1a1tj")
+TargetSceneType = 1
 
-[sub_resource type="Resource" id="Resource_wej5w"]
+[sub_resource type="Resource" id="Resource_wy651"]
 script = ExtResource("7_lox1w")
 Scene = ExtResource("1_nrow6")
 Name = "@GraphNode@19060"
-OutSignals = [SubResource("Resource_fwxgq")]
+OutSignals = [SubResource("Resource_psrh4")]
 Position = Vector2(420, 40)
 
-[sub_resource type="Resource" id="Resource_devyj"]
+[sub_resource type="Resource" id="Resource_g7186"]
 script = ExtResource("2_qkiub")
 PackedScene = ExtResource("1_nrow6")
 graphNodeName = "@GraphNode@19060"
 
-[sub_resource type="Resource" id="Resource_md47m"]
+[sub_resource type="Resource" id="Resource_4fijb"]
 script = ExtResource("3_2nrk4")
 OutSlotSignalName = "Starting App Out slot"
-TargetScene = SubResource("Resource_devyj")
+TargetScene = SubResource("Resource_g7186")
+TargetSceneType = 1
 
-[sub_resource type="Resource" id="Resource_373yr"]
+[sub_resource type="Resource" id="Resource_ut5ff"]
 script = ExtResource("4_hdlk6")
-Name = "@GraphNode@18262"
-OutSignals = [SubResource("Resource_md47m")]
+Name = "@GraphNode@18064"
+OutSignals = [SubResource("Resource_4fijb")]
 Position = Vector2(-40, 360)
 
 [resource]
 script = ExtResource("8_7myeb")
-Items = [SubResource("Resource_4dwqo"), SubResource("Resource_0ds2g"), SubResource("Resource_wej5w"), SubResource("Resource_373yr")]
+Items = [SubResource("Resource_xqw2t"), SubResource("Resource_njo6x"), SubResource("Resource_wy651"), SubResource("Resource_ut5ff")]

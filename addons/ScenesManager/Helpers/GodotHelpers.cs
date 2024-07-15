@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Godot;
 using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Scripts.Resources;
@@ -32,6 +33,11 @@ namespace MoF.Addons.ScenesManager.Helpers
                 SceneManagerSchemaPath = path,
             };
             ResourceSaver.Save(sceneManagerSettings, AddonConstants.SettingsFilePath);
+        }
+
+        public static string GetSceneGraphNodeTitle(Node node)
+        {
+            return $"{Path.GetFileNameWithoutExtension(node.SceneFilePath)}::{node.Name}";
         }
 
     }

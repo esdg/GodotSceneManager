@@ -27,7 +27,7 @@ namespace MoF.Addons.ScenesManager.Extensions
 			EventInfo? eventInfo = source?.GetType().GetEvent(signalName);
 			if (eventInfo == null)
 			{
-				GD.PrintErr($"Event '{signalName}' not found on source object.");
+				GD.PrintErr($"[SceneManagerEditor] Event '{signalName}' not found on source object");
 				return;
 			}
 
@@ -36,8 +36,12 @@ namespace MoF.Addons.ScenesManager.Extensions
 			ParameterInfo[]? parms = invokeMethod?.GetParameters();
 			Type[] parmTypes = parms?.Select(p => p.ParameterType).ToArray() ?? Array.Empty<Type>();
 
-			AssemblyName assemblyName = new AssemblyName("DynamicTypes");
+			AssemblyName assemblyName = new("DynamicTypes");
 			AssemblyBuilder assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
+			if (assemblyName.Name == null)
+			{
+				throw new Exception($"Assembly name '{assemblyName}' not found on target instance");
+			}
 			ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule(assemblyName.Name);
 			TypeBuilder typeBuilder = moduleBuilder.DefineType("Handler", TypeAttributes.Class | TypeAttributes.Public);
 
@@ -64,7 +68,7 @@ namespace MoF.Addons.ScenesManager.Extensions
 			MethodInfo? targetMethod = targetInstance.GetType().GetMethod(staticTargetMethodName, new Type[] { typeof(Node), typeof(T) });
 			if (targetMethod == null)
 			{
-				throw new Exception($"Target method '{staticTargetMethodName}' not found on target instance.");
+				throw new Exception($"Target method '{staticTargetMethodName}' not found on target instance");
 			}
 
 			methodIL.Emit(OpCodes.Ldarg_0);
@@ -74,8 +78,8 @@ namespace MoF.Addons.ScenesManager.Extensions
 			methodIL.EmitCall(OpCodes.Call, targetMethod, null);
 			methodIL.Emit(OpCodes.Ret);
 
-			Type handlerTypeFinished = typeBuilder.CreateType() ?? throw new Exception("Unable to create handler type.");
-			MethodInfo handlerMethodInfo = handlerTypeFinished.GetMethod("DynamicHandler") ?? throw new Exception("Unable to get DynamicHandler method.");
+			Type handlerTypeFinished = typeBuilder.CreateType() ?? throw new Exception("Unable to create handler type");
+			MethodInfo handlerMethodInfo = handlerTypeFinished.GetMethod("DynamicHandler") ?? throw new Exception("Unable to get DynamicHandler method");
 			object? handlerInstance = Activator.CreateInstance(handlerTypeFinished, args);
 
 			if (handlerType is not null)

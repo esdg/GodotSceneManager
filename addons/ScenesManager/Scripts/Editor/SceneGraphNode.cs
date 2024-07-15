@@ -3,8 +3,9 @@ using Godot;
 using Godot.Collections;
 using MoF.Addons.ScenesManager.Extensions;
 using MoF.Addons.ScenesManager.Constants;
+using MoF.Addons.ScenesManager.Helpers;
 
-namespace MoF.Addons.ScenesManager
+namespace MoF.Addons.ScenesManager.Scripts.Editor
 {
 	[Tool, GlobalClass]
 	public partial class SceneGraphNode : ScenesManagerBaseGraphNode
@@ -109,7 +110,7 @@ namespace MoF.Addons.ScenesManager
 		private void SetScene(PackedScene packedScene)
 		{
 			sceneRootNode = packedScene.Instantiate<Node>();
-			Title = packedScene.ResourcePath;//sceneRootNode.Name;
+			Title = GodotHelpers.GetSceneGraphNodeTitle(sceneRootNode);
 			CreateInSlotNode();
 			CreateAddOutSlotButton();
 			SetSignalsSlot();

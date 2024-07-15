@@ -1,13 +1,9 @@
-using System;
 using System.Linq;
 using Godot;
-using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Helpers;
 using MoF.Addons.ScenesManager.Scripts.Resources;
-using static Godot.PopupMenu;
-using static MoF.Addons.ScenesManager.ScenesManagerBaseGraphNode;
 
-namespace MoF.Addons.ScenesManager
+namespace MoF.Addons.ScenesManager.Scripts.Editor
 {
 	[Tool]
 	public partial class ScenesManagerEditor : Control
@@ -15,12 +11,10 @@ namespace MoF.Addons.ScenesManager
 		private GraphEdit graphEdit;
 		private int nodeCount = 0;
 		private Texture2D trashCanIconTexture;
-		private MenuBar mainMenuBar;
+		public MenuBar mainMenuBar { get; set; }
 		private MenuBar mainContextualMenuBar;
 		private GraphNode selectedNode;
 		private SceneManagerSchema currentSceneManagerSchema = new();
-
-		private static GraphNodeReadyEventHandler graphNodeReadyEventHandler;
 
 		private string saveFilePath = "";
 
@@ -85,7 +79,7 @@ namespace MoF.Addons.ScenesManager
 			var loadedSchema = ResourceLoader.Load<SceneManagerSchema>(path);
 			if (loadedSchema == null)
 			{
-				GD.PrintErr("Failed to load SceneManagerSchema from path: " + path);
+				GD.PrintErr("[SceneManagerEditor] Failed to load SceneManagerSchema from path: " + path);
 				return;
 			}
 

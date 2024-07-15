@@ -16,7 +16,6 @@ public partial class Scene_A : Control
 	}
 	private void _on_button_pressed()
 	{
-		GD.Print("gotonext");
 		EmitSignal(SignalName.GoToNextScene);
 	}
 }

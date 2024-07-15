@@ -1,6 +1,6 @@
 using Godot;
 
-namespace MoF.Addons.ScenesManager
+namespace MoF.Addons.ScenesManager.Scripts.Editor
 {
 	[Tool]
 	public partial class SceneManagerGraphEdit : GraphEdit
