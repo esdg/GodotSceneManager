@@ -76,7 +76,7 @@ namespace MoF.Addons.ScenesManager
 		public static void SignalEmitted(Node sourceNode, SceneManagerOutSlotSignal sceneManagerOutSlotSignal)
 		{
 			//sourceNode.Disconnect(sceneManagerOutSlotSignal.OutSlotSignalName, new Callable(d));
-			if (sceneManagerOutSlotSignal.TargetSceneType == 2)
+			if (sceneManagerOutSlotSignal.TargetSceneType == Enums.TargetSceneType.QuitGraphNode)
 			{
 				sourceNode.GetTree().Quit();
 				return;

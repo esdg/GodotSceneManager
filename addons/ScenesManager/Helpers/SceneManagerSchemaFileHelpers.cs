@@ -149,12 +149,12 @@ namespace MoF.Addons.ScenesManager.Helpers
                 if (toNodeInstance is SceneGraphNode toSceneGraphNode)
                 {
                     sceneManagerOutSlotSignal.TargetScene.PackedScene = toSceneGraphNode.Scene;
-                    sceneManagerOutSlotSignal.TargetSceneType = 1;
+                    sceneManagerOutSlotSignal.TargetSceneType = Enums.TargetSceneType.SceneGraphNode;
                 }
 
                 if (toNodeInstance is QuitAppGraphNode)
                 {
-                    sceneManagerOutSlotSignal.TargetSceneType = 2;
+                    sceneManagerOutSlotSignal.TargetSceneType = Enums.TargetSceneType.QuitGraphNode;
                 }
 
                 if (toNodeInstance is not StartAppGraphNode)
