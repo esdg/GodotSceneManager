@@ -38,15 +38,12 @@ namespace MoF.Addons.ScenesManager
 
 		private void OnTreeChanged()
 		{
-			GD.Print(GetTree()?.CurrentScene);
-
 			if (CurrentPackedScene == null)
 			{
 				foreach (SceneManagerBaseItem sceneManagerBaseItem in SceneManagerSchema.Items)
 				{
 					if (sceneManagerBaseItem is StartAppSceneManagerItem startAppSceneManagerItem)
 					{
-						GD.Print("call switch to scene");
 						CallDeferred(MethodName.SwitchToScene, new Variant[] { startAppSceneManagerItem.OutSignals[0].TargetScene.PackedScene });
 					}
 				}
@@ -78,8 +75,12 @@ namespace MoF.Addons.ScenesManager
 
 		public static void SignalEmitted(Node sourceNode, SceneManagerOutSlotSignal sceneManagerOutSlotSignal)
 		{
-			GD.Print("signal emitted");
 			//sourceNode.Disconnect(sceneManagerOutSlotSignal.OutSlotSignalName, new Callable(d));
+			if (sceneManagerOutSlotSignal.TargetSceneType == Enums.TargetSceneType.QuitGraphNode)
+			{
+				sourceNode.GetTree().Quit();
+				return;
+			}
 			SwitchToScene(sceneManagerOutSlotSignal.TargetScene.PackedScene);
 		}
 

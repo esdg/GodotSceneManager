@@ -15,6 +15,7 @@ namespace MoF.Addons.ScenesManager
 		private GraphEdit graphEdit;
 		private int nodeCount = 0;
 		private Texture2D trashCanIconTexture;
+		private MenuBar mainMenuBar;
 		private MenuBar mainContextualMenuBar;
 		private GraphNode selectedNode;
 		private SceneManagerSchema currentSceneManagerSchema = new();
@@ -52,7 +53,7 @@ namespace MoF.Addons.ScenesManager
 
 		private void CreateTopMenuBar()
 		{
-			MenuBar mainMenuBar = GetNode<MenuBar>("%MenuBar");
+			mainMenuBar = GetNode<MenuBar>("%MenuBar");
 			MenuHelpers.CreateGraphMenu(mainMenuBar, OnGraphMenuItemPressed);
 			MenuHelpers.CreateNodesMenu(mainMenuBar, OnNodesSubMenuItemPressed);
 		}
@@ -100,7 +101,7 @@ namespace MoF.Addons.ScenesManager
 			{
 				if (child is ScenesManagerBaseGraphNode graphNode)
 				{
-					graphNode.GraphNodeName += "_is_freeing";
+					graphNode.Name += "_is_freeing";
 					graphNode.GraphNodeName += "_is_freeing";
 					graphNode.CallDeferred(MethodName.QueueFree);
 				}
@@ -119,7 +120,7 @@ namespace MoF.Addons.ScenesManager
 
 		private void CreateInitialStartAppNode()
 		{
-			var node = new StartAppGraphNode();
+			StartAppGraphNode node = new();
 			node.PositionOffset += new Vector2(100, 100);
 			graphEdit.AddChild(node);
 			node.GraphNodeName = node.Name;
@@ -127,11 +128,23 @@ namespace MoF.Addons.ScenesManager
 
 		private void CreateSceneNode()
 		{
-			var node = new SceneGraphNode();
+			SceneGraphNode node = new();
 			node.PositionOffset += new Vector2(40, 40) + (nodeCount * new Vector2(30, 30));
 			graphEdit.AddChild(node);
 			node.GraphNodeName = node.Name;
 			nodeCount++;
+		}
+
+		private void CreateQuitAppNode()
+		{
+			QuitAppGraphNode node = new();
+			node.PositionOffset += new Vector2(600, 100);
+			graphEdit.AddChild(node);
+			node.GraphNodeName = node.Name;
+		}
+		private void RemoveQuitAppNode()
+		{
+			graphEdit.GetChildren().OfType<QuitAppGraphNode>().First().QueueFree();
 		}
 
 		private void CreateTransitionNode()
@@ -168,6 +181,19 @@ namespace MoF.Addons.ScenesManager
 				case 1:
 					CreateTransitionNode();
 					break;
+				case 2:
+					var nodeMenu = mainMenuBar.GetChildren().OfType<PopupMenu>().FirstOrDefault(o => o.Name == "Node menu");
+					if (!graphEdit.GetChildren().OfType<QuitAppGraphNode>().Any())
+					{
+						nodeMenu.SetItemChecked((int)index, true);
+						CreateQuitAppNode();
+					}
+					else
+					{
+						nodeMenu.SetItemChecked((int)index, false);
+						RemoveQuitAppNode();
+					}
+					break;
 			}
 		}
 
@@ -189,7 +215,7 @@ namespace MoF.Addons.ScenesManager
 		private void OnNodeSelected(Node node)
 		{
 			selectedNode = node as ScenesManagerBaseGraphNode;
-			if (selectedNode is not StartAppGraphNode)
+			if (selectedNode is not StartAppGraphNode && selectedNode is not QuitAppGraphNode)
 				mainContextualMenuBar.Visible = true;
 		}
 

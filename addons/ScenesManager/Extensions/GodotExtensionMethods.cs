@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using Godot;
-#nullable enable
+
 namespace MoF.Addons.ScenesManager.Extensions
 {
 	public static class GodotExtensionMethodsNode
@@ -21,6 +21,7 @@ namespace MoF.Addons.ScenesManager.Extensions
 			return resource.ResourcePath.Substr(0, resource.ResourcePath.Length - resource.ResourcePath.Split("/").Last().Length);
 		}
 
+#nullable enable
 		public static void ConnectToStaticDelegate<T>(this GodotObject source, object targetInstance, string signalName, string staticTargetMethodName, params object?[]? args)
 		{
 			EventInfo? eventInfo = source?.GetType().GetEvent(signalName);
@@ -35,49 +36,54 @@ namespace MoF.Addons.ScenesManager.Extensions
 			ParameterInfo[]? parms = invokeMethod?.GetParameters();
 			Type[] parmTypes = parms?.Select(p => p.ParameterType).ToArray() ?? Array.Empty<Type>();
 
-			AssemblyName aName = new AssemblyName("DynamicTypes");
-			AssemblyBuilder ab = AssemblyBuilder.DefineDynamicAssembly(aName, AssemblyBuilderAccess.Run);
-			ModuleBuilder mb = ab.DefineDynamicModule(aName.Name);
-			TypeBuilder tb = mb.DefineType("Handler", TypeAttributes.Class | TypeAttributes.Public);
+			AssemblyName assemblyName = new AssemblyName("DynamicTypes");
+			AssemblyBuilder assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
+			ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule(assemblyName.Name);
+			TypeBuilder typeBuilder = moduleBuilder.DefineType("Handler", TypeAttributes.Class | TypeAttributes.Public);
 
-			FieldBuilder sourceNodeField = tb.DefineField("sourceNode", typeof(Node), FieldAttributes.Public);
-			FieldBuilder sceneManagerOutSlotSignalField = tb.DefineField("sceneManagerOutSlotSignal", typeof(T), FieldAttributes.Public);
+			FieldBuilder sourceNodeField = typeBuilder.DefineField("sourceNode", typeof(Node), FieldAttributes.Public);
+			FieldBuilder sceneManagerOutSlotSignalField = typeBuilder.DefineField("sceneManagerOutSlotSignal", typeof(T), FieldAttributes.Public);
 
-			ConstructorBuilder constructor = tb.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, new Type[] { typeof(Node), typeof(T) });
-			ILGenerator ctorIL = constructor.GetILGenerator();
-			ctorIL.Emit(OpCodes.Ldarg_0);
-			ctorIL.Emit(OpCodes.Call, typeof(object).GetConstructor(Type.EmptyTypes));
-			ctorIL.Emit(OpCodes.Ldarg_0);
-			ctorIL.Emit(OpCodes.Ldarg_1);
-			ctorIL.Emit(OpCodes.Stfld, sourceNodeField);
-			ctorIL.Emit(OpCodes.Ldarg_0);
-			ctorIL.Emit(OpCodes.Ldarg_2);
-			ctorIL.Emit(OpCodes.Stfld, sceneManagerOutSlotSignalField);
-			ctorIL.Emit(OpCodes.Ret);
+			ConstructorBuilder constructorBuilder = typeBuilder.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, new Type[] { typeof(Node), typeof(T) });
+			ILGenerator constructorIL = constructorBuilder.GetILGenerator();
 
-			MethodBuilder handler = tb.DefineMethod("DynamicHandler",
-				MethodAttributes.Public, invokeMethod?.ReturnType, parmTypes);
+			ConstructorInfo objectConstructor = typeof(object).GetConstructor(Type.EmptyTypes) ?? throw new Exception("Unable to find object constructor");
+			constructorIL.Emit(OpCodes.Ldarg_0);
+			constructorIL.Emit(OpCodes.Call, objectConstructor);
+			constructorIL.Emit(OpCodes.Ldarg_0);
+			constructorIL.Emit(OpCodes.Ldarg_1);
+			constructorIL.Emit(OpCodes.Stfld, sourceNodeField);
+			constructorIL.Emit(OpCodes.Ldarg_0);
+			constructorIL.Emit(OpCodes.Ldarg_2);
+			constructorIL.Emit(OpCodes.Stfld, sceneManagerOutSlotSignalField);
+			constructorIL.Emit(OpCodes.Ret);
 
-			ILGenerator ilgen = handler.GetILGenerator();
+			MethodBuilder handlerMethodBuilder = typeBuilder.DefineMethod("DynamicHandler", MethodAttributes.Public, invokeMethod?.ReturnType, parmTypes);
+			ILGenerator methodIL = handlerMethodBuilder.GetILGenerator();
+
 			MethodInfo? targetMethod = targetInstance.GetType().GetMethod(staticTargetMethodName, new Type[] { typeof(Node), typeof(T) });
-
-			ilgen.Emit(OpCodes.Ldarg_0);
-			ilgen.Emit(OpCodes.Ldfld, sourceNodeField);
-			ilgen.Emit(OpCodes.Ldarg_0);
-			ilgen.Emit(OpCodes.Ldfld, sceneManagerOutSlotSignalField);
-			ilgen.EmitCall(OpCodes.Call, targetMethod, null);
-			ilgen.Emit(OpCodes.Ret);
-
-			Type? finished = tb.CreateType();
-			MethodInfo? eventHandler = finished?.GetMethod("DynamicHandler");
-
-			var inst = Activator.CreateInstance(finished, args);
-
-			if (handlerType is not null && eventHandler is not null)
+			if (targetMethod == null)
 			{
-				Delegate d = Delegate.CreateDelegate(handlerType, inst, eventHandler);
-				eventInfo?.AddEventHandler(source, d);
+				throw new Exception($"Target method '{staticTargetMethodName}' not found on target instance.");
+			}
+
+			methodIL.Emit(OpCodes.Ldarg_0);
+			methodIL.Emit(OpCodes.Ldfld, sourceNodeField);
+			methodIL.Emit(OpCodes.Ldarg_0);
+			methodIL.Emit(OpCodes.Ldfld, sceneManagerOutSlotSignalField);
+			methodIL.EmitCall(OpCodes.Call, targetMethod, null);
+			methodIL.Emit(OpCodes.Ret);
+
+			Type handlerTypeFinished = typeBuilder.CreateType() ?? throw new Exception("Unable to create handler type.");
+			MethodInfo handlerMethodInfo = handlerTypeFinished.GetMethod("DynamicHandler") ?? throw new Exception("Unable to get DynamicHandler method.");
+			object? handlerInstance = Activator.CreateInstance(handlerTypeFinished, args);
+
+			if (handlerType is not null)
+			{
+				Delegate handlerDelegate = Delegate.CreateDelegate(handlerType, handlerInstance, handlerMethodInfo);
+				eventInfo.AddEventHandler(source, handlerDelegate);
 			}
 		}
 	}
+#nullable disable
 }

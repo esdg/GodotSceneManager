@@ -19,7 +19,9 @@ namespace MoF.Addons.ScenesManager.Helpers
             };
 
             var menuGraph = CreatePopupMenu("Graph", graphMenuItems, eventHandler);
+
             mainMenuBar.AddChild(menuGraph);
+            menuGraph.Name = "Graph menu";
         }
 
         public static void CreateNodesMenu(MenuBar mainMenuBar, PopupMenu.IndexPressedEventHandler eventHandler)
@@ -27,18 +29,22 @@ namespace MoF.Addons.ScenesManager.Helpers
             var nodesAddSubMenuItems = new[]
             {
                 "Add Scene Node",
-                "Add Transition Node"
+                "Add Transition Node",
             };
 
-            var menuItemNodes = CreatePopupMenu("Nodes", Array.Empty<string>());
+            var menuItemNodes = CreatePopupMenu("Nodes", Array.Empty<string>(), eventHandler);
             var nodesAddSubMenuItem = CreatePopupMenu("NodesAddSubMenu", nodesAddSubMenuItems, eventHandler);
 
             menuItemNodes.AddSubmenuItem("Add", nodesAddSubMenuItem.Name);
             menuItemNodes.AddChild(nodesAddSubMenuItem);
+            menuItemNodes.AddSeparator();
+            menuItemNodes.AddIconRadioCheckItem(null, "Quit Node");
+
             mainMenuBar.AddChild(menuItemNodes);
+            menuItemNodes.Name = "Node menu";
         }
 
-        private static PopupMenu CreatePopupMenu(string name, string[] items, PopupMenu.IndexPressedEventHandler indexPressedHandler = null)
+        private static PopupMenu CreatePopupMenu(string name, string[] items, PopupMenu.IndexPressedEventHandler eventHandler = null)
         {
             var menu = new PopupMenu { Name = name };
             for (int i = 0; i < items.Length; i++)
@@ -54,9 +60,9 @@ namespace MoF.Addons.ScenesManager.Helpers
                 }
             }
 
-            if (indexPressedHandler != null)
+            if (eventHandler != null)
             {
-                menu.IndexPressed += indexPressedHandler;
+                menu.IndexPressed += eventHandler;
             }
 
             return menu;
