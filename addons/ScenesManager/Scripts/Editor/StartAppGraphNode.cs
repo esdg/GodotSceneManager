@@ -2,7 +2,7 @@ using Godot;
 using Godot.Collections;
 using MoF.Addons.ScenesManager.Constants;
 
-namespace MoF.Addons.ScenesManager
+namespace MoF.Addons.ScenesManager.Scripts.Editor
 {
     [Tool, GlobalClass]
     public partial class StartAppGraphNode : ScenesManagerBaseGraphNode

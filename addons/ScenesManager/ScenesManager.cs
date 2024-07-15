@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using Godot;
 using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Extensions;
@@ -78,6 +77,7 @@ namespace MoF.Addons.ScenesManager
 			//sourceNode.Disconnect(sceneManagerOutSlotSignal.OutSlotSignalName, new Callable(d));
 			if (sceneManagerOutSlotSignal.TargetSceneType == Enums.TargetSceneType.QuitGraphNode)
 			{
+				GD.Print($"[SceneManager] Quitting the program");
 				sourceNode.GetTree().Quit();
 				return;
 			}
@@ -93,7 +93,7 @@ namespace MoF.Addons.ScenesManager
 			}
 			else
 			{
-				GD.PrintErr($"Failed to load settings from path: {AddonConstants.SettingsFilePath}");
+				GD.PrintErr($"[SceneManager] Failed to load settings from path: {AddonConstants.SettingsFilePath}");
 			}
 		}
 
@@ -101,7 +101,7 @@ namespace MoF.Addons.ScenesManager
 		{
 			if (SceneManagerSettings == null)
 			{
-				GD.PrintErr("SceneManagerSettings is null. Schema cannot be loaded.");
+				GD.PrintErr("[SceneManager] SceneManagerSettings is null. Schema cannot be loaded");
 				return;
 			}
 
@@ -112,7 +112,7 @@ namespace MoF.Addons.ScenesManager
 			}
 			else
 			{
-				GD.PrintErr($"Failed to load schema from path: {SceneManagerSettings.SceneManagerSchemaPath}");
+				GD.PrintErr($"[SceneManager] Failed to load schema from path: {SceneManagerSettings.SceneManagerSchemaPath}");
 			}
 		}
 	}
