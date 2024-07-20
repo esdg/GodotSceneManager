@@ -1,8 +1,12 @@
 using System;
+using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using Godot;
 using MoF.Addons.ScenesManager.Constants;
+using MoF.Addons.ScenesManager.Extensions;
 using MoF.Addons.ScenesManager.Scripts.Resources;
+using static Godot.Control;
 
 namespace MoF.Addons.ScenesManager.Helpers
 {
@@ -40,5 +44,41 @@ namespace MoF.Addons.ScenesManager.Helpers
             return $"{Path.GetFileNameWithoutExtension(node.SceneFilePath)}::{node.Name}";
         }
 
+        public static OptionButton CreateOptionButton()
+        {
+            return new OptionButton
+            {
+                TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
+                FitToLongestItem = false,
+                SizeFlagsHorizontal = SizeFlags.ExpandFill
+            };
+        }
+
+        public static string ToReadableFileName(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                return fileName;
+            }
+
+            string nameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+
+            // Replace underscores and hyphens with spaces in the name without extension
+            string readableName = Regex.Replace(nameWithoutExtension, "[-_]", " ");
+
+            // Insert spaces before uppercase letters (handling CamelCase)
+            readableName = Regex.Replace(readableName, "(?<!^)([A-Z])", " $1");
+
+            // Trim any extra spaces that might result from replacements
+            readableName = readableName.Trim();
+
+            // Ensure single spaces between words
+            readableName = Regex.Replace(readableName, @"\s+", " ");
+
+            // Capitalize the first letter of each word
+            readableName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(readableName.ToLower());
+
+            return readableName;
+        }
     }
 }

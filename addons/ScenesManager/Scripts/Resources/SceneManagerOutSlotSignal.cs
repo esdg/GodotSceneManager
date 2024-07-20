@@ -9,5 +9,6 @@ namespace MoF.Addons.ScenesManager.Scripts.Resources
         [Export] public string OutSlotSignalName { get; set; }
         [Export] public TargetScene TargetScene { get; set; } = new();
         [Export] public TargetSceneType TargetSceneType { get; set; } = new();
+        [Export] public string TransitionFileName { get; set; }
     }
 }

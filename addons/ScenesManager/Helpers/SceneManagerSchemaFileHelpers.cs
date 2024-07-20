@@ -151,6 +151,11 @@ namespace MoF.Addons.ScenesManager.Helpers
 				if (toNodeInstance is SceneGraphNode toSceneGraphNode)
 				{
 					sceneManagerOutSlotSignal.TargetScene.PackedScene = toSceneGraphNode.Scene;
+					if (fromNodeInstance is SceneGraphNode sceneGraphNode)
+					{
+						sceneManagerOutSlotSignal.TransitionFileName = sceneGraphNode.OutTransitionPackedScenePaths[(int)connection["from_port"]];
+					}
+
 					sceneManagerOutSlotSignal.TargetSceneType = Enums.TargetSceneType.SceneGraphNode;
 				}
 
@@ -162,7 +167,6 @@ namespace MoF.Addons.ScenesManager.Helpers
 				if (toNodeInstance is not StartAppGraphNode)
 				{
 					sceneManagerOutSlotSignal.TargetScene.graphNodeName = toNodeInstance.GraphNodeName;
-
 				}
 
 				sceneManagerBaseItem.OutSignals.Add(sceneManagerOutSlotSignal);

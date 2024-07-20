@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ni2frf6t3ayx"]
+
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/TransitionCanvas.cs" id="1_m4oe0"]
+
+[node name="TransitionCanvas" type="Node"]
+script = ExtResource("1_m4oe0")

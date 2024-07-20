@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dybkuhvnaemqt"
-path="res://.godot/imported/Signal.svg-6e4fcbecf601f21e532ec65cc58fd1c2.ctex"
+uid="uid://bw78c7vjfidna"
+path="res://.godot/imported/TransitionIconOff.svg-bbcdec8ceb3a16d7bbd1f6b216e3f0c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/ScenesManager/Assets/Icons/Signal.svg"
-dest_files=["res://.godot/imported/Signal.svg-6e4fcbecf601f21e532ec65cc58fd1c2.ctex"]
+source_file="res://addons/ScenesManager/Assets/Icons/TransitionIconOff.svg"
+dest_files=["res://.godot/imported/TransitionIconOff.svg-bbcdec8ceb3a16d7bbd1f6b216e3f0c5.ctex"]
 
 [params]
 
