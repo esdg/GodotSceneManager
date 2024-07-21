@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Godot;
 using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Extensions;
@@ -10,48 +12,114 @@ namespace MoF.Addons.ScenesManager
 	{
 		[Export] public SceneManagerSchema SceneManagerSchema { get; set; }
 
-		private bool treeInitialized = false;
-		private static SceneManagerSettings SceneManagerSettings;
+		private bool _treeInitialized = false;
+		private static SceneManagerSettings _sceneManagerSettings;
 
-		private static PackedScene CurrentPackedScene;
+		private static PackedScene _currentPackedScene;
 
-		private static SceneTree Tree;
-		private static Node currentScene;
+		private static SceneTree _tree;
+		private static Node _currentScene;
+
+		private static TransitionCanvas _transitionCanvas;
+		private static Node _targetSceneRootNode = new();
+
 
 		public override void _Ready()
 		{
-			Tree = GetTree();
+			_tree = GetTree();
 			LoadSettings();
 			LoadSchema();
 
-			GetTree().TreeChanged += () => OnTreeChanged();
+			_tree.TreeChanged += OnTreeChanged;
 		}
 
-		private static void SwitchToScene(PackedScene packedScene)
+		private static void ChangeSceneToPacked(PackedScene packedScene)
 		{
-			GD.Print($"[SceneManager] Switching scene : {packedScene.ResourcePath}");
-			CurrentPackedScene = packedScene;
-			Tree.ChangeSceneToPacked(packedScene);
+			// _targetCanvasLayer.AddChild(packedScene.Instantiate());
+			// _tree.CurrentScene.AddChild(_targetCanvasLayer);
+		}
 
+		private static void SwitchToScene(SceneManagerOutSlotSignal sceneManagerOutSlotSignal)
+		{
+			var packedScene = sceneManagerOutSlotSignal.TargetScene.PackedScene;
+			GD.Print($"[SceneManager] Switching scene : {packedScene.ResourcePath}");
+
+			_targetSceneRootNode = packedScene.Instantiate();
+			_targetSceneRootNode.Ready += OnReadyTarget;
+			_tree.Root.AddChild(_targetSceneRootNode);
+			// if (sceneManagerOutSlotSignal.TransitionFileName == "")
+			// {
+			// 	ChangeSceneToPacked(packedScene);
+			// }
+			// else
+			// {
+			// 	PackedScene transitionPackedScene = ResourceLoader.Load<PackedScene>(AddonConstants.TransitionFolderPath + "/" + sceneManagerOutSlotSignal.TransitionFileName);
+			// 	_transitionCanvas = transitionPackedScene.Instantiate<TransitionCanvas>();
+			// 	_transitionCanvas.PlayInAnimation();
+			// 	_transitionCanvas.InAnimationFinished += OnInAnimationFinished;
+			// 	_tree.CurrentScene.AddChild(_transitionCanvas);
+			// }
+		}
+
+		private static void OnReadyTarget()
+		{
+			_tree.Root.RemoveChild(_tree.CurrentScene);
+			GD.Print("sss");
+		}
+
+		private static void SetFirstScene(SceneManagerOutSlotSignal sceneManagerOutSlotSignal)
+		{
+			var packedScene = sceneManagerOutSlotSignal.TargetScene.PackedScene;
+			GD.Print($"[SceneManager] Init first scene : {packedScene.ResourcePath}");
+			_currentPackedScene = packedScene;
+			_currentScene = packedScene.Instantiate();
+			_currentScene.Ready += OnReadyInit;
+			_tree.Root.RemoveChild(_tree.CurrentScene);
+			_tree.Root.AddChild(_currentScene);
+		}
+
+		private static void OnReadyInit()
+		{
+			_tree.Root.GetChildren().OfType<ScenesManager>().FirstOrDefault().CallDeferred(MethodName.SetSignals, new Variant[] { _currentPackedScene });
+			_currentScene.Ready -= OnReadyInit;
+			_tree.CurrentScene = _currentScene;
+		}
+
+		private static void OnInAnimationFinished()
+		{
+			_transitionCanvas.InAnimationFinished -= OnInAnimationFinished;
+			_tree.ChangeSceneToPacked(_currentPackedScene);
+		}
+
+		private static void OnTreeChangedAnimation(SceneManagerOutSlotSignal sceneManagerOutSlotSignal)
+		{
+			PackedScene transitionPackedScene = ResourceLoader.Load<PackedScene>(AddonConstants.TransitionFolderPath + "/" + sceneManagerOutSlotSignal.TransitionFileName);
+			_transitionCanvas = transitionPackedScene.Instantiate<TransitionCanvas>();
+			_tree.CurrentScene.AddChild(_transitionCanvas);
+			_transitionCanvas.PlayOutAnimation();
+			_transitionCanvas.OutAnimationFinished += OnOutAnimationFinished;
+		}
+
+		private static void OnOutAnimationFinished()
+		{
+			_transitionCanvas.OutAnimationFinished -= OnOutAnimationFinished;
+			_tree.CurrentScene.RemoveChild(_transitionCanvas);
+			_transitionCanvas = null;
+			_transitionCanvas.QueueFree();
 		}
 
 		private void OnTreeChanged()
 		{
-			if (CurrentPackedScene == null)
+			if (_currentPackedScene == null)
 			{
 				foreach (SceneManagerBaseItem sceneManagerBaseItem in SceneManagerSchema.Items)
 				{
 					if (sceneManagerBaseItem is StartAppSceneManagerItem startAppSceneManagerItem)
 					{
-						CallDeferred(MethodName.SwitchToScene, new Variant[] { startAppSceneManagerItem.OutSignals[0].TargetScene.PackedScene });
+						CallDeferred(MethodName.SetFirstScene, startAppSceneManagerItem.OutSignals[0]);
 					}
 				}
 			}
-			else if (GetTree()?.CurrentScene != null && GetTree()?.CurrentScene != currentScene)
-			{
-				CallDeferred(MethodName.SetSignals, new Variant[] { CurrentPackedScene });
-			}
-			currentScene = GetTree()?.CurrentScene;
 		}
 
 		public void SetSignals(PackedScene packedScene)
@@ -81,7 +149,7 @@ namespace MoF.Addons.ScenesManager
 				sourceNode.GetTree().Quit();
 				return;
 			}
-			SwitchToScene(sceneManagerOutSlotSignal.TargetScene.PackedScene);
+			SwitchToScene(sceneManagerOutSlotSignal);
 		}
 
 		private static void LoadSettings()
@@ -89,7 +157,7 @@ namespace MoF.Addons.ScenesManager
 			var settingsResource = ResourceLoader.Load<Resource>(AddonConstants.SettingsFilePath);
 			if (settingsResource is SceneManagerSettings settings)
 			{
-				SceneManagerSettings = settings;
+				_sceneManagerSettings = settings;
 			}
 			else
 			{
@@ -99,20 +167,20 @@ namespace MoF.Addons.ScenesManager
 
 		private void LoadSchema()
 		{
-			if (SceneManagerSettings == null)
+			if (_sceneManagerSettings == null)
 			{
 				GD.PrintErr("[SceneManager] SceneManagerSettings is null. Schema cannot be loaded");
 				return;
 			}
 
-			var schemaResource = ResourceLoader.Load<Resource>(SceneManagerSettings.SceneManagerSchemaPath);
+			var schemaResource = ResourceLoader.Load<Resource>(_sceneManagerSettings.SceneManagerSchemaPath);
 			if (schemaResource is SceneManagerSchema schema)
 			{
 				SceneManagerSchema = schema;
 			}
 			else
 			{
-				GD.PrintErr($"[SceneManager] Failed to load schema from path: {SceneManagerSettings.SceneManagerSchemaPath}");
+				GD.PrintErr($"[SceneManager] Failed to load schema from path: {_sceneManagerSettings.SceneManagerSchemaPath}");
 			}
 		}
 	}
