@@ -1,14 +1,13 @@
 using Godot;
+using MoF.Addons.ScenesManager.Scripts;
 
 namespace MoF.Addons.ScenesManager
 {
 	[Tool, GlobalClass]
-	public partial class TransitionCanvas : CanvasLayer
+	public partial class TransitionCanvas : TransitionCanvasBase
 	{
-		[Export] private AnimationPlayer AnimationPlayer { get; set; }
 
-		[Signal] public delegate void InAnimationFinishedEventHandler();
-		[Signal] public delegate void OutAnimationFinishedEventHandler();
+		[Export] private AnimationPlayer AnimationPlayer { get; set; }
 
 		public override void _Ready()
 		{
@@ -18,14 +17,20 @@ namespace MoF.Addons.ScenesManager
 				return;
 			}
 			AnimationPlayer.AnimationFinished += OnAnimationFinished;
+			// AddChild(CurrentScene);
+			// CurrentScene.Owner = this;
+			// CurrentScene.Name = "current_scene";
+			// AddChild(TargetScene);
+			// TargetScene.Owner = this;
+			// TargetScene.Name = "target_scene";
 		}
 
-		public void PlayInAnimation()
+		public override void PlayInAnimation()
 		{
 			AnimationPlayer.Play("IN");
 		}
 
-		public void PlayOutAnimation()
+		public override void PlayOutAnimation()
 		{
 			AnimationPlayer.Play("OUT");
 		}
@@ -38,7 +43,7 @@ namespace MoF.Addons.ScenesManager
 			}
 			else
 			{
-				EmitSignal(SignalName.OutAnimationFinished);
+				EmitSignal(SignalName.OutAnimationFinished, TargetScene);
 			}
 		}
 

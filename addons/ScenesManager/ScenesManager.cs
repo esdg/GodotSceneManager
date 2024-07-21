@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Godot;
 using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Extensions;
+using MoF.Addons.ScenesManager.Scripts;
 using MoF.Addons.ScenesManager.Scripts.Resources;
 
 namespace MoF.Addons.ScenesManager
@@ -18,7 +19,7 @@ namespace MoF.Addons.ScenesManager
 		private static PackedScene _currentPackedScene;
 		private static SceneTree _tree;
 		private static Node _currentScene;
-		private static TransitionCanvas _transitionCanvas;
+		private static TransitionCanvasBase _transitionCanvas;
 		private static Node _targetSceneRootNode = new();
 		private static bool _isTargetSceneReady = false;
 
@@ -82,21 +83,25 @@ namespace MoF.Addons.ScenesManager
 			_targetSceneRootNode.Set("visible", false);
 			_tree.Root.AddChild(_targetSceneRootNode);
 
-
-			if (!string.IsNullOrEmpty(sceneManagerOutSlotSignal.TransitionFileName))
-			{
-				StartTransition(sceneManagerOutSlotSignal);
-			}
+			StartTransition(sceneManagerOutSlotSignal);
 		}
 
 		private static void StartTransition(SceneManagerOutSlotSignal sceneManagerOutSlotSignal)
 		{
-			string transitionPath = $"{AddonConstants.TransitionFolderPath}/{sceneManagerOutSlotSignal.TransitionFileName}";
-			PackedScene transitionPackedScene = ResourceLoader.Load<PackedScene>(transitionPath);
-			_transitionCanvas = transitionPackedScene.Instantiate<TransitionCanvas>();
+			if (string.IsNullOrEmpty(sceneManagerOutSlotSignal.TransitionFileName))
+			{
+				_transitionCanvas = new JumpCutTransitionCanvas();
+			}
+			else
+			{
+				string transitionPath = $"{AddonConstants.TransitionFolderPath}/{sceneManagerOutSlotSignal.TransitionFileName}";
+				PackedScene transitionPackedScene = ResourceLoader.Load<PackedScene>(transitionPath);
+				_transitionCanvas = transitionPackedScene.Instantiate<TransitionCanvas>();
+			}
+
 			_transitionCanvas.Layer = 10;
-			_transitionCanvas.PlayInAnimation();
 			_transitionCanvas.InAnimationFinished += async () => await OnInAnimationFinished();
+			_transitionCanvas.PlayInAnimation();
 			_tree.Root.AddChild(_transitionCanvas);
 		}
 
@@ -104,19 +109,8 @@ namespace MoF.Addons.ScenesManager
 		{
 			_isTargetSceneReady = true;
 			_targetSceneRootNode.Name = sceneManagerOutSlotSignal.TargetScene.graphNodeName;
-
-			if (string.IsNullOrEmpty(sceneManagerOutSlotSignal.TransitionFileName))
-			{
-				CompleteSceneSwitch();
-			}
-
 			_currentPackedScene = sceneManagerOutSlotSignal.TargetScene.PackedScene;
 			_tree.Root.GetChildren().OfType<ScenesManager>().FirstOrDefault()?.CallDeferred(nameof(SetSignals), _targetSceneRootNode);
-
-			if (string.IsNullOrEmpty(sceneManagerOutSlotSignal.TransitionFileName))
-			{
-				_targetSceneRootNode = null;
-			}
 		}
 
 		private static void CompleteSceneSwitch()
@@ -144,7 +138,7 @@ namespace MoF.Addons.ScenesManager
 			_transitionCanvas.OutAnimationFinished += OnOutAnimationFinished;
 		}
 
-		private static void OnOutAnimationFinished()
+		private static void OnOutAnimationFinished(Control targetScene)
 		{
 			_transitionCanvas.OutAnimationFinished -= OnOutAnimationFinished;
 			_transitionCanvas.QueueFree();
