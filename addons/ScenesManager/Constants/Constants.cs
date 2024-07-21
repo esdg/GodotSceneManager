@@ -10,6 +10,7 @@ namespace MoF.Addons.ScenesManager.Constants
         // General constants
         public const string PopupMenuSeparator = "------";
         public const string SettingsFilePath = "res://addons/ScenesManager/Settings/SceneManagerSettings.tres";
+        public const string TransitionFolderPath = "res://addons/ScenesManager/TransitionsLibrary";
 
         /// <summary>
         /// Constants related to graph nodes.
@@ -23,6 +24,16 @@ namespace MoF.Addons.ScenesManager.Constants
             public static readonly Color InSlotColor = new("45F576");
             public static readonly Color OutSlotColor = new("FF5F5F");
 
+
+
+            public static partial class Icons
+            {
+                public const string SignalIconTexture = "res://addons/ScenesManager/Assets/Icons/SignalIcon.svg";
+                public const string TrashcanIconTexture = "res://addons/ScenesManager/Assets/Icons/trashcan.svg";
+                public static readonly string[] TransitionIconsTexture = { "res://addons/ScenesManager/Assets/Icons/TransitionIconOff.svg", "res://addons/ScenesManager/Assets/Icons/TransitionIconOn.svg" };
+            }
+
+
             /// <summary>
             /// Constants specific to scene graph nodes.
             /// </summary>
@@ -32,6 +43,7 @@ namespace MoF.Addons.ScenesManager.Constants
                 public const string GraphNodeStylePanelPath = "res://addons/ScenesManager/Assets/Styles/SceneGraphNodeStylePanel.tres";
                 public const string GraphNodeStyleTitlebarPath = "res://addons/ScenesManager/Assets/Styles/SceneGraphNodeStyleTitlebar.tres";
                 public static readonly Vector2 InitialSize = new(250, 10);
+                public static readonly string[] linkImagesTransition = { "res://addons/ScenesManager/Assets/Icons/LinkTransitionIconOff.svg", "res://addons/ScenesManager/Assets/Icons/LinkTransitionIconOn.svg" };
             }
 
             /// <summary>

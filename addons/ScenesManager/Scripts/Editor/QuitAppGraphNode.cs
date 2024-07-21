@@ -4,7 +4,7 @@ using MoF.Addons.ScenesManager.Constants;
 
 namespace MoF.Addons.ScenesManager.Scripts.Editor
 {
-    [Tool, GlobalClass]
+    [Tool]
     public partial class QuitAppGraphNode : ScenesManagerBaseGraphNode
     {
         private static Texture2D quitAppIconTexture;

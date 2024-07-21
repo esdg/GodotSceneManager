@@ -7,16 +7,16 @@ using MoF.Addons.ScenesManager.Helpers;
 
 namespace MoF.Addons.ScenesManager.Scripts.Editor
 {
-	[Tool, GlobalClass]
+	[Tool]
 	public partial class SceneGraphNode : ScenesManagerBaseGraphNode
 	{
 
 		public PackedScene Scene
 		{
-			get => scene;
+			get => _scene;
 			set
 			{
-				scene = value;
+				_scene = value;
 			}
 		}
 
@@ -25,36 +25,45 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			get
 			{
 				var signals = new Array<string>();
-				foreach (Node node in outSlotNodes)
+				foreach (OutSlotSceneGraphNode node in _outSlotNodes.Cast<OutSlotSceneGraphNode>())
 				{
-					if (node.GetChildren()[1] is OptionButton selectBox)
-					{
-						signals.Add(selectBox.GetItemText(selectBox.Selected));
-					}
+					signals.Add(node.SignalSelect.GetItemText(node.SignalSelect.Selected));
 				}
 				return signals;
 			}
 		}
 
+		public Array<string> OutTransitionPackedScenePaths
+		{
+			get
+			{
+				var transitions = new Array<string>();
+				foreach (OutSlotSceneGraphNode node in _outSlotNodes.Cast<OutSlotSceneGraphNode>())
+				{
+					if (node.TransitionSelect.Selected != 0)
+						transitions.Add(node.TransitionPaths[node.TransitionSelect.Selected - 1]);
+					else
+						transitions.Add("");
+				}
+				return transitions;
+			}
+		}
 
-		private Node sceneRootNode;
-		private Node inSlotNode;
-		private Array<Node> outSlotNodes = new();
-		private Button addOutSlotButton;
-		private EditorResourcePicker sceneResourcePicker;
-		private PackedScene scene;
 
-		private static Texture2D signalIconTexture;
-		private static Texture2D trashCanIconTexture;
-		private static StyleBoxFlat sceneGraphNodeStylePanel;
-		private static StyleBoxFlat sceneGraphNodeStyleTitlebar;
+		private Node _sceneRootNode;
+		private Node _inSlotNode;
+		private Array<Node> _outSlotNodes = new(); // probably remove this? using children?
+		private Button _addOutSlotButton;
+		private EditorResourcePicker _sceneResourcePicker;
+		private PackedScene _scene;
+
+		private static StyleBoxFlat _sceneGraphNodeStylePanel;
+		private static StyleBoxFlat _sceneGraphNodeStyleTitlebar;
 
 		public override void _LoadResources()
 		{
-			signalIconTexture ??= ResourceLoader.Load<Texture2D>("res://addons/ScenesManager/Assets/Icons/Signal.svg");
-			trashCanIconTexture ??= ResourceLoader.Load<Texture2D>("res://addons/ScenesManager/Assets/Icons/trashcan.svg");
-			sceneGraphNodeStylePanel ??= ResourceLoader.Load<StyleBoxFlat>(AddonConstants.GraphNode.SceneGraphNode.GraphNodeStylePanelPath);
-			sceneGraphNodeStyleTitlebar ??= ResourceLoader.Load<StyleBoxFlat>(AddonConstants.GraphNode.SceneGraphNode.GraphNodeStyleTitlebarPath);
+			_sceneGraphNodeStylePanel ??= ResourceLoader.Load<StyleBoxFlat>(AddonConstants.GraphNode.SceneGraphNode.GraphNodeStylePanelPath);
+			_sceneGraphNodeStyleTitlebar ??= ResourceLoader.Load<StyleBoxFlat>(AddonConstants.GraphNode.SceneGraphNode.GraphNodeStyleTitlebarPath);
 		}
 
 		public override void _SetupGraphNode()
@@ -62,8 +71,8 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			Title = AddonConstants.GraphNode.SceneGraphNode.Title;
 			Size = AddonConstants.GraphNode.SceneGraphNode.InitialSize;
 			Set("theme_override_constants/separation", AddonConstants.GraphNode.NodeVerticalSpace);
-			Set("theme_override_styles/panel", sceneGraphNodeStylePanel);
-			Set("theme_override_styles/titlebar", sceneGraphNodeStyleTitlebar);
+			Set("theme_override_styles/panel", _sceneGraphNodeStylePanel);
+			Set("theme_override_styles/titlebar", _sceneGraphNodeStyleTitlebar);
 		}
 
 		public override void _ReadyNode()
@@ -73,44 +82,44 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 		private void CreateSceneResourcePicker()
 		{
-			sceneResourcePicker = new EditorResourcePicker
+			_sceneResourcePicker = new EditorResourcePicker
 			{
 				BaseType = nameof(PackedScene)
 			};
-			AddChild(sceneResourcePicker);
+			AddChild(_sceneResourcePicker);
 
 			if (Scene != null)
 			{
-				sceneResourcePicker.EditedResource = Scene;
+				_sceneResourcePicker.EditedResource = Scene;
 				SetScene(Scene);
 			}
-			sceneResourcePicker.ResourceChanged += OnSceneResourcePickerChanged;
+			_sceneResourcePicker.ResourceChanged += OnSceneResourcePickerChanged;
 
 		}
 
 		private void InitializeGraphNode()
 		{
-			if (inSlotNode != null)
+			if (_inSlotNode != null)
 			{
-				RemoveChild(inSlotNode);
-				inSlotNode.QueueFree();
+				RemoveChild(_inSlotNode);
+				_inSlotNode.QueueFree();
 			}
 
-			if (addOutSlotButton != null)
+			if (_addOutSlotButton != null)
 			{
-				RemoveChild(addOutSlotButton);
-				addOutSlotButton.QueueFree();
+				RemoveChild(_addOutSlotButton);
+				_addOutSlotButton.QueueFree();
 			}
 
-			this.RemoveChildren(outSlotNodes.ToArray());
-			outSlotNodes.Clear();
+			this.RemoveChildren(_outSlotNodes.ToArray());
+			_outSlotNodes.Clear();
 			SetSize(new Vector2(250, 10));
 		}
 
 		private void SetScene(PackedScene packedScene)
 		{
-			sceneRootNode = packedScene.Instantiate<Node>();
-			Title = GodotHelpers.GetSceneGraphNodeTitle(sceneRootNode);
+			_sceneRootNode = packedScene.Instantiate<Node>();
+			Title = GodotHelpers.GetSceneGraphNodeTitle(_sceneRootNode);
 			CreateInSlotNode();
 			CreateAddOutSlotButton();
 			SetSignalsSlot();
@@ -122,88 +131,53 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		{
 			foreach (var outSignals in OutSignalsToLoad)
 			{
-				CreateOutSlotNode(outSignals.OutSlotSignalName);
+				CreateOutSlotNode(outSignals.OutSlotSignalName, outSignals.TransitionFileName);
 			}
 		}
 
 		private void CreateInSlotNode()
 		{
-			inSlotNode = new Label { Text = "In" };
-			AddChild(inSlotNode);
-			SetSlot(inSlotNode.GetIndex(), true, 0, AddonConstants.GraphNode.InSlotColor, false, 0, Colors.White);
+			_inSlotNode = new Label { Text = "In" };
+			AddChild(_inSlotNode);
+			SetSlot(_inSlotNode.GetIndex(), true, 0, AddonConstants.GraphNode.InSlotColor, false, 0, Colors.White);
 		}
 
 		private void CreateAddOutSlotButton()
 		{
-			addOutSlotButton = new Button
+			_addOutSlotButton = new Button
 			{
 				Text = GetAddOutSlotButtonText()
 			};
-			addOutSlotButton.Pressed += OnAddOutSlot;
-			AddChild(addOutSlotButton);
+			_addOutSlotButton.Pressed += OnAddOutSlot;
+			AddChild(_addOutSlotButton);
 		}
 
-		private void CreateOutSlotNode(string signalName = "")
+		private void CreateOutSlotNode(string signalName = "", string transitionPath = "")
 		{
-			var outSignalNode = new HBoxContainer();
-			var deleteButton = new Button
-			{
-				Icon = trashCanIconTexture
-			};
-			var signalsSelectBox = CreateSignalsSelectBox();
-
-			if (signalName != "")
-			{
-				for (int i = 0; i < signalsSelectBox.ItemCount; i++)
-				{
-					if (signalsSelectBox.GetItemText(i) == signalName)
-					{
-						signalsSelectBox.Select(i);
-					}
-				}
-			}
-
-			deleteButton.Pressed += () => OnDeleteOutSignalNode(outSignalNode);
-
-			outSignalNode.AddChild(deleteButton);
-			outSignalNode.AddChild(signalsSelectBox);
+			var outSignalNode = new OutSlotSceneGraphNode(_sceneRootNode, signalName, transitionPath);
+			outSignalNode.DeleteButtonPressed += () => OnDeleteOutSignalNode(outSignalNode);
 
 			AddChild(outSignalNode);
-			outSlotNodes.Add(outSignalNode);
+			_outSlotNodes.Add(outSignalNode);
 			SetSlot(outSignalNode.GetIndex(), false, 0, Colors.White, true, 0, AddonConstants.GraphNode.OutSlotColor);
-		}
-
-		private OptionButton CreateSignalsSelectBox()
-		{
-			var optionButton = new OptionButton
-			{
-				TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
-				FitToLongestItem = false,
-				SizeFlagsHorizontal = SizeFlags.ExpandFill
-			};
-			foreach (Dictionary signal in sceneRootNode.GetSignalList())
-			{
-				optionButton.AddIconItem(signalIconTexture, (string)signal.Values.First());
-			}
-			return optionButton;
 		}
 
 		private void UpdateAddOutSlotButtonState()
 		{
-			addOutSlotButton.Text = GetAddOutSlotButtonText();
-			addOutSlotButton.Disabled = outSlotNodes.Count >= AddonConstants.GraphNode.MaxNumberOfOutSlots;
+			_addOutSlotButton.Text = GetAddOutSlotButtonText();
+			_addOutSlotButton.Disabled = _outSlotNodes.Count >= AddonConstants.GraphNode.MaxNumberOfOutSlots;
 		}
 
 		private string GetAddOutSlotButtonText()
 		{
-			return $"Add Out slot {outSlotNodes.Count}/{AddonConstants.GraphNode.MaxNumberOfOutSlots}";
+			return $"Add Out slot {_outSlotNodes.Count}/{AddonConstants.GraphNode.MaxNumberOfOutSlots}";
 		}
 
 		private void OnSceneResourcePickerChanged(Resource resource)
 		{
 			if (resource is PackedScene packedScene)
 			{
-				scene = packedScene;
+				_scene = packedScene;
 				InitializeGraphNode();
 				SetScene(packedScene);
 			}
@@ -215,7 +189,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 		private void OnAddOutSlot()
 		{
-			if (outSlotNodes.Count < AddonConstants.GraphNode.MaxNumberOfOutSlots)
+			if (_outSlotNodes.Count < AddonConstants.GraphNode.MaxNumberOfOutSlots)
 			{
 				CreateOutSlotNode();
 			}
@@ -225,7 +199,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private void OnDeleteOutSignalNode(Node node)
 		{
 			RemoveChild(node);
-			outSlotNodes.Remove(node);
+			_outSlotNodes.Remove(node);
 			UpdateAddOutSlotButtonState();
 			SetSize(new Vector2(250, 10));
 		}

@@ -73,6 +73,10 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			GodotHelpers.SaveSceneManagerSettings(path);
 		}
 
+		private void SaveSchemaAs()
+		{
+			GodotHelpers.CreateFileDialog(FileDialog.FileModeEnum.SaveFile, "Save scene manager schema As", OnDialogFileSelected, this);
+		}
 
 		private void OpenSchema(string path)
 		{
@@ -105,11 +109,6 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private void OpenSchema()
 		{
 			GodotHelpers.CreateFileDialog(FileDialog.FileModeEnum.OpenFile, "Open scene manager schema", OnDialogFileSelected, this);
-		}
-
-		private void SaveSchemaAs()
-		{
-			GodotHelpers.CreateFileDialog(FileDialog.FileModeEnum.SaveFile, "Save scene manager schema As", OnDialogFileSelected, this);
 		}
 
 		private void CreateInitialStartAppNode()
