@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvluusjjkjqw3"]
+
+[ext_resource type="Script" path="res://Demo/Scenes/Scripts/GameOverScript.cs" id="1_2mkx3"]
+[ext_resource type="PackedScene" uid="uid://dvu7sukpc3esy" path="res://Demo/Assets/Scenes/back_ground.tscn" id="1_axk10"]
+[ext_resource type="FontFile" uid="uid://cwo7itfgiwtrg" path="res://Demo/Assets/Fonts/TT Fors Trial Light.ttf" id="2_7qisu"]
+[ext_resource type="Theme" uid="uid://c310ectd8gxb1" path="res://Demo/Assets/Theme/demo_theme.tres" id="3_ac34o"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2mkx3")
+
+[node name="BackGround" parent="." instance=ExtResource("1_axk10")]
+layout_mode = 1
+
+[node name="GameOverLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -11.5
+offset_right = 43.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_7qisu")
+theme_override_font_sizes/font_size = 64
+text = "Game Over"
+
+[node name="BackToMenuBtn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.5
+offset_top = 123.0
+offset_right = 57.5
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_ac34o")
+text = "Back to menu"
+
+[connection signal="pressed" from="BackToMenuBtn" to="." method="_on_back_to_menu_btn_pressed"]

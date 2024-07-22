@@ -1,10 +1,9 @@
 using Godot;
 using System;
 
-public partial class Scene_A : Control
+public partial class GameOverScript : Control
 {
-	[Signal] public delegate void GoToNextSceneEventHandler();
-
+	[Signal] public delegate void QuitToMenuEventHandler();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -14,11 +13,12 @@ public partial class Scene_A : Control
 	public override void _Process(double delta)
 	{
 	}
-	private void _on_button_pressed()
+
+
+	private void _on_back_to_menu_btn_pressed()
 	{
-		EmitSignal(SignalName.GoToNextScene);
+		EmitSignal(SignalName.QuitToMenu);
 	}
 }
-
 
 

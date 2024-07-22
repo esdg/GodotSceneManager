@@ -1,0 +1,78 @@
+[gd_scene load_steps=6 format=3 uid="uid://dvu7sukpc3esy"]
+
+[ext_resource type="Texture2D" uid="uid://2jbo0apxdgih" path="res://Demo/Assets/Textures/GodotSceneManagerLogo.png" id="1_miwu8"]
+[ext_resource type="Texture2D" uid="uid://qkhgcd44t7gl" path="res://Demo/Assets/Textures/star_01.png" id="2_rc651"]
+
+[sub_resource type="Animation" id="Animation_4d8fp"]
+resource_name = "pulse"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BackGround/Logo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.137255), Color(1, 1, 1, 0.0862745), Color(1, 1, 1, 0.137255)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_if4e6"]
+_data = {
+"pulse": SubResource("Animation_4d8fp")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_komwr"]
+light_mode = 1
+
+[node name="BackGround" type="ColorRect"]
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0784314, 0.054902, 0.141176, 1)
+
+[node name="LogoAnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_if4e6")
+}
+autoplay = "pulse"
+
+[node name="Logo" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.137255)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -423.0
+offset_top = -512.0
+offset_right = 601.0
+offset_bottom = 512.0
+grow_vertical = 2
+pivot_offset = Vector2(512, 512)
+texture = ExtResource("1_miwu8")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_komwr")
+position = Vector2(87, 73)
+amount = 90
+lifetime = 8.0
+speed_scale = 0.5
+randomness = 0.05
+lifetime_randomness = 0.34
+texture = ExtResource("2_rc651")
+emission_shape = 1
+emission_sphere_radius = 128.0
+gravity = Vector2(0, 50)
+initial_velocity_max = 179.22
+scale_amount_min = 0.0
+scale_amount_max = 0.05
+color = Color(0.858837, 0.526502, 0.425916, 0.211765)
+hue_variation_min = -0.38
+hue_variation_max = 0.14

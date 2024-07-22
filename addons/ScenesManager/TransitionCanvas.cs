@@ -44,12 +44,12 @@ namespace MoF.Addons.ScenesManager
 
 		private void SetupTargetSceneRoot()
 		{
-			if (!HasNode("target_scene"))
+			if (!HasNode("%target_scene"))
 			{
 				AddSceneNode(_targetSceneRoot, "target_scene");
 			}
 
-			_targetSceneRoot = GetNode<Control>("target_scene");
+			_targetSceneRoot = GetNode<Control>("%target_scene");
 
 			if (_targetPackedScene == null)
 			{
@@ -65,12 +65,12 @@ namespace MoF.Addons.ScenesManager
 
 		private void SetupCurrentSceneRoot()
 		{
-			if (!HasNode("current_scene"))
+			if (!HasNode("%current_scene"))
 			{
 				AddSceneNode(_currentSceneRoot, "current_scene");
 			}
 
-			_currentSceneRoot = GetNode<Control>("current_scene");
+			_currentSceneRoot = GetNode<Control>("%current_scene");
 
 			if (_currentSceneNode == null)
 			{
@@ -84,10 +84,12 @@ namespace MoF.Addons.ScenesManager
 
 		private void AddSceneNode(Control sceneNode, string nodeName)
 		{
+			sceneNode = new Control();
 			AddChild(sceneNode);
 			sceneNode.SetAnchorsPreset(Control.LayoutPreset.FullRect);
 			sceneNode.Owner = this;
 			sceneNode.Name = nodeName;
+			sceneNode.UniqueNameInOwner = true;
 		}
 
 		private static void AddDummySceneNode(Control sceneNode, string nodeName, Color backgroundColor, string labelText)
