@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="SceneManagerSchema" load_steps=11 format=3 uid="uid://cl10lg3h5jfby"]
+
+[ext_resource type="PackedScene" uid="uid://cgmbwovvih6mf" path="res://Demo/Scenes/StartScreen.tscn" id="1_t1bkw"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/TargetScene.cs" id="2_qfva5"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerOutSlotSignal.cs" id="3_8cx5h"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/StartAppSceneManagerItem.cs" id="4_f5pu3"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerItem.cs" id="5_tkcbg"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="6_wqudt"]
+
+[sub_resource type="Resource" id="Resource_1okar"]
+script = ExtResource("2_qfva5")
+PackedScene = ExtResource("1_t1bkw")
+graphNodeName = "@GraphNode@18178"
+
+[sub_resource type="Resource" id="Resource_fd3ha"]
+script = ExtResource("3_8cx5h")
+OutSlotSignalName = "Starting App Out slot"
+TargetScene = SubResource("Resource_1okar")
+TargetSceneType = 1
+TransitionFileName = ""
+
+[sub_resource type="Resource" id="Resource_t10pi"]
+script = ExtResource("4_f5pu3")
+Name = "@GraphNode@18609"
+OutSignals = [SubResource("Resource_fd3ha")]
+Position = Vector2(100, 100)
+
+[sub_resource type="Resource" id="Resource_ojq45"]
+script = ExtResource("5_tkcbg")
+Scene = ExtResource("1_t1bkw")
+Name = "@GraphNode@18178"
+OutSignals = []
+Position = Vector2(780, 100)
+
+[resource]
+script = ExtResource("6_wqudt")
+Items = [SubResource("Resource_t10pi"), SubResource("Resource_ojq45")]

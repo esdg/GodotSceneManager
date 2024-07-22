@@ -1,0 +1,101 @@
+[gd_resource type="Resource" script_class="SceneManagerSchema" load_steps=24 format=3 uid="uid://dwuwqpt30d73o"]
+
+[ext_resource type="PackedScene" uid="uid://cgmbwovvih6mf" path="res://Demo/Scenes/StartScreen.tscn" id="1_ckm4g"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/TargetScene.cs" id="2_j3eiq"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerOutSlotSignal.cs" id="3_2kx57"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/StartAppSceneManagerItem.cs" id="4_6l8go"]
+[ext_resource type="PackedScene" uid="uid://cn1obwdrx5x5w" path="res://Demo/Scenes/MenuScreen.tscn" id="5_bhu74"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerItem.cs" id="6_01jqy"]
+[ext_resource type="PackedScene" uid="uid://5ngv11d5jkdx" path="res://Demo/Scenes/SettingsScreen.tscn" id="7_m8c6y"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/QuitAppSceneManagerItem.cs" id="8_s80cd"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="9_xwawl"]
+
+[sub_resource type="Resource" id="Resource_j5vhx"]
+script = ExtResource("2_j3eiq")
+PackedScene = ExtResource("1_ckm4g")
+graphNodeName = "@GraphNode@34670"
+
+[sub_resource type="Resource" id="Resource_mnorq"]
+script = ExtResource("3_2kx57")
+OutSlotSignalName = "Starting App Out slot"
+TargetScene = SubResource("Resource_j5vhx")
+TargetSceneType = 1
+TransitionFileName = ""
+
+[sub_resource type="Resource" id="Resource_iexgn"]
+script = ExtResource("4_6l8go")
+Name = "@GraphNode@37125"
+OutSignals = [SubResource("Resource_mnorq")]
+Position = Vector2(100, 100)
+
+[sub_resource type="Resource" id="Resource_wsxrp"]
+script = ExtResource("2_j3eiq")
+PackedScene = ExtResource("5_bhu74")
+graphNodeName = "@GraphNode@35413"
+
+[sub_resource type="Resource" id="Resource_3wugi"]
+script = ExtResource("3_2kx57")
+OutSlotSignalName = "GoToGameMenu"
+TargetScene = SubResource("Resource_wsxrp")
+TargetSceneType = 1
+TransitionFileName = "diamond_fade_to_black.tscn"
+
+[sub_resource type="Resource" id="Resource_x7gqn"]
+script = ExtResource("6_01jqy")
+Scene = ExtResource("1_ckm4g")
+Name = "@GraphNode@34670"
+OutSignals = [SubResource("Resource_3wugi")]
+Position = Vector2(580, 60)
+
+[sub_resource type="Resource" id="Resource_dv0i2"]
+script = ExtResource("2_j3eiq")
+graphNodeName = "@GraphNode@37223"
+
+[sub_resource type="Resource" id="Resource_74u8d"]
+script = ExtResource("3_2kx57")
+OutSlotSignalName = "QuitGame"
+TargetScene = SubResource("Resource_dv0i2")
+TargetSceneType = 2
+TransitionFileName = ""
+
+[sub_resource type="Resource" id="Resource_f6qpr"]
+script = ExtResource("2_j3eiq")
+PackedScene = ExtResource("7_m8c6y")
+graphNodeName = "@GraphNode@37234"
+
+[sub_resource type="Resource" id="Resource_coiy6"]
+script = ExtResource("3_2kx57")
+OutSlotSignalName = "GoToSettings"
+TargetScene = SubResource("Resource_f6qpr")
+TargetSceneType = 1
+TransitionFileName = "horizontal_curtain_to_black.tscn"
+
+[sub_resource type="Resource" id="Resource_xp2ig"]
+script = ExtResource("6_01jqy")
+Scene = ExtResource("5_bhu74")
+Name = "@GraphNode@35413"
+OutSignals = [SubResource("Resource_74u8d"), SubResource("Resource_coiy6")]
+Position = Vector2(1020, 60)
+
+[sub_resource type="Resource" id="Resource_15fdg"]
+script = ExtResource("8_s80cd")
+Name = "@GraphNode@37223"
+OutSignals = []
+Position = Vector2(1520, 440)
+
+[sub_resource type="Resource" id="Resource_bmdrg"]
+script = ExtResource("6_01jqy")
+Scene = ExtResource("7_m8c6y")
+Name = "@GraphNode@37234"
+OutSignals = []
+Position = Vector2(1520, 240)
+
+[sub_resource type="Resource" id="Resource_jjklw"]
+script = ExtResource("6_01jqy")
+Name = "@GraphNode@37227"
+OutSignals = []
+Position = Vector2(1520, 60)
+
+[resource]
+script = ExtResource("9_xwawl")
+Items = [SubResource("Resource_iexgn"), SubResource("Resource_x7gqn"), SubResource("Resource_xp2ig"), SubResource("Resource_15fdg"), SubResource("Resource_bmdrg"), SubResource("Resource_jjklw")]

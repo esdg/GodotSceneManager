@@ -1,0 +1,101 @@
+[gd_resource type="Resource" script_class="SceneManagerSchema" load_steps=24 format=3 uid="uid://bhn4itnjbx766"]
+
+[ext_resource type="PackedScene" uid="uid://cgmbwovvih6mf" path="res://Demo/Scenes/StartScreen.tscn" id="1_wmige"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/TargetScene.cs" id="2_wpqxr"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerOutSlotSignal.cs" id="3_a17dy"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/StartAppSceneManagerItem.cs" id="4_6ja27"]
+[ext_resource type="PackedScene" uid="uid://cn1obwdrx5x5w" path="res://Demo/Scenes/MenuScreen.tscn" id="5_ko5eq"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerItem.cs" id="6_jqjkk"]
+[ext_resource type="PackedScene" uid="uid://5ngv11d5jkdx" path="res://Demo/Scenes/SettingsScreen.tscn" id="7_idxu3"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/QuitAppSceneManagerItem.cs" id="8_cwp85"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="9_x0cva"]
+
+[sub_resource type="Resource" id="Resource_as02p"]
+script = ExtResource("2_wpqxr")
+PackedScene = ExtResource("1_wmige")
+graphNodeName = "@GraphNode@34670"
+
+[sub_resource type="Resource" id="Resource_tb1eh"]
+script = ExtResource("3_a17dy")
+OutSlotSignalName = "Starting App Out slot"
+TargetScene = SubResource("Resource_as02p")
+TargetSceneType = 1
+TransitionFileName = ""
+
+[sub_resource type="Resource" id="Resource_nr6wn"]
+script = ExtResource("4_6ja27")
+Name = "@GraphNode@37125"
+OutSignals = [SubResource("Resource_tb1eh")]
+Position = Vector2(100, 100)
+
+[sub_resource type="Resource" id="Resource_u1msq"]
+script = ExtResource("2_wpqxr")
+PackedScene = ExtResource("5_ko5eq")
+graphNodeName = "@GraphNode@35413"
+
+[sub_resource type="Resource" id="Resource_yl11y"]
+script = ExtResource("3_a17dy")
+OutSlotSignalName = "GoToGameMenu"
+TargetScene = SubResource("Resource_u1msq")
+TargetSceneType = 1
+TransitionFileName = "diamond_fade_to_black.tscn"
+
+[sub_resource type="Resource" id="Resource_fn6v8"]
+script = ExtResource("6_jqjkk")
+Scene = ExtResource("1_wmige")
+Name = "@GraphNode@34670"
+OutSignals = [SubResource("Resource_yl11y")]
+Position = Vector2(580, 60)
+
+[sub_resource type="Resource" id="Resource_8hjen"]
+script = ExtResource("2_wpqxr")
+graphNodeName = "@GraphNode@37223"
+
+[sub_resource type="Resource" id="Resource_y0uhw"]
+script = ExtResource("3_a17dy")
+OutSlotSignalName = "QuitGame"
+TargetScene = SubResource("Resource_8hjen")
+TargetSceneType = 2
+TransitionFileName = ""
+
+[sub_resource type="Resource" id="Resource_wodtw"]
+script = ExtResource("2_wpqxr")
+PackedScene = ExtResource("7_idxu3")
+graphNodeName = "@GraphNode@37234"
+
+[sub_resource type="Resource" id="Resource_ccr0p"]
+script = ExtResource("3_a17dy")
+OutSlotSignalName = "GoToSettings"
+TargetScene = SubResource("Resource_wodtw")
+TargetSceneType = 1
+TransitionFileName = "horizontal_curtain_to_black.tscn"
+
+[sub_resource type="Resource" id="Resource_gw68e"]
+script = ExtResource("6_jqjkk")
+Scene = ExtResource("5_ko5eq")
+Name = "@GraphNode@35413"
+OutSignals = [SubResource("Resource_y0uhw"), SubResource("Resource_ccr0p")]
+Position = Vector2(1020, 60)
+
+[sub_resource type="Resource" id="Resource_7bbt2"]
+script = ExtResource("8_cwp85")
+Name = "@GraphNode@37223"
+OutSignals = []
+Position = Vector2(1520, 440)
+
+[sub_resource type="Resource" id="Resource_mq45m"]
+script = ExtResource("6_jqjkk")
+Scene = ExtResource("7_idxu3")
+Name = "@GraphNode@37234"
+OutSignals = []
+Position = Vector2(1520, 240)
+
+[sub_resource type="Resource" id="Resource_sl1c2"]
+script = ExtResource("6_jqjkk")
+Name = "@GraphNode@37227"
+OutSignals = []
+Position = Vector2(1520, 60)
+
+[resource]
+script = ExtResource("9_x0cva")
+Items = [SubResource("Resource_nr6wn"), SubResource("Resource_fn6v8"), SubResource("Resource_gw68e"), SubResource("Resource_7bbt2"), SubResource("Resource_mq45m"), SubResource("Resource_sl1c2")]

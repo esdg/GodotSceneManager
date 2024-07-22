@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Scene_B : Control
+public partial class SettingsScreenScript : Control
 {
 	[Signal] public delegate void GoToPreviousSceneEventHandler();
 
@@ -20,6 +20,3 @@ public partial class Scene_B : Control
 		EmitSignal(SignalName.GoToPreviousScene);
 	}
 }
-
-
-

@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=3 uid="uid://cn1obwdrx5x5w"]
+
+[ext_resource type="Script" path="res://Demo/Scenes/Scripts/MenuScreenScript.cs" id="1_v3t5t"]
+[ext_resource type="PackedScene" uid="uid://dvu7sukpc3esy" path="res://Demo/Assets/Scenes/back_ground.tscn" id="2_trw84"]
+[ext_resource type="Theme" uid="uid://c310ectd8gxb1" path="res://Demo/Assets/Theme/demo_theme.tres" id="3_8cf7k"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v3t5t")
+
+[node name="BackGround" parent="." instance=ExtResource("2_trw84")]
+layout_mode = 1
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Scene C"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = -33.0
+offset_right = 74.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 21
+
+[node name="StartGame" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_8cf7k")
+toggle_mode = true
+text = "New game
+"
+
+[node name="Settings" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_8cf7k")
+toggle_mode = true
+text = "Settings
+"
+
+[node name="QuitBtn" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_8cf7k")
+toggle_mode = true
+text = "Return to desktop
+"
+
+[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_settings_pressed_settings"]
+[connection signal="pressed" from="VBoxContainer/QuitBtn" to="." method="_on_quit_btn_pressed"]

@@ -1,0 +1,123 @@
+[gd_scene load_steps=4 format=3 uid="uid://5ngv11d5jkdx"]
+
+[ext_resource type="Script" path="res://Demo/Scenes/Scripts/SettingsScreenScript.cs" id="1_e57bx"]
+[ext_resource type="PackedScene" uid="uid://dvu7sukpc3esy" path="res://Demo/Assets/Scenes/back_ground.tscn" id="2_d3wcx"]
+[ext_resource type="Theme" uid="uid://c310ectd8gxb1" path="res://Demo/Assets/Theme/demo_theme.tres" id="2_qi11i"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e57bx")
+
+[node name="BackGround" parent="." instance=ExtResource("2_d3wcx")]
+layout_mode = 1
+
+[node name="Button" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.5
+offset_top = 47.0
+offset_right = 68.5
+offset_bottom = 78.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Go to previous scene
+"
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_qi11i")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="Ttile" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Settings"
+
+[node name="SettingsContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Soud volume"
+
+[node name="HSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Graphic mode"
+
+[node name="OptionButton" type="OptionButton" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "Graphic GPU"
+popup/item_0/id = 0
+popup/item_1/text = "Processor CPU"
+popup/item_1/id = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Graphic quality"
+
+[node name="HSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="DialogBtns" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Panel/MarginContainer/VBoxContainer/DialogBtns"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Saves settings"
+
+[node name="Button2" type="Button" parent="Panel/MarginContainer/VBoxContainer/DialogBtns"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Cancel"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/DialogBtns/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/DialogBtns/Button2" to="." method="_on_button_pressed"]
