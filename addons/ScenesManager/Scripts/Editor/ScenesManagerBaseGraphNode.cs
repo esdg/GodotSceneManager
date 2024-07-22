@@ -21,10 +21,10 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
             CallDeferred(MethodName._ReadyNode);
         }
 
-        public abstract void _ReadyNode();
+        public virtual void _ReadyNode() { }
 
-        public abstract void _LoadResources();
+        public virtual void _LoadResources() { }
 
-        public abstract void _SetupGraphNode();
+        public virtual void _SetupGraphNode() { }
     }
 }

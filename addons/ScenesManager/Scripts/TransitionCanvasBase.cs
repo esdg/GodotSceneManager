@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace MoF.Addons.ScenesManager.Scripts
@@ -5,13 +6,46 @@ namespace MoF.Addons.ScenesManager.Scripts
     [Tool]
     public abstract partial class TransitionCanvasBase : CanvasLayer
     {
+        [Signal] public delegate void TransitionFinishedEventHandler(Node currentScene);
+        protected Control _currentSceneRoot;
+        protected Control _targetSceneRoot;
 
-        [Signal] public delegate void InAnimationFinishedEventHandler();
-        [Signal] public delegate void OutAnimationFinishedEventHandler(Control CurrentScene);
-        public Control CurrentScene { get; set; } = new();
-        public Control TargetScene { get; set; } = new();
+        protected Node _currentSceneNode;
+        protected Node _targetSceneNode;
 
-        public abstract void PlayInAnimation();
-        public abstract void PlayOutAnimation();
+
+        protected PackedScene _targetPackedScene;
+
+        public string TargetNodeName { get; set; }
+        public virtual PackedScene TargetPackedScene
+        {
+            set
+            {
+                _targetPackedScene = value;
+            }
+        }
+
+        public sealed override void _Ready()
+        {
+            _TransitionReady();
+        }
+
+        public virtual void _TransitionReady() { }
+
+        public override void _ExitTree()
+        {
+            QueueFree();
+        }
+
+        protected virtual void SendTransitionFinishedSignal()
+        {
+            if (_currentSceneNode != null)
+            {
+                _currentSceneRoot?.RemoveChild(_currentSceneNode);
+                _currentSceneNode.QueueFree();
+            }
+            _targetSceneRoot?.RemoveChild(_targetSceneNode);
+            CallDeferred(MethodName.EmitSignal, SignalName.TransitionFinished, _targetSceneNode);
+        }
     }
 }

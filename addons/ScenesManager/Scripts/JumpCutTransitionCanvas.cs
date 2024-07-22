@@ -7,19 +7,11 @@ namespace MoF.Addons.ScenesManager
 	[Tool, GlobalClass]
 	public partial class JumpCutTransitionCanvas : TransitionCanvasBase
 	{
-		public override void PlayInAnimation()
+		public override void _TransitionReady()
 		{
-			EmitSignal(SignalName.InAnimationFinished);
-		}
-
-		public override void PlayOutAnimation()
-		{
-			EmitSignal(SignalName.OutAnimationFinished, TargetScene);
-		}
-
-		public override void _ExitTree()
-		{
-			QueueFree();
+			_targetSceneNode = _targetPackedScene.Instantiate();
+			_targetSceneNode.Name = TargetNodeName;
+			SendTransitionFinishedSignal();
 		}
 	}
 }
