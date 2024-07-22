@@ -1,6 +1,4 @@
-using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Godot;
 using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Extensions;
@@ -74,20 +72,9 @@ namespace MoF.Addons.ScenesManager
 
 		private static void SwitchToScene(SceneManagerOutSlotSignal sceneManagerOutSlotSignal)
 		{
-			var packedScene = sceneManagerOutSlotSignal.TargetScene.PackedScene;
-			GD.Print($"[SceneManager] Switching scene: {packedScene.ResourcePath}");
+			var targetPackedScene = sceneManagerOutSlotSignal.TargetScene.PackedScene;
+			GD.Print($"[SceneManager] Switching scene: {targetPackedScene.ResourcePath}");
 
-			_targetSceneRootNode = packedScene.Instantiate();
-
-			_targetSceneRootNode.Ready += () => OnReadyTarget(sceneManagerOutSlotSignal);
-			_targetSceneRootNode.Set("visible", false);
-			_tree.Root.AddChild(_targetSceneRootNode);
-
-			StartTransition(sceneManagerOutSlotSignal);
-		}
-
-		private static void StartTransition(SceneManagerOutSlotSignal sceneManagerOutSlotSignal)
-		{
 			if (string.IsNullOrEmpty(sceneManagerOutSlotSignal.TransitionFileName))
 			{
 				_transitionCanvas = new JumpCutTransitionCanvas();
@@ -100,48 +87,25 @@ namespace MoF.Addons.ScenesManager
 			}
 
 			_transitionCanvas.Layer = 10;
-			_transitionCanvas.InAnimationFinished += async () => await OnInAnimationFinished();
-			_transitionCanvas.PlayInAnimation();
+			_transitionCanvas.TransitionFinished += OnTransitionFinished;
+			if (_transitionCanvas is TransitionCanvas transitionCanvas)
+			{
+				transitionCanvas.CurrentSceneRoot = _currentScene;
+			}
+			_transitionCanvas.TargetNodeName = sceneManagerOutSlotSignal.TargetScene.graphNodeName;
+			_transitionCanvas.TargetPackedScene = targetPackedScene;
+			_tree.Root.RemoveChild(_tree.CurrentScene);
 			_tree.Root.AddChild(_transitionCanvas);
 		}
 
-		private static void OnReadyTarget(SceneManagerOutSlotSignal sceneManagerOutSlotSignal)
+		private static void OnTransitionFinished(Node currentScene)
 		{
-			_isTargetSceneReady = true;
-			_targetSceneRootNode.Name = sceneManagerOutSlotSignal.TargetScene.graphNodeName;
-			_currentPackedScene = sceneManagerOutSlotSignal.TargetScene.PackedScene;
-			_tree.Root.GetChildren().OfType<ScenesManager>().FirstOrDefault()?.CallDeferred(nameof(SetSignals), _targetSceneRootNode);
-		}
-
-		private static void CompleteSceneSwitch()
-		{
-			_targetSceneRootNode.Set("visible", true);
-			_tree.Root.RemoveChild(_tree.CurrentScene);
-			_currentScene.QueueFree();
-			_currentScene = _targetSceneRootNode;
-			_tree.CurrentScene = _currentScene;
-		}
-
-		private static async Task OnInAnimationFinished()
-		{
-			_transitionCanvas.InAnimationFinished -= async () => await OnInAnimationFinished();
-
-			await Task.Run(() =>
-			{
-				while (!_isTargetSceneReady) { }
-			});
-
-			_isTargetSceneReady = false;
-			CompleteSceneSwitch();
-			_targetSceneRootNode = null;
-			_transitionCanvas.PlayOutAnimation();
-			_transitionCanvas.OutAnimationFinished += OnOutAnimationFinished;
-		}
-
-		private static void OnOutAnimationFinished(Control targetScene)
-		{
-			_transitionCanvas.OutAnimationFinished -= OnOutAnimationFinished;
-			_transitionCanvas.QueueFree();
+			_transitionCanvas.TransitionFinished -= OnTransitionFinished;
+			_tree.Root.RemoveChild(_transitionCanvas);
+			_tree.Root.AddChild(currentScene);
+			_tree.CurrentScene = currentScene;
+			_tree.Root.GetChildren().OfType<ScenesManager>().FirstOrDefault()?.CallDeferred(nameof(SetSignals), currentScene);
+			_currentScene = currentScene;
 		}
 
 		public void SetSignals(Node nodeSource)
@@ -202,6 +166,7 @@ namespace MoF.Addons.ScenesManager
 			}
 
 			var schemaResource = ResourceLoader.Load<Resource>(_sceneManagerSettings.SceneManagerSchemaPath);
+			ResourceLoader.LoadThreadedRequest(_sceneManagerSettings.SceneManagerSchemaPath);
 			if (schemaResource is SceneManagerSchema schema)
 			{
 				SceneManagerSchema = schema;
