@@ -4,7 +4,7 @@ using Godot;
 namespace MoF.Addons.ScenesManager.Scripts
 {
     [Tool]
-    public abstract partial class TransitionCanvasBase : CanvasLayer
+    public abstract partial class TransitionCanvasBase : Node
     {
         [Signal] public delegate void TransitionFinishedEventHandler(Node currentScene);
         protected Control _currentSceneRoot;
@@ -31,11 +31,6 @@ namespace MoF.Addons.ScenesManager.Scripts
         }
 
         public virtual void _TransitionReady() { }
-
-        public override void _ExitTree()
-        {
-            QueueFree();
-        }
 
         protected virtual void SendTransitionFinishedSignal()
         {

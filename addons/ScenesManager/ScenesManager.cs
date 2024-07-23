@@ -19,7 +19,6 @@ namespace MoF.Addons.ScenesManager
 		private static Node _currentScene;
 		private static TransitionCanvasBase _transitionCanvas;
 		private static Node _targetSceneRootNode = new();
-		private static bool _isTargetSceneReady = false;
 
 		public override void _Ready()
 		{
@@ -86,7 +85,6 @@ namespace MoF.Addons.ScenesManager
 				_transitionCanvas = transitionPackedScene.Instantiate<TransitionCanvas>();
 			}
 
-			_transitionCanvas.Layer = 10;
 			_transitionCanvas.TransitionFinished += OnTransitionFinished;
 			if (_transitionCanvas is TransitionCanvas transitionCanvas)
 			{
