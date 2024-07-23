@@ -4,7 +4,7 @@ using Godot.Collections;
 
 namespace MoF.Addons.ScenesManager.Helpers
 {
-    public static partial class DirectoryHelper
+    public static partial class FileSystemHelper
     {
         public static Array<string> DirContent(string path, bool recursive = false, string extension = "*.*")
         {
@@ -73,6 +73,20 @@ namespace MoF.Addons.ScenesManager.Helpers
 
             // Match the filename against the regex pattern
             return regex.IsMatch(filename);
+        }
+
+        public static void SaveAndCreateFolder(Resource resource, string path)
+        {
+
+            // Ensure the directory exists using Godot's Directory class
+            string directoryPath = path.GetBaseDir();
+            GD.Print(path);
+            GD.Print(directoryPath);
+            if (!DirAccess.DirExistsAbsolute(directoryPath))
+            {
+                DirAccess.MakeDirRecursiveAbsolute(directoryPath);
+            }
+            ResourceSaver.Save(resource, path);
         }
     }
 

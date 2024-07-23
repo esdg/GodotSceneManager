@@ -129,7 +129,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		{
 			OptionButton optionButton = GodotHelpers.CreateOptionButton();
 			optionButton.AddIconItem(_transitionIconTextures[(int)TransitionState.Off], "none");
-			foreach (string transitionPath in DirectoryHelper.DirScenes<TransitionCanvas>(AddonConstants.TransitionFolderPath, false, "*.tscn"))
+			foreach (string transitionPath in FileSystemHelper.DirScenes<TransitionCanvas>(AddonConstants.TransitionFolderPath, false, "*.tscn"))
 			{
 				_transitionPaths.Add(Path.GetFileName(transitionPath));
 				optionButton.AddIconItem(_transitionIconTextures[(int)TransitionState.On], GodotHelpers.ToReadableFileName(transitionPath));
