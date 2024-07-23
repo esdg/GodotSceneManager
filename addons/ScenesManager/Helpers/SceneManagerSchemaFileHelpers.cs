@@ -76,7 +76,8 @@ namespace MoF.Addons.ScenesManager.Helpers
 
 				foreach (SceneManagerOutSlotSignal signal in item.OutSignals)
 				{
-					var index = node.OutSignalsNames.IndexOf(signal.OutSlotSignalName);
+
+					var index = signal.Index; //node.OutSignalsNames.IndexOf(signal.OutSlotSignalName); //here is the probleme if there is twice outsinalname,it will connect to the first one.
 					var targetNode = graphEdit.GetChildren().OfType<ScenesManagerBaseGraphNode>().FirstOrDefault(o => o.GraphNodeName == signal.TargetScene.graphNodeName);
 					if (signal?.TargetScene?.graphNodeName != null && node.OutSignalsNames.Count > 0 && index >= 0)
 					{
@@ -168,6 +169,8 @@ namespace MoF.Addons.ScenesManager.Helpers
 				{
 					sceneManagerOutSlotSignal.TargetScene.graphNodeName = toNodeInstance.GraphNodeName;
 				}
+
+				sceneManagerOutSlotSignal.Index = sceneManagerBaseItem.OutSignals.Count;
 
 				sceneManagerBaseItem.OutSignals.Add(sceneManagerOutSlotSignal);
 			}

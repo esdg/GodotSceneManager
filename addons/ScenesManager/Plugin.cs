@@ -1,7 +1,6 @@
 #if TOOLS
 using Godot;
 using MoF.Addons.ScenesManager.Extensions;
-using MoF.Addons.ScenesManager.Scripts.Editor;
 
 namespace MoF.Addons.ScenesManager
 {

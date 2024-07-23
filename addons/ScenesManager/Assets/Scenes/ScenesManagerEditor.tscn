@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://2yg2v508os2v"]
 
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Editor/ScenesManagerEditor.cs" id="1_qfdo0"]
+[ext_resource type="Script" path="res://addons/ScenesManager/ScenesManagerEditor.cs" id="1_qfdo0"]
 [ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Editor/SceneManagerGraphEdit.cs" id="2_cae0k"]
 [ext_resource type="Texture2D" uid="uid://ddsuobbfsgvb7" path="res://addons/ScenesManager/Assets/Icons/trashcan.svg" id="2_j23dq"]
 
