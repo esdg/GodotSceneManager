@@ -80,8 +80,6 @@ namespace MoF.Addons.ScenesManager.Helpers
 
             // Ensure the directory exists using Godot's Directory class
             string directoryPath = path.GetBaseDir();
-            GD.Print(path);
-            GD.Print(directoryPath);
             if (!DirAccess.DirExistsAbsolute(directoryPath))
             {
                 DirAccess.MakeDirRecursiveAbsolute(directoryPath);

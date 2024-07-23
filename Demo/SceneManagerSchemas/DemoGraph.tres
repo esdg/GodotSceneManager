@@ -1,171 +1,179 @@
-[gd_resource type="Resource" script_class="SceneManagerSchema" load_steps=37 format=3 uid="uid://80ivobq75idn"]
+[gd_resource type="Resource" script_class="SceneManagerSchema" load_steps=36 format=3 uid="uid://b0vt1fr4jswxl"]
 
-[ext_resource type="PackedScene" uid="uid://cgmbwovvih6mf" path="res://Demo/Scenes/StartScreen.tscn" id="1_0llem"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/TargetScene.cs" id="2_tyd76"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerOutSlotSignal.cs" id="3_0qlau"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/StartAppSceneManagerItem.cs" id="4_hhkgv"]
-[ext_resource type="PackedScene" uid="uid://cn1obwdrx5x5w" path="res://Demo/Scenes/MenuScreen.tscn" id="5_1qevs"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerItem.cs" id="6_ivjsb"]
-[ext_resource type="PackedScene" uid="uid://5ngv11d5jkdx" path="res://Demo/Scenes/SettingsScreen.tscn" id="7_iy7te"]
-[ext_resource type="PackedScene" uid="uid://d4da4cvaeycms" path="res://Demo/Scenes/GameLoop.tscn" id="8_cou2j"]
-[ext_resource type="PackedScene" uid="uid://cvluusjjkjqw3" path="res://Demo/Scenes/GameOver.tscn" id="9_aisr4"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/QuitAppSceneManagerItem.cs" id="10_0e7oy"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="11_7p7hk"]
+[ext_resource type="PackedScene" uid="uid://cgmbwovvih6mf" path="res://Demo/Scenes/StartScreen.tscn" id="1_ityyw"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/TargetScene.cs" id="2_fkk7c"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerOutSlotSignal.cs" id="3_a38wt"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/StartAppSceneManagerItem.cs" id="4_ie5p5"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/QuitAppSceneManagerItem.cs" id="5_e0a3o"]
+[ext_resource type="PackedScene" uid="uid://cn1obwdrx5x5w" path="res://Demo/Scenes/MenuScreen.tscn" id="6_l06ux"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerItem.cs" id="7_qxuap"]
+[ext_resource type="PackedScene" uid="uid://d4da4cvaeycms" path="res://Demo/Scenes/GameLoop.tscn" id="8_u2gu3"]
+[ext_resource type="PackedScene" uid="uid://cvluusjjkjqw3" path="res://Demo/Scenes/GameOver.tscn" id="9_bi12e"]
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="10_wdjs3"]
 
-[sub_resource type="Resource" id="Resource_tucu7"]
-script = ExtResource("2_tyd76")
-PackedScene = ExtResource("1_0llem")
-graphNodeName = "@GraphNode@34670"
+[sub_resource type="Resource" id="Resource_0uesv"]
+script = ExtResource("2_fkk7c")
+PackedScene = ExtResource("1_ityyw")
+graphNodeName = "@GraphNode@22986"
 
-[sub_resource type="Resource" id="Resource_ptnf1"]
-script = ExtResource("3_0qlau")
+[sub_resource type="Resource" id="Resource_b0k06"]
+script = ExtResource("3_a38wt")
+Index = 0
 OutSlotSignalName = "Starting App Out slot"
-TargetScene = SubResource("Resource_tucu7")
+TargetScene = SubResource("Resource_0uesv")
 TargetSceneType = 1
 TransitionFileName = ""
 
-[sub_resource type="Resource" id="Resource_3na2a"]
-script = ExtResource("4_hhkgv")
-Name = "@GraphNode@38813"
-OutSignals = [SubResource("Resource_ptnf1")]
-Position = Vector2(100, 100)
+[sub_resource type="Resource" id="Resource_hjo15"]
+script = ExtResource("4_ie5p5")
+Name = "@GraphNode@22982"
+OutSignals = [SubResource("Resource_b0k06")]
+Position = Vector2(80, 140)
 
-[sub_resource type="Resource" id="Resource_rhd8v"]
-script = ExtResource("2_tyd76")
-PackedScene = ExtResource("5_1qevs")
-graphNodeName = "@GraphNode@35413"
+[sub_resource type="Resource" id="Resource_xirmi"]
+script = ExtResource("5_e0a3o")
+Name = "@GraphNode@23067"
+OutSignals = []
+Position = Vector2(1600, 480)
 
-[sub_resource type="Resource" id="Resource_gumgx"]
-script = ExtResource("3_0qlau")
+[sub_resource type="Resource" id="Resource_w7egm"]
+script = ExtResource("2_fkk7c")
+PackedScene = ExtResource("6_l06ux")
+graphNodeName = "@GraphNode@22993"
+
+[sub_resource type="Resource" id="Resource_huhep"]
+script = ExtResource("3_a38wt")
+Index = 0
 OutSlotSignalName = "GoToGameMenu"
-TargetScene = SubResource("Resource_rhd8v")
+TargetScene = SubResource("Resource_w7egm")
 TargetSceneType = 1
-TransitionFileName = "diamond_fade_to_black.tscn"
+TransitionFileName = ""
 
-[sub_resource type="Resource" id="Resource_6ut3x"]
-script = ExtResource("6_ivjsb")
-Scene = ExtResource("1_0llem")
-Name = "@GraphNode@34670"
-OutSignals = [SubResource("Resource_gumgx")]
-Position = Vector2(580, 60)
+[sub_resource type="Resource" id="Resource_sm3yw"]
+script = ExtResource("7_qxuap")
+Scene = ExtResource("1_ityyw")
+Name = "@GraphNode@22986"
+OutSignals = [SubResource("Resource_huhep")]
+Position = Vector2(460, 100)
 
-[sub_resource type="Resource" id="Resource_b0o6h"]
-script = ExtResource("2_tyd76")
-graphNodeName = "@GraphNode@24193"
+[sub_resource type="Resource" id="Resource_5dhlf"]
+script = ExtResource("2_fkk7c")
+graphNodeName = "@GraphNode@23067"
 
-[sub_resource type="Resource" id="Resource_2a6ji"]
-script = ExtResource("3_0qlau")
+[sub_resource type="Resource" id="Resource_ylc3t"]
+script = ExtResource("3_a38wt")
+Index = 0
 OutSlotSignalName = "QuitGame"
-TargetScene = SubResource("Resource_b0o6h")
+TargetScene = SubResource("Resource_5dhlf")
 TargetSceneType = 2
 TransitionFileName = ""
 
-[sub_resource type="Resource" id="Resource_boriy"]
-script = ExtResource("2_tyd76")
-PackedScene = ExtResource("7_iy7te")
-graphNodeName = "@GraphNode@37234"
+[sub_resource type="Resource" id="Resource_51c0u"]
+script = ExtResource("2_fkk7c")
+PackedScene = ExtResource("1_ityyw")
+graphNodeName = "@GraphNode@23056"
 
-[sub_resource type="Resource" id="Resource_esbe7"]
-script = ExtResource("3_0qlau")
+[sub_resource type="Resource" id="Resource_131l6"]
+script = ExtResource("3_a38wt")
+Index = 1
 OutSlotSignalName = "GoToSettings"
-TargetScene = SubResource("Resource_boriy")
-TargetSceneType = 1
-TransitionFileName = "horizontal_curtain_to_black.tscn"
-
-[sub_resource type="Resource" id="Resource_j3cpk"]
-script = ExtResource("2_tyd76")
-PackedScene = ExtResource("8_cou2j")
-graphNodeName = "@GraphNode@37227"
-
-[sub_resource type="Resource" id="Resource_jwsx1"]
-script = ExtResource("3_0qlau")
-OutSlotSignalName = "StartGameScene"
-TargetScene = SubResource("Resource_j3cpk")
-TargetSceneType = 1
-TransitionFileName = "fade_to_black.tscn"
-
-[sub_resource type="Resource" id="Resource_wfjs5"]
-script = ExtResource("6_ivjsb")
-Scene = ExtResource("5_1qevs")
-Name = "@GraphNode@35413"
-OutSignals = [SubResource("Resource_2a6ji"), SubResource("Resource_esbe7"), SubResource("Resource_jwsx1")]
-Position = Vector2(1060, 40)
-
-[sub_resource type="Resource" id="Resource_d2rbx"]
-script = ExtResource("2_tyd76")
-PackedScene = ExtResource("9_aisr4")
-graphNodeName = "@GraphNode@18363"
-
-[sub_resource type="Resource" id="Resource_j510i"]
-script = ExtResource("3_0qlau")
-OutSlotSignalName = "GameOver"
-TargetScene = SubResource("Resource_d2rbx")
-TargetSceneType = 1
-TransitionFileName = "diamond_fade_to_black.tscn"
-
-[sub_resource type="Resource" id="Resource_gt470"]
-script = ExtResource("2_tyd76")
-PackedScene = ExtResource("5_1qevs")
-graphNodeName = "@GraphNode@35413"
-
-[sub_resource type="Resource" id="Resource_2xx4c"]
-script = ExtResource("3_0qlau")
-OutSlotSignalName = "QuitToMenu"
-TargetScene = SubResource("Resource_gt470")
-TargetSceneType = 1
-TransitionFileName = "fade_to_black.tscn"
-
-[sub_resource type="Resource" id="Resource_ygv2p"]
-script = ExtResource("6_ivjsb")
-Scene = ExtResource("8_cou2j")
-Name = "@GraphNode@37227"
-OutSignals = [SubResource("Resource_j510i"), SubResource("Resource_2xx4c")]
-Position = Vector2(1500, 780)
-
-[sub_resource type="Resource" id="Resource_dbfbg"]
-script = ExtResource("2_tyd76")
-PackedScene = ExtResource("5_1qevs")
-graphNodeName = "@GraphNode@35413"
-
-[sub_resource type="Resource" id="Resource_0dgx7"]
-script = ExtResource("3_0qlau")
-OutSlotSignalName = "QuitToMenu"
-TargetScene = SubResource("Resource_dbfbg")
+TargetScene = SubResource("Resource_51c0u")
 TargetSceneType = 1
 TransitionFileName = ""
 
-[sub_resource type="Resource" id="Resource_35g4h"]
-script = ExtResource("6_ivjsb")
-Scene = ExtResource("9_aisr4")
-Name = "@GraphNode@18363"
-OutSignals = [SubResource("Resource_0dgx7")]
-Position = Vector2(2080, 820)
+[sub_resource type="Resource" id="Resource_64bwu"]
+script = ExtResource("2_fkk7c")
+PackedScene = ExtResource("8_u2gu3")
+graphNodeName = "@GraphNode@23049"
 
-[sub_resource type="Resource" id="Resource_opbcr"]
-script = ExtResource("10_0e7oy")
-Name = "@GraphNode@38822"
-OutSignals = []
-Position = Vector2(1560, -180)
-
-[sub_resource type="Resource" id="Resource_n0fvh"]
-script = ExtResource("2_tyd76")
-PackedScene = ExtResource("5_1qevs")
-graphNodeName = "@GraphNode@35413"
-
-[sub_resource type="Resource" id="Resource_46l6g"]
-script = ExtResource("3_0qlau")
-OutSlotSignalName = "GoToPreviousScene"
-TargetScene = SubResource("Resource_n0fvh")
+[sub_resource type="Resource" id="Resource_8gjkf"]
+script = ExtResource("3_a38wt")
+Index = 2
+OutSlotSignalName = "StartGameScene"
+TargetScene = SubResource("Resource_64bwu")
 TargetSceneType = 1
-TransitionFileName = "chaotic_fade_to_black.tscn"
+TransitionFileName = ""
 
-[sub_resource type="Resource" id="Resource_o0jce"]
-script = ExtResource("6_ivjsb")
-Scene = ExtResource("7_iy7te")
-Name = "@GraphNode@37234"
-OutSignals = [SubResource("Resource_46l6g")]
-Position = Vector2(1680, 140)
+[sub_resource type="Resource" id="Resource_gbao6"]
+script = ExtResource("7_qxuap")
+Scene = ExtResource("6_l06ux")
+Name = "@GraphNode@22993"
+OutSignals = [SubResource("Resource_ylc3t"), SubResource("Resource_131l6"), SubResource("Resource_8gjkf")]
+Position = Vector2(840, 140)
+
+[sub_resource type="Resource" id="Resource_w1efq"]
+script = ExtResource("2_fkk7c")
+PackedScene = ExtResource("6_l06ux")
+graphNodeName = "@GraphNode@22993"
+
+[sub_resource type="Resource" id="Resource_8de2m"]
+script = ExtResource("3_a38wt")
+Index = 0
+OutSlotSignalName = "GoToGameMenu"
+TargetScene = SubResource("Resource_w1efq")
+TargetSceneType = 1
+TransitionFileName = ""
+
+[sub_resource type="Resource" id="Resource_2eyh0"]
+script = ExtResource("7_qxuap")
+Scene = ExtResource("1_ityyw")
+Name = "@GraphNode@23056"
+OutSignals = [SubResource("Resource_8de2m")]
+Position = Vector2(1460, 140)
+
+[sub_resource type="Resource" id="Resource_i87kj"]
+script = ExtResource("2_fkk7c")
+PackedScene = ExtResource("6_l06ux")
+graphNodeName = "@GraphNode@22993"
+
+[sub_resource type="Resource" id="Resource_f8nyc"]
+script = ExtResource("3_a38wt")
+Index = 0
+OutSlotSignalName = "QuitToMenu"
+TargetScene = SubResource("Resource_i87kj")
+TargetSceneType = 1
+TransitionFileName = ""
+
+[sub_resource type="Resource" id="Resource_ivx1c"]
+script = ExtResource("2_fkk7c")
+PackedScene = ExtResource("9_bi12e")
+graphNodeName = "@GraphNode@23273"
+
+[sub_resource type="Resource" id="Resource_u0b76"]
+script = ExtResource("3_a38wt")
+Index = 1
+OutSlotSignalName = "GameOver"
+TargetScene = SubResource("Resource_ivx1c")
+TargetSceneType = 1
+TransitionFileName = ""
+
+[sub_resource type="Resource" id="Resource_pnd6f"]
+script = ExtResource("7_qxuap")
+Scene = ExtResource("8_u2gu3")
+Name = "@GraphNode@23049"
+OutSignals = [SubResource("Resource_f8nyc"), SubResource("Resource_u0b76")]
+Position = Vector2(1480, -240)
+
+[sub_resource type="Resource" id="Resource_xhb3v"]
+script = ExtResource("2_fkk7c")
+PackedScene = ExtResource("6_l06ux")
+graphNodeName = "@GraphNode@22993"
+
+[sub_resource type="Resource" id="Resource_htjyi"]
+script = ExtResource("3_a38wt")
+Index = 0
+OutSlotSignalName = "QuitToMenu"
+TargetScene = SubResource("Resource_xhb3v")
+TargetSceneType = 1
+TransitionFileName = ""
+
+[sub_resource type="Resource" id="Resource_8a2vl"]
+script = ExtResource("7_qxuap")
+Scene = ExtResource("9_bi12e")
+Name = "@GraphNode@23273"
+OutSignals = [SubResource("Resource_htjyi")]
+Position = Vector2(1940, -140)
 
 [resource]
-script = ExtResource("11_7p7hk")
-Items = [SubResource("Resource_3na2a"), SubResource("Resource_6ut3x"), SubResource("Resource_wfjs5"), SubResource("Resource_ygv2p"), SubResource("Resource_35g4h"), SubResource("Resource_opbcr"), SubResource("Resource_o0jce")]
+script = ExtResource("10_wdjs3")
+Items = [SubResource("Resource_hjo15"), SubResource("Resource_xirmi"), SubResource("Resource_sm3yw"), SubResource("Resource_gbao6"), SubResource("Resource_2eyh0"), SubResource("Resource_pnd6f"), SubResource("Resource_8a2vl")]

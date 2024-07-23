@@ -1,9 +1,10 @@
 using System.Linq;
 using Godot;
 using MoF.Addons.ScenesManager.Helpers;
+using MoF.Addons.ScenesManager.Scripts.Editor;
 using MoF.Addons.ScenesManager.Scripts.Resources;
 
-namespace MoF.Addons.ScenesManager.Scripts.Editor
+namespace MoF.Addons.ScenesManager
 {
 	[Tool]
 	public partial class ScenesManagerEditor : Control
@@ -11,7 +12,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private GraphEdit graphEdit;
 		private int nodeCount = 0;
 		private Texture2D trashCanIconTexture;
-		public MenuBar mainMenuBar { get; set; }
+		public MenuBar MainMenuBar { get; set; }
 		private MenuBar mainContextualMenuBar;
 		private GraphNode selectedNode;
 		private SceneManagerSchema currentSceneManagerSchema = new();
@@ -47,9 +48,9 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 		private void CreateTopMenuBar()
 		{
-			mainMenuBar = GetNode<MenuBar>("%MenuBar");
-			MenuHelpers.CreateGraphMenu(mainMenuBar, OnGraphMenuItemPressed);
-			MenuHelpers.CreateNodesMenu(mainMenuBar, OnNodesSubMenuItemPressed);
+			MainMenuBar = GetNode<MenuBar>("%MenuBar");
+			MenuHelpers.CreateGraphMenu(MainMenuBar, OnGraphMenuItemPressed);
+			MenuHelpers.CreateNodesMenu(MainMenuBar, OnNodesSubMenuItemPressed);
 		}
 
 		private void NewGraph()
@@ -136,12 +137,13 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			graphEdit.AddChild(node);
 			node.GraphNodeName = node.Name;
 		}
+
 		private void RemoveQuitAppNode()
 		{
 			graphEdit.GetChildren().OfType<QuitAppGraphNode>().First().QueueFree();
 		}
 
-		private void CreateTransitionNode()
+		private static void CreateTransitionNode()
 		{
 			// Implement Create Transition Node logic here
 		}
@@ -176,7 +178,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 					CreateTransitionNode();
 					break;
 				case 2:
-					var nodeMenu = mainMenuBar.GetChildren().OfType<PopupMenu>().FirstOrDefault(o => o.Name == "Node menu");
+					var nodeMenu = MainMenuBar.GetChildren().OfType<PopupMenu>().FirstOrDefault(o => o.Name == "Node menu");
 					if (!graphEdit.GetChildren().OfType<QuitAppGraphNode>().Any())
 					{
 						nodeMenu.SetItemChecked((int)index, true);

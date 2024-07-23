@@ -46,7 +46,7 @@ namespace MoF.Addons.ScenesManager.Helpers
 			else if (item is QuitAppSceneManagerItem quitAppSceneManagerItem)
 			{
 				node = new QuitAppGraphNode { GraphNodeName = quitAppSceneManagerItem.Name };
-				var nodeMenu = graphEdit.GetParent().GetParent<ScenesManagerEditor>().mainMenuBar.GetChildren().OfType<PopupMenu>().FirstOrDefault(o => o.Name == "Node menu");
+				var nodeMenu = graphEdit.GetParent().GetParent<ScenesManagerEditor>().MainMenuBar.GetChildren().OfType<PopupMenu>().FirstOrDefault(o => o.Name == "Node menu");
 				nodeMenu.SetItemChecked(2, true);
 			}
 			else
@@ -76,7 +76,8 @@ namespace MoF.Addons.ScenesManager.Helpers
 
 				foreach (SceneManagerOutSlotSignal signal in item.OutSignals)
 				{
-					var index = node.OutSignalsNames.IndexOf(signal.OutSlotSignalName);
+
+					var index = signal.Index;
 					var targetNode = graphEdit.GetChildren().OfType<ScenesManagerBaseGraphNode>().FirstOrDefault(o => o.GraphNodeName == signal.TargetScene.graphNodeName);
 					if (signal?.TargetScene?.graphNodeName != null && node.OutSignalsNames.Count > 0 && index >= 0)
 					{
@@ -118,7 +119,7 @@ namespace MoF.Addons.ScenesManager.Helpers
 				case StartAppGraphNode startAppGraphNode:
 					StartAppSceneManagerItem startAppSceneManagerItem = new()
 					{
-						Name = startAppGraphNode.Name,
+						Name = startAppGraphNode.GraphNodeName,
 						Position = startAppGraphNode.PositionOffset,
 					};
 					SetSceneManagerItemForSchema(startAppGraphNode, startAppSceneManagerItem, graphEdit, schema);
@@ -126,7 +127,7 @@ namespace MoF.Addons.ScenesManager.Helpers
 				case QuitAppGraphNode quitAppGraphNode:
 					QuitAppSceneManagerItem quitAppSceneManagerItem = new()
 					{
-						Name = quitAppGraphNode.Name,
+						Name = quitAppGraphNode.GraphNodeName,
 						Position = quitAppGraphNode.PositionOffset,
 					};
 					SetSceneManagerItemForSchema(quitAppGraphNode, quitAppSceneManagerItem, graphEdit, schema);
@@ -168,6 +169,8 @@ namespace MoF.Addons.ScenesManager.Helpers
 				{
 					sceneManagerOutSlotSignal.TargetScene.graphNodeName = toNodeInstance.GraphNodeName;
 				}
+
+				sceneManagerOutSlotSignal.Index = sceneManagerBaseItem.OutSignals.Count;
 
 				sceneManagerBaseItem.OutSignals.Add(sceneManagerOutSlotSignal);
 			}
