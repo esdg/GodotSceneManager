@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="SceneManagerSettings" load_steps=2 format=3 uid="uid://dvxmkfmfmaujq"]
-
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSettings.cs" id="1_qj7jx"]
-
-[resource]
-script = ExtResource("1_qj7jx")
-SceneManagerSchemaPath = "D:/Development/GodotSceneManager/Demo/SceneManagerSchemas/DemoGraph.tres"

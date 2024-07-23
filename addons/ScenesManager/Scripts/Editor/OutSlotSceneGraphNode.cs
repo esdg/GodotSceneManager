@@ -110,16 +110,14 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			{
 				optionButton.AddIconItem(_signalIconTexture, (string)signal.Values.First());
 			}
-			GD.Print(selectedSignalName);
-			// select signal if provided
-			if (selectedSignalName != "")
+
+			// select signal if empty change it for none
+			selectedSignalName = selectedSignalName == "" ? "non" : selectedSignalName;
+			for (int i = 0; i < optionButton.ItemCount; i++)
 			{
-				for (int i = 0; i < optionButton.ItemCount; i++)
+				if (optionButton.GetItemText(i) == selectedSignalName)
 				{
-					if (optionButton.GetItemText(i) == selectedSignalName)
-					{
-						optionButton.Select(i);
-					}
+					optionButton.Select(i);
 				}
 			}
 			return optionButton;
@@ -134,7 +132,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 				_transitionPaths.Add(Path.GetFileName(transitionPath));
 				optionButton.AddIconItem(_transitionIconTextures[(int)TransitionState.On], GodotHelpers.ToReadableFileName(transitionPath));
 			}
-			GD.Print(selectedTransitionPath);
+
 			// select signal if provided
 			if (selectedTransitionPath != "")
 			{
