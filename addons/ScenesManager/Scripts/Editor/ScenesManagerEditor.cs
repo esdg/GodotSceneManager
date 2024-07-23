@@ -80,7 +80,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 		private void OpenSchema(string path)
 		{
-			var loadedSchema = ResourceLoader.Load<SceneManagerSchema>(path);
+			var loadedSchema = ResourceLoader.Load<SceneManagerSchema>(path, null, ResourceLoader.CacheMode.Replace);
 			if (loadedSchema == null)
 			{
 				GD.PrintErr("[SceneManagerEditor] Failed to load SceneManagerSchema from path: " + path);
@@ -89,6 +89,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 			ClearGraphNodes();
 			nodeCount = SceneManagerSchemaFileHelpers.LoadGraphNodesFromSchema(graphEdit, loadedSchema);
+			GodotHelpers.SaveSceneManagerSettings(path);
 		}
 
 		private void ClearGraphNodes()
