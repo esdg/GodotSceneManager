@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ckaud6yuaa0ua"]
+[gd_scene load_steps=8 format=3 uid="uid://ckaud6yuaa0ua"]
 
 [ext_resource type="Script" path="res://addons/ScenesManager/TransitionCanvas.cs" id="1_5vonl"]
 [ext_resource type="Shader" path="res://addons/ScenesManager/Assets/Shaders/texturefader.gdshader" id="2_r11yp"]
@@ -58,8 +58,48 @@ tracks/3/keys = {
 "values": [1.0, 0.0, 1.0]
 }
 
+[sub_resource type="Animation" id="Animation_o3au7"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("target_scene:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("current_scene:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BlackLayer:material:shader_parameter/cutoff")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mvcip"]
 _data = {
+"RESET": SubResource("Animation_o3au7"),
 "TRANSITION": SubResource("Animation_ua1vh")
 }
 
@@ -81,6 +121,7 @@ libraries = {
 
 [node name="target_scene" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -90,7 +131,6 @@ grow_vertical = 2
 
 [node name="current_scene" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
