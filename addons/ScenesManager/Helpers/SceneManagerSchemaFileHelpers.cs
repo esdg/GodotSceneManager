@@ -46,7 +46,7 @@ namespace MoF.Addons.ScenesManager.Helpers
 			else if (item is QuitAppSceneManagerItem quitAppSceneManagerItem)
 			{
 				node = new QuitAppGraphNode { GraphNodeName = quitAppSceneManagerItem.Name };
-				var nodeMenu = graphEdit.GetParent().GetParent<ScenesManagerEditor>().mainMenuBar.GetChildren().OfType<PopupMenu>().FirstOrDefault(o => o.Name == "Node menu");
+				var nodeMenu = graphEdit.GetParent().GetParent<ScenesManagerEditor>().MainMenuBar.GetChildren().OfType<PopupMenu>().FirstOrDefault(o => o.Name == "Node menu");
 				nodeMenu.SetItemChecked(2, true);
 			}
 			else
