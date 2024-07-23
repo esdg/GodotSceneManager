@@ -36,7 +36,7 @@ namespace MoF.Addons.ScenesManager.Helpers
             {
                 SceneManagerSchemaPath = path,
             };
-            ResourceSaver.Save(sceneManagerSettings, AddonConstants.SettingsFilePath);
+            FileSystemHelper.SaveAndCreateFolder(sceneManagerSettings, AddonConstants.SettingsFilePath);
         }
 
         public static string GetSceneGraphNodeTitle(Node node)

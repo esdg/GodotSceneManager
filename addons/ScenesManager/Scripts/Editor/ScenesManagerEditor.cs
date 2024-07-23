@@ -69,7 +69,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 			currentSceneManagerSchema = SceneManagerSchemaFileHelpers.PrepareSchemaForSave(graphEdit);
 
-			ResourceSaver.Save(currentSceneManagerSchema, path);
+			FileSystemHelper.SaveAndCreateFolder(currentSceneManagerSchema, path);
 			GodotHelpers.SaveSceneManagerSettings(path);
 		}
 
