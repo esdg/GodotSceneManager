@@ -3,7 +3,7 @@ using Godot.Collections;
 
 namespace MoF.Addons.ScenesManager.Scripts.Resources
 {
-    [Tool, GlobalClass]
+    [Tool]
     public partial class SceneManagerSchema : Resource
     {
         [Export] public Array<SceneManagerBaseItem> Items { get; set; } = new();

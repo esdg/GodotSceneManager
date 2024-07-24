@@ -1,10 +1,9 @@
-using System.Threading.Tasks;
 using Godot;
 using MoF.Addons.ScenesManager.Scripts;
 
 namespace MoF.Addons.ScenesManager
 {
-	[Tool, GlobalClass]
+	[Tool]
 	public partial class JumpCutTransitionCanvas : TransitionCanvasBase
 	{
 		public override void _TransitionReady()

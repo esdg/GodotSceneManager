@@ -7,7 +7,6 @@ using MoF.Addons.ScenesManager.Scripts.Resources;
 
 namespace MoF.Addons.ScenesManager
 {
-	[GlobalClass]
 	public partial class ScenesManager : Node
 	{
 		[Export] public SceneManagerSchema SceneManagerSchema { get; set; }

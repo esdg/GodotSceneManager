@@ -1,7 +1,17 @@
 namespace MoF.Addons.ScenesManager.Extensions
 {
+    /// <summary>
+    /// Provides extension methods for working with strings.
+    /// </summary>
     public static partial class StringExtensionMethodsNode
     {
+        /// <summary>
+        /// Capitalizes the first letter of each word in the input string.
+        /// </summary>
+        /// <param name="input">The input string to capitalize.</param>
+        /// <returns>
+        /// A string with the first letter of each word capitalized and the rest of the letters in lowercase.
+        /// </returns>
         public static string CapitalizeFirstLetterOfEachWord(this string input)
         {
             // Split the string into words

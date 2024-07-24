@@ -6,8 +6,16 @@ using Godot;
 
 namespace MoF.Addons.ScenesManager.Extensions
 {
+	/// <summary>
+	/// Provides extension methods for working with Godot nodes and resources.
+	/// </summary>
 	public static class GodotExtensionMethodsNode
 	{
+		/// <summary>
+		/// Removes the specified children from the node and frees them.
+		/// </summary>
+		/// <param name="node">The node from which to remove the children.</param>
+		/// <param name="targetNodes">The array of nodes to remove.</param>
 		public static void RemoveChildren(this Node node, Node[] targetNodes)
 		{
 			foreach (Node n in targetNodes)
@@ -16,12 +24,28 @@ namespace MoF.Addons.ScenesManager.Extensions
 				n.QueueFree();
 			}
 		}
+
+		/// <summary>
+		/// Gets the directory path of the specified resource.
+		/// </summary>
+		/// <param name="resource">The resource from which to get the path.</param>
+		/// <returns>The directory path of the resource.</returns>
 		public static string GetPath(this Resource resource)
 		{
 			return resource.ResourcePath.Substr(0, resource.ResourcePath.Length - resource.ResourcePath.Split("/").Last().Length);
 		}
 
 #nullable enable
+		/// <summary>
+		/// Connects a signal to a static delegate method on a target instance.
+		/// </summary>
+		/// <typeparam name="T">The type of the static target method parameter.</typeparam>
+		/// <param name="source">The source object emitting the signal.</param>
+		/// <param name="targetInstance">The instance of the target class containing the static method.</param>
+		/// <param name="signalName">The name of the signal to connect.</param>
+		/// <param name="staticTargetMethodName">The name of the static method to connect to.</param>
+		/// <param name="args">Optional arguments to pass to the static method.</param>
+		/// <exception cref="Exception">Thrown if the event, handler type, invoke method, or target method is not found.</exception>
 		public static void ConnectToStaticDelegate<T>(this GodotObject source, object targetInstance, string signalName, string staticTargetMethodName, params object?[]? args)
 		{
 			EventInfo? eventInfo = source?.GetType().GetEvent(signalName);
@@ -88,6 +112,6 @@ namespace MoF.Addons.ScenesManager.Extensions
 				eventInfo.AddEventHandler(source, handlerDelegate);
 			}
 		}
-	}
 #nullable disable
+	}
 }

@@ -3,7 +3,7 @@ using MoF.Addons.ScenesManager.Enums;
 
 namespace MoF.Addons.ScenesManager.Scripts.Resources
 {
-    [Tool, GlobalClass]
+    [Tool]
     public partial class SceneManagerOutSlotSignal : Resource
     {
         [Export] public int Index { get; set; }

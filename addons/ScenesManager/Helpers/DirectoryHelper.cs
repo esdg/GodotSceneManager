@@ -4,8 +4,20 @@ using Godot.Collections;
 
 namespace MoF.Addons.ScenesManager.Helpers
 {
+    /// <summary>
+    /// Provides helper methods for file system operations.
+    /// </summary>
     public static partial class FileSystemHelper
     {
+        /// <summary>
+        /// Retrieves the content of a directory.
+        /// </summary>
+        /// <param name="path">The path of the directory.</param>
+        /// <param name="recursive">If set to <c>true</c>, retrieves content recursively.</param>
+        /// <param name="extension">The file extension filter. Default is "*.*".</param>
+        /// <returns>
+        /// An array of file paths matching the specified extension.
+        /// </returns>
         public static Array<string> DirContent(string path, bool recursive = false, string extension = "*.*")
         {
             if (!path.EndsWith("/"))
@@ -55,11 +67,29 @@ namespace MoF.Addons.ScenesManager.Helpers
             return items;
         }
 
+        /// <summary>
+        /// Retrieves the scenes from a directory.
+        /// </summary>
+        /// <typeparam name="T">The type of scenes to retrieve.</typeparam>
+        /// <param name="path">The path of the directory.</param>
+        /// <param name="recursive">If set to <c>true</c>, retrieves scenes recursively.</param>
+        /// <param name="extension">The file extension filter. Default is "*.*".</param>
+        /// <returns>
+        /// An array of scene paths matching the specified extension.
+        /// </returns>
         public static Array<string> DirScenes<T>(string path, bool recursive = false, string extension = "*.*")
         {
             return DirContent(path, recursive, extension);
         }
 
+        /// <summary>
+        /// Checks if a filename matches a specified pattern.
+        /// </summary>
+        /// <param name="filename">The filename to check.</param>
+        /// <param name="pattern">The pattern to match against.</param>
+        /// <returns>
+        /// <c>true</c> if the filename matches the pattern; otherwise, <c>false</c>.
+        /// </returns>
         public static bool FileNameMatchesPattern(string filename, string pattern)
         {
             // Escape any regex special characters except for * and .
@@ -75,9 +105,13 @@ namespace MoF.Addons.ScenesManager.Helpers
             return regex.IsMatch(filename);
         }
 
+        /// <summary>
+        /// Saves a resource and creates the folder if it doesn't exist.
+        /// </summary>
+        /// <param name="resource">The resource to save.</param>
+        /// <param name="path">The path where the resource will be saved.</param>
         public static void SaveAndCreateFolder(Resource resource, string path)
         {
-
             // Ensure the directory exists using Godot's Directory class
             string directoryPath = path.GetBaseDir();
             if (!DirAccess.DirExistsAbsolute(directoryPath))
@@ -87,6 +121,4 @@ namespace MoF.Addons.ScenesManager.Helpers
             ResourceSaver.Save(resource, path);
         }
     }
-
-
 }

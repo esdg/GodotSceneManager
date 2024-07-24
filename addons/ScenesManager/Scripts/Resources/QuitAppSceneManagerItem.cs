@@ -2,7 +2,7 @@ using Godot;
 
 namespace MoF.Addons.ScenesManager.Scripts.Resources
 {
-    [Tool, GlobalClass]
+    [Tool]
     public partial class QuitAppSceneManagerItem : SceneManagerBaseItem
     {
 
