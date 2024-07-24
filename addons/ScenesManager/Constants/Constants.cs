@@ -11,6 +11,7 @@ namespace MoF.Addons.ScenesManager.Constants
         public const string PopupMenuSeparator = "------";
         public const string SettingsFilePath = "/Settings/SceneManagerSettings.tres";
         public const string TransitionFolderPath = "/TransitionsLibrary";
+        public const string TransitionNone = "none";
 
         /// <summary>
         /// Constants related to graph nodes.

@@ -1,5 +1,6 @@
 using System.Linq;
 using Godot;
+using Godot.Collections;
 using MoF.Addons.ScenesManager.Helpers;
 using MoF.Addons.ScenesManager.Scripts.Editor;
 using MoF.Addons.ScenesManager.Scripts.Resources;
@@ -13,8 +14,10 @@ namespace MoF.Addons.ScenesManager
 		private int nodeCount = 0;
 		public MenuBar MainMenuBar { get; set; }
 		private MenuBar mainContextualMenuBar;
-		private GraphNode selectedNode;
 		private SceneManagerSchema currentSceneManagerSchema = new();
+
+		private ScenesManagerBaseGraphNode selectedNode;
+		private Array<SceneGraphNode> selectedNodes = new();
 
 		private string saveFilePath = "";
 
@@ -203,15 +206,26 @@ namespace MoF.Addons.ScenesManager
 
 		private void OnNodeSelected(Node node)
 		{
-			selectedNode = node as ScenesManagerBaseGraphNode;
-			if (selectedNode is not StartAppGraphNode && selectedNode is not QuitAppGraphNode)
-				mainContextualMenuBar.Visible = true;
+			if (node is SceneGraphNode)
+			{
+				selectedNode = node as ScenesManagerBaseGraphNode;
+				selectedNodes.Add(node as SceneGraphNode);
+				if (selectedNodes.Count == 1)
+					mainContextualMenuBar.Visible = true;
+				else
+					mainContextualMenuBar.Visible = false;
+			}
+
 		}
 
 		private void OnNodeDeselected(Node node)
 		{
 			selectedNode = null;
-			mainContextualMenuBar.Visible = false;
+			selectedNodes.Remove(node as SceneGraphNode);
+			if (selectedNodes.Count == 1)
+				mainContextualMenuBar.Visible = true;
+			else
+				mainContextualMenuBar.Visible = false;
 		}
 
 		private void _on_graph_edit_connection_request(StringName from_node, long from_port, StringName to_node, long to_port)

@@ -84,7 +84,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private void TransitionSelected(int index)
 		{
 			var transition = TransitionSelect.GetItemText(index);
-			if (transition == "none")
+			if (transition == Constants.AddonConstants.TransitionNone)
 			{
 				nodeTransitionSate = TransitionState.Off;
 				_linkImage.Texture = _linkTextures[(int)nodeTransitionSate];
@@ -126,7 +126,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private OptionButton CreateTransitionSelectBox(string selectedTransitionPath = "")
 		{
 			OptionButton optionButton = GodotHelpers.CreateOptionButton();
-			optionButton.AddIconItem(_transitionIconTextures[(int)TransitionState.Off], "none");
+			optionButton.AddIconItem(_transitionIconTextures[(int)TransitionState.Off], Constants.AddonConstants.TransitionNone);
 			foreach (string transitionPath in FileSystemHelper.DirScenes<TransitionCanvas>(Plugin.PathToPlugin + AddonConstants.TransitionFolderPath, false, "*.tscn"))
 			{
 				_transitionPaths.Add(Path.GetFileName(transitionPath));
