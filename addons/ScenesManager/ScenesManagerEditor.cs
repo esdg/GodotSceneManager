@@ -11,7 +11,6 @@ namespace MoF.Addons.ScenesManager
 	{
 		private GraphEdit graphEdit;
 		private int nodeCount = 0;
-		private Texture2D trashCanIconTexture;
 		public MenuBar MainMenuBar { get; set; }
 		private MenuBar mainContextualMenuBar;
 		private GraphNode selectedNode;
@@ -21,15 +20,9 @@ namespace MoF.Addons.ScenesManager
 
 		public override void _Ready()
 		{
-			LoadResources();
 			InitializeNodes();
 			SetupEventHandlers();
 			CreateTopMenuBar();
-		}
-
-		private void LoadResources()
-		{
-			trashCanIconTexture = ResourceLoader.Load<Texture2D>("res://addons/ScenesManager/Assets/Icons/trashcan.svg");
 		}
 
 		private void InitializeNodes()

@@ -11,6 +11,8 @@ namespace MoF.Addons.ScenesManager
 	{
 		[Export] public SceneManagerSchema SceneManagerSchema { get; set; }
 
+		public static string PathToPlugin { get; set; }
+
 		private bool _treeInitialized = false;
 		private static SceneManagerSettings _sceneManagerSettings;
 		private static PackedScene _currentPackedScene;
@@ -25,6 +27,9 @@ namespace MoF.Addons.ScenesManager
 			LoadSettings();
 			LoadSchema();
 			_tree.TreeChanged += OnTreeChanged;
+
+
+			GD.Print($"====>{PathToPlugin}");
 		}
 
 		private void OnTreeChanged()
@@ -79,7 +84,7 @@ namespace MoF.Addons.ScenesManager
 			}
 			else
 			{
-				string transitionPath = $"{AddonConstants.TransitionFolderPath}/{sceneManagerOutSlotSignal.TransitionFileName}";
+				string transitionPath = $"{"res://addons/ScenesManager/" + AddonConstants.TransitionFolderPath}/{sceneManagerOutSlotSignal.TransitionFileName}";
 				PackedScene transitionPackedScene = ResourceLoader.Load<PackedScene>(transitionPath);
 				_transitionCanvas = transitionPackedScene.Instantiate<TransitionCanvas>();
 			}
@@ -143,14 +148,14 @@ namespace MoF.Addons.ScenesManager
 
 		private static void LoadSettings()
 		{
-			var settingsResource = ResourceLoader.Load<Resource>(AddonConstants.SettingsFilePath);
+			var settingsResource = ResourceLoader.Load<Resource>("res://addons/ScenesManager/" + AddonConstants.SettingsFilePath);
 			if (settingsResource is SceneManagerSettings settings)
 			{
 				_sceneManagerSettings = settings;
 			}
 			else
 			{
-				GD.PrintErr($"[SceneManager] Failed to load settings from path: {AddonConstants.SettingsFilePath}");
+				GD.PrintErr($"[SceneManager] Failed to load settings from path: {"res://addons/ScenesManager/" + AddonConstants.SettingsFilePath}");
 			}
 		}
 
@@ -163,7 +168,7 @@ namespace MoF.Addons.ScenesManager
 			}
 
 			var schemaResource = ResourceLoader.Load<Resource>(_sceneManagerSettings.SceneManagerSchemaPath);
-			ResourceLoader.LoadThreadedRequest(_sceneManagerSettings.SceneManagerSchemaPath);
+			//ResourceLoader.LoadThreadedRequest(_sceneManagerSettings.SceneManagerSchemaPath);
 			if (schemaResource is SceneManagerSchema schema)
 			{
 				SceneManagerSchema = schema;

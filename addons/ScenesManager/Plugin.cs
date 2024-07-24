@@ -7,13 +7,15 @@ namespace MoF.Addons.ScenesManager
 	[Tool]
 	public partial class Plugin : EditorPlugin
 	{
+		public static string PathToPlugin { get; set; }
 		private ScenesManagerEditor instantiatedEditorScene;
 		public override void _EnterTree()
 		{
 			Resource currentScript = (Resource)GetScript();
-			// Declare TransitionCanvas
-			var script = GD.Load<Script>(currentScript.GetPath() + "TransitionCanvas.cs");
-			var texture = GD.Load<Texture2D>(currentScript.GetPath() + "/Assets/Icons/TransitionIconOn.svg");
+			PathToPlugin = currentScript.GetPath();
+			// Declare custom type TransitionCanvas
+			var script = GD.Load<Script>(PathToPlugin + "TransitionCanvas.cs");
+			var texture = GD.Load<Texture2D>(PathToPlugin + "/Assets/Icons/TransitionIconOn.svg");
 			AddCustomType("TransitionCanvas", "Node", script, texture);
 
 			// Add Graph Editor
@@ -22,7 +24,12 @@ namespace MoF.Addons.ScenesManager
 			AddControlToBottomPanel(instantiatedEditorScene, "Scenes Manager");
 
 			// Add SceneManager Singleton
-			AddAutoloadSingleton("ScenesManagerController", currentScript.GetPath() + "ScenesManager.cs");
+			AddAutoloadSingleton("ScenesManagerController", PathToPlugin + "ScenesManager.cs");
+
+		}
+		public override void _Ready()
+		{
+			ScenesManager.PathToPlugin = PathToPlugin;//not working
 		}
 
 		public override void _ExitTree()

@@ -52,12 +52,12 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 		private static void LoadTextures()
 		{
-			_signalIconTexture ??= ResourceLoader.Load<Texture2D>(AddonConstants.GraphNode.Icons.SignalIconTexture);
-			_transitionIconTextures[(int)TransitionState.Off] ??= ResourceLoader.Load<Texture2D>(AddonConstants.GraphNode.Icons.TransitionIconsTexture[(int)TransitionState.Off]);
-			_transitionIconTextures[(int)TransitionState.On] ??= ResourceLoader.Load<Texture2D>(AddonConstants.GraphNode.Icons.TransitionIconsTexture[(int)TransitionState.On]);
-			_trashCanIconTexture ??= ResourceLoader.Load<Texture2D>(AddonConstants.GraphNode.Icons.TrashcanIconTexture);
-			_linkTextures[(int)TransitionState.Off] ??= ResourceLoader.Load<Texture2D>(AddonConstants.GraphNode.SceneGraphNode.linkImagesTransition[(int)TransitionState.Off]);
-			_linkTextures[(int)TransitionState.On] ??= ResourceLoader.Load<Texture2D>(AddonConstants.GraphNode.SceneGraphNode.linkImagesTransition[(int)TransitionState.On]);
+			_signalIconTexture ??= ResourceLoader.Load<Texture2D>(Plugin.PathToPlugin + AddonConstants.GraphNode.Icons.SignalIconTexture);
+			_transitionIconTextures[(int)TransitionState.Off] ??= ResourceLoader.Load<Texture2D>(Plugin.PathToPlugin + AddonConstants.GraphNode.Icons.TransitionIconsTexture[(int)TransitionState.Off]);
+			_transitionIconTextures[(int)TransitionState.On] ??= ResourceLoader.Load<Texture2D>(Plugin.PathToPlugin + AddonConstants.GraphNode.Icons.TransitionIconsTexture[(int)TransitionState.On]);
+			_trashCanIconTexture ??= ResourceLoader.Load<Texture2D>(Plugin.PathToPlugin + AddonConstants.GraphNode.Icons.TrashcanIconTexture);
+			_linkTextures[(int)TransitionState.Off] ??= ResourceLoader.Load<Texture2D>(Plugin.PathToPlugin + AddonConstants.GraphNode.SceneGraphNode.linkImagesTransition[(int)TransitionState.Off]);
+			_linkTextures[(int)TransitionState.On] ??= ResourceLoader.Load<Texture2D>(Plugin.PathToPlugin + AddonConstants.GraphNode.SceneGraphNode.linkImagesTransition[(int)TransitionState.On]);
 		}
 
 		private void InitializeSubMainContainer()
@@ -127,7 +127,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		{
 			OptionButton optionButton = GodotHelpers.CreateOptionButton();
 			optionButton.AddIconItem(_transitionIconTextures[(int)TransitionState.Off], "none");
-			foreach (string transitionPath in FileSystemHelper.DirScenes<TransitionCanvas>(AddonConstants.TransitionFolderPath, false, "*.tscn"))
+			foreach (string transitionPath in FileSystemHelper.DirScenes<TransitionCanvas>(Plugin.PathToPlugin + AddonConstants.TransitionFolderPath, false, "*.tscn"))
 			{
 				_transitionPaths.Add(Path.GetFileName(transitionPath));
 				optionButton.AddIconItem(_transitionIconTextures[(int)TransitionState.On], GodotHelpers.ToReadableFileName(transitionPath));

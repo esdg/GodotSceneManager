@@ -41,9 +41,9 @@ namespace MoF.Addons.ScenesManager.Helpers
         }
 
         /// <summary>
-        /// Saves the scene manager settings to the specified path.
+        /// Saves the scene manager settings, with path to the scene manager schema file.
         /// </summary>
-        /// <param name="path">The path where the settings will be saved.</param>
+        /// <param name="path">The path to the scene manager schema file.</param>
         public static void SaveSceneManagerSettings(string path)
         {
             SceneManagerSettings sceneManagerSettings = new()
