@@ -81,7 +81,7 @@ namespace MoF.Addons.ScenesManager
 
 		private void OpenSchema(string path)
 		{
-			var loadedSchema = ResourceLoader.Load<SceneManagerSchema>(path, null, ResourceLoader.CacheMode.Replace);
+			var loadedSchema = ResourceLoader.Load<SceneManagerSchema>(path, null, ResourceLoader.CacheMode.Ignore);
 			if (loadedSchema == null)
 			{
 				GD.PrintErr("[SceneManagerEditor] Failed to load SceneManagerSchema from path: " + path);
