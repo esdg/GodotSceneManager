@@ -1,0 +1,74 @@
+name: 'Submit main'
+
+on:
+  push:
+    branches: [ 'main' ]
+
+env:
+  GODOT_VERSION: 4.2
+  VERSION_FILE: project.godot
+  VERSION_REGEX: config\/version=\"\K[0-9.\-A-z]*
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v3
+
+      - name: Install Godot
+        uses: CapsCollective/godot-actions/install-godot@v1.0
+        with:
+          godot-version: ${{ env.GODOT_VERSION }}
+          install-templates: true
+        id: install-godot
+
+      - name: Open Godot editor for reimport
+        run: ${{ steps.install-godot.outputs.godot-executable }} --editor --headless --quit || true
+
+      - name: Build and upload artifacts for all platforms
+        uses: CapsCollective/godot-actions/build-godot@v1.0
+        with:
+          godot-executable: ${{ steps.install-godot.outputs.godot-executable }}
+
+  generate-release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v3
+
+      - name: Extract version
+        uses: CapsCollective/version-actions/extract-version@v1.0
+        with:
+          version-file: ${{ env.VERSION_FILE }}
+          version-regex: ${{ env.VERSION_REGEX }}
+        id: extract-version
+      
+      - name: Download macOS artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: macos
+          path: artifacts/macos
+
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: windows
+          path: artifacts/windows
+
+      - name: Download Linux artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: linux
+          path: artifacts/linux
+
+      - name: Tag and upload artifacts to release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.extract-version.outputs.version-string }}
+          commit: ${{ github.sha }}
+          allowUpdates: false
+          artifactErrorsFailBuild: true
+          prerelease: true
+          artifacts: artifacts/*/*
