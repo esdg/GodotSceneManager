@@ -1,24 +1,10 @@
 ![Godot Scene Manager Cover image](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/cover-image.png?raw=true)
 
-![GitHub Release](https://img.shields.io/github/v/release/esdg/GodotSceneManager)
-
 ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/esdg/GodotSceneManager/latest/total)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/esdg/GodotSceneManager?style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/esdg/GodotSceneManager)
 
-
-![GitHub opened Issues](https://img.shields.io/github/issues/esdg/GodotSceneManager?style=flat-square)
-![GitHub closed Issues](https://img.shields.io/github/issues-closed/esdg/GodotSceneManager?style=flat-square)
-![GitHub opened pull Requests](https://img.shields.io/github/issues-pr/esdg/GodotSceneManager?style=flat-square)
-![GitHub closed Pull Requests](https://img.shields.io/github/issues-pr-closed/esdg/GodotSceneManager?style=flat-square)
-
 ![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/1?style=flat-square)
-![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/2?style=flat-square)
-![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/3?style=flat-square)
-![GitHub milestone details](https://img.shields.io/github/milestones/progress/esdg/GodotSceneManager/4?style=flat-square)
-
-
-
+![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/1?style=flat-square)
 
 # Scene Manager Plugin for Godot
 
@@ -48,8 +34,10 @@ The **Scene Manager** plugin enhances your Godot development workflow by providi
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-![itch.io](https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white)(https://itch.io/)
-![FaceBook](https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white)(https://www.facebook.com/people/Mid-or-Feed/61559305242385/)
-![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)(https://github.com/esdg/GodotSceneManager)
-![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)(https://github.com/esdg/GodotSceneManager)
+---
+
+[![itch.io](https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white)](https://itch.io/)
+[![FaceBook](https://img.shields.io/badge/facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/people/Mid-or-Feed/61559305242385/)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/esdg/GodotSceneManager)
+[![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com)
 
