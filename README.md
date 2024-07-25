@@ -3,9 +3,6 @@
 ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/esdg/GodotSceneManager/latest/total?style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/esdg/GodotSceneManager?style=flat-square)
 
-![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/1?style=flat-square)
-![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/1?style=flat-square)
-
 # Scene Manager Plugin for Godot
 
 The **Scene Manager** plugin enhances your Godot development workflow by providing a visual graph editor for managing transitions between nodes. This tool allows you to easily create and visualize relationships and transitions between different scenes and nodes within your project. With a user-friendly interface, you can drag and drop nodes, define transitions, and see an intuitive representation of your scene flow. This plugin is perfect for developers looking to streamline scene management and improve project organization.
@@ -29,6 +26,29 @@ The **Scene Manager** plugin enhances your Godot development workflow by providi
 1. Open the Scene Manager from the Godot editor.
 2. Create nodes and define transitions between them.
 3. Visualize and manage your scene relationships with ease.
+
+## Planned releases
+
+### v1 Alpha (MVP)
+
+![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/1?style=flat-square)
+![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/1?style=flat-square)
+
+## v1 Beta
+
+![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/2?style=flat-square)
+![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/2?style=flat-square)
+
+## v1 RC
+
+![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/3?style=flat-square)
+![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/3?style=flat-square)
+
+## v1 Release
+
+![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/4?style=flat-square)
+![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/4?style=flat-square)
+
 
 ## License
 
