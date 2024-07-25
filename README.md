@@ -1,7 +1,7 @@
 ![Godot Scene Manager Cover image](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/cover-image.png?raw=true)
 
-![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/esdg/GodotSceneManager/latest/total)
-![GitHub repo size](https://img.shields.io/github/repo-size/esdg/GodotSceneManager)
+![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/esdg/GodotSceneManager/latest/total?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/esdg/GodotSceneManager?style=flat-square)
 
 ![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/1?style=flat-square)
 ![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/1?style=flat-square)
