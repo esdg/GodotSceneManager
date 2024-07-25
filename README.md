@@ -1,7 +1,8 @@
-![Godot Scene Manager Cover image](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/cover-image.png?raw=true)
+<a name="header"></a>
+[![Godot Scene Manager Cover image](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/cover-image.png?raw=true)](#header)
 
-![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/esdg/GodotSceneManager/latest/total?style=flat-square)
-![GitHub repo size](https://img.shields.io/github/repo-size/esdg/GodotSceneManager?style=flat-square)
+[![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/esdg/GodotSceneManager/latest/total?style=flat-square)](#header)
+[![GitHub repo size](https://img.shields.io/github/repo-size/esdg/GodotSceneManager?style=flat-square)](#header)
 
 # Scene Manager Plugin for Godot
 
@@ -29,26 +30,33 @@ The **Scene Manager** plugin enhances your Godot development workflow by providi
 
 ## Planned releases
 
-### v1 Alpha (MVP)
+### v1 Alpha (MVP) <a name="alpha"></a>
 
-![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/1?style=flat-square)
-![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/1?style=flat-square)
+[![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/1?style=flat-square)](#alpha)
+[![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/1?style=flat-square)](#alpha)
 
-## v1 Beta
+The initial release of the Scene Manager Plugin, providing the core functionality required for basic scene management in Godot. This version focuses on delivering a minimum viable product (MVP) to gather early feedback from users and to identify and address critical issues.
 
-![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/2?style=flat-square)
-![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/2?style=flat-square)
+## v1 Beta <a name="beta"></a>
 
-## v1 RC
+[![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/2?style=flat-square)](#beta)
+[![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/2?style=flat-square)](#beta)
 
-![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/3?style=flat-square)
-![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/3?style=flat-square)
+The beta release introduces additional features and improvements based on feedback from the alpha release. This version aims to refine the user experience and add more functionality to enhance scene management capabilities.
 
-## v1 Release
+## v1 RC <a name="rc"></a>
 
-![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/4?style=flat-square)
-![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/4?style=flat-square)
+[![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/3?style=flat-square)](#rc)
+[![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/3?style=flat-square)](#rc)
 
+The release candidate is a nearly complete version of the plugin, incorporating all planned features and addressing issues identified in previous releases. This version is intended for final testing and quality assurance before the official release.
+
+## v1 Release <a name="release"></a>
+
+[![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/4?style=flat-square)](#release)
+[![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/4?style=flat-square)](#release)
+
+The official release of the Scene Manager Plugin, offering a robust and fully-featured tool for managing scene transitions in Godot. This version is stable, thoroughly tested, and ready for use in production environments.
 
 ## License
 
