@@ -1,3 +1,4 @@
+#if TOOLS
 using Godot;
 using Godot.Collections;
 using MoF.Addons.ScenesManager.Constants;
@@ -52,3 +53,4 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
         }
     }
 }
+#endif

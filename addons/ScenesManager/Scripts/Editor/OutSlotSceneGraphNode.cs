@@ -1,3 +1,4 @@
+#if TOOLS
 using System.IO;
 using System.Linq;
 using Godot;
@@ -151,3 +152,4 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		}
 	}
 }
+#endif

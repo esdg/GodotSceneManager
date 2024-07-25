@@ -1,3 +1,4 @@
+#if TOOLS
 using System;
 using System.Globalization;
 using System.IO;
@@ -6,6 +7,7 @@ using Godot;
 using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Scripts.Resources;
 using static Godot.Control;
+
 
 namespace MoF.Addons.ScenesManager.Helpers
 {
@@ -110,3 +112,4 @@ namespace MoF.Addons.ScenesManager.Helpers
         }
     }
 }
+#endif

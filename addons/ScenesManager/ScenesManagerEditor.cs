@@ -1,9 +1,11 @@
+#if TOOLS
 using System.Linq;
 using Godot;
 using Godot.Collections;
 using MoF.Addons.ScenesManager.Helpers;
 using MoF.Addons.ScenesManager.Scripts.Editor;
 using MoF.Addons.ScenesManager.Scripts.Resources;
+
 
 namespace MoF.Addons.ScenesManager
 {
@@ -244,3 +246,4 @@ namespace MoF.Addons.ScenesManager
 		}
 	}
 }
+#endif

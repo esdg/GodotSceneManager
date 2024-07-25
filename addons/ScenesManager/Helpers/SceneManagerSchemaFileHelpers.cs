@@ -1,3 +1,4 @@
+#if TOOLS
 using System.Linq;
 using Godot;
 using MoF.Addons.ScenesManager.Scripts.Editor;
@@ -232,3 +233,4 @@ namespace MoF.Addons.ScenesManager.Helpers
 		#endregion
 	}
 }
+#endif

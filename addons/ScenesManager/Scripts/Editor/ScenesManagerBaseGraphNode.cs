@@ -1,3 +1,4 @@
+#if TOOLS
 using Godot;
 using Godot.Collections;
 using MoF.Addons.ScenesManager.Scripts.Resources;
@@ -74,3 +75,4 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
         public virtual void _SetupGraphNode() { }
     }
 }
+#endif

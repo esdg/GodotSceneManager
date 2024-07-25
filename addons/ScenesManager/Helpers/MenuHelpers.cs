@@ -1,3 +1,4 @@
+#if TOOLS
 using Godot;
 using MoF.Addons.ScenesManager.Constants;
 using System;
@@ -87,3 +88,4 @@ namespace MoF.Addons.ScenesManager.Helpers
         }
     }
 }
+#endif
