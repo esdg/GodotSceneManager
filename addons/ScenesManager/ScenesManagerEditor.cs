@@ -139,11 +139,6 @@ namespace MoF.Addons.ScenesManager
 			graphEdit.GetChildren().OfType<QuitAppGraphNode>().First().QueueFree();
 		}
 
-		private static void CreateTransitionNode()
-		{
-			// Implement Create Transition Node logic here
-		}
-
 		private void OnGraphMenuItemPressed(long index)
 		{
 			switch (index)
@@ -169,9 +164,6 @@ namespace MoF.Addons.ScenesManager
 			{
 				case 0:
 					CreateSceneNode();
-					break;
-				case 1:
-					CreateTransitionNode();
 					break;
 				case 2:
 					var nodeMenu = MainMenuBar.GetChildren().OfType<PopupMenu>().FirstOrDefault(o => o.Name == "Node menu");

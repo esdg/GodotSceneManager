@@ -41,7 +41,6 @@ namespace MoF.Addons.ScenesManager.Helpers
             var nodesAddSubMenuItems = new[]
             {
                 "Add Scene Node",
-                "Add Transition Node",
             };
 
             var menuItemNodes = CreatePopupMenu("Nodes", Array.Empty<string>(), eventHandler);
