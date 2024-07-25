@@ -12,6 +12,7 @@ The **Scene Manager** plugin enhances your Godot development workflow by providi
 ## Features
 
 - Visual graph editor for node transitions
+- Large collection of transitions effects
 - Easy drag-and-drop interface
 - Intuitive representation of scene flow
 - Simplifies scene management

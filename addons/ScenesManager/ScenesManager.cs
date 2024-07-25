@@ -23,13 +23,12 @@ namespace MoF.Addons.ScenesManager
 
 		public override void _Ready()
 		{
+			PathToPlugin = ((Resource)GetScript()).GetPath();
+
 			_tree = GetTree();
 			LoadSettings();
 			LoadSchema();
 			_tree.TreeChanged += OnTreeChanged;
-
-
-			GD.Print($"====>{PathToPlugin}");
 		}
 
 		private void OnTreeChanged()
@@ -84,7 +83,7 @@ namespace MoF.Addons.ScenesManager
 			}
 			else
 			{
-				string transitionPath = $"{"res://addons/ScenesManager/" + AddonConstants.TransitionFolderPath}/{sceneManagerOutSlotSignal.TransitionFileName}";
+				string transitionPath = $"{PathToPlugin + AddonConstants.TransitionFolderPath}/{sceneManagerOutSlotSignal.TransitionFileName}";
 				PackedScene transitionPackedScene = ResourceLoader.Load<PackedScene>(transitionPath);
 				_transitionCanvas = transitionPackedScene.Instantiate<TransitionCanvas>();
 			}
@@ -148,14 +147,14 @@ namespace MoF.Addons.ScenesManager
 
 		private static void LoadSettings()
 		{
-			var settingsResource = ResourceLoader.Load<Resource>("res://addons/ScenesManager/" + AddonConstants.SettingsFilePath);
+			var settingsResource = ResourceLoader.Load<Resource>(PathToPlugin + AddonConstants.SettingsFilePath);
 			if (settingsResource is SceneManagerSettings settings)
 			{
 				_sceneManagerSettings = settings;
 			}
 			else
 			{
-				GD.PrintErr($"[SceneManager] Failed to load settings from path: {"res://addons/ScenesManager/" + AddonConstants.SettingsFilePath}");
+				GD.PrintErr($"[SceneManager] Failed to load settings from path: {PathToPlugin + AddonConstants.SettingsFilePath}");
 			}
 		}
 

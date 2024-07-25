@@ -25,11 +25,6 @@ namespace MoF.Addons.ScenesManager
 
 			// Add SceneManager Singleton
 			AddAutoloadSingleton("ScenesManagerController", PathToPlugin + "ScenesManager.cs");
-
-		}
-		public override void _Ready()
-		{
-			ScenesManager.PathToPlugin = PathToPlugin;//not working
 		}
 
 		public override void _ExitTree()
