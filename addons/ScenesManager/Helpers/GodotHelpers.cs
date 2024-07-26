@@ -52,7 +52,7 @@ namespace MoF.Addons.ScenesManager.Helpers
             {
                 SceneManagerSchemaPath = path,
             };
-            FileSystemHelper.SaveAndCreateFolder(sceneManagerSettings, AddonConstants.SettingsFilePath);
+            FileSystemHelper.SaveAndCreateFolder(sceneManagerSettings, Plugin.PathToPlugin + AddonConstants.SettingsFilePath);
         }
 
         /// <summary>
