@@ -75,9 +75,8 @@ The official release of the Scene Manager Plugin, offering a robust and fully-fe
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
-
-[![itch.io](https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white)](https://mid-or-feed.itch.io/godot-scene-manager){:title="Click to Visit our ItchIo page"}{:target="_blank"}
-[![FaceBook](https://img.shields.io/badge/facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/people/Mid-or-Feed/61559305242385/){:title="Click to Visit our Facebook page"}{:target="_blank"}
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/esdg/GodotSceneManager){:title="Click to Visit the GitHub project pages"}{:target="_blank"}
-[![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com){:title="Click to Visit our X account"}{:target="_blank"}
+<a href="https://mid-or-feed.itch.io/godot-scene-manager" target="_blank"><img src="https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white" alt="Gitch.io"></a>
+<a href="https://www.facebook.com/people/Mid-or-Feed/61559305242385/" target="_blank"><img src="https://img.shields.io/badge/facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="FaceBook"></a>
+<a href="https://github.com/esdg/GodotSceneManager" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+<a href="https://x.com" target="_blank"><img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" alt="GitHub"></a>
 
