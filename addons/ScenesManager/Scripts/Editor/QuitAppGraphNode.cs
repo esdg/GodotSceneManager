@@ -1,3 +1,4 @@
+#if TOOLS
 using Godot;
 using Godot.Collections;
 using MoF.Addons.ScenesManager.Constants;
@@ -23,9 +24,9 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
         public override void _LoadResources()
         {
-            quitAppIconTexture ??= ResourceLoader.Load<Texture2D>(AddonConstants.GraphNode.QuitAppGraphNode.StartingAppIconTexturePath);
-            quitAppGraphNodeStylePanel ??= ResourceLoader.Load<StyleBoxFlat>(AddonConstants.GraphNode.QuitAppGraphNode.GraphNodeStylePanelPath);
-            quitAppGraphNodeStyleTitlebar ??= ResourceLoader.Load<StyleBoxFlat>(AddonConstants.GraphNode.QuitAppGraphNode.GraphNodeStyleTitlebarPath);
+            quitAppIconTexture ??= ResourceLoader.Load<Texture2D>(Plugin.PathToPlugin + AddonConstants.GraphNode.QuitAppGraphNode.StartingAppIconTexturePath);
+            quitAppGraphNodeStylePanel ??= ResourceLoader.Load<StyleBoxFlat>(Plugin.PathToPlugin + AddonConstants.GraphNode.QuitAppGraphNode.GraphNodeStylePanelPath);
+            quitAppGraphNodeStyleTitlebar ??= ResourceLoader.Load<StyleBoxFlat>(Plugin.PathToPlugin + AddonConstants.GraphNode.QuitAppGraphNode.GraphNodeStyleTitlebarPath);
         }
 
         public override void _SetupGraphNode()
@@ -52,3 +53,4 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
         }
     }
 }
+#endif

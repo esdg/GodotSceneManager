@@ -1,17 +1,29 @@
+#if TOOLS
 using System;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using Godot;
 using MoF.Addons.ScenesManager.Constants;
-using MoF.Addons.ScenesManager.Extensions;
 using MoF.Addons.ScenesManager.Scripts.Resources;
 using static Godot.Control;
 
+
 namespace MoF.Addons.ScenesManager.Helpers
 {
+    /// <summary>
+    /// Provides helper methods for common Godot-related tasks.
+    /// </summary>
     public static class GodotHelpers
     {
+        /// <summary>
+        /// Creates a <see cref="FileDialog"/> with specified settings.
+        /// </summary>
+        /// <param name="mode">The file dialog mode.</param>
+        /// <param name="title">The title of the file dialog.</param>
+        /// <param name="onFileSelected">The action to execute when a file is selected.</param>
+        /// <param name="parent">The parent control to which the file dialog will be added.</param>
+        /// <returns>The created <see cref="FileDialog"/>.</returns>
         public static FileDialog CreateFileDialog(FileDialog.FileModeEnum mode, string title, Action<FileDialog, string, FileDialog.FileModeEnum> onFileSelected, Control parent)
         {
             FileDialog fileDialog = new FileDialog
@@ -30,6 +42,10 @@ namespace MoF.Addons.ScenesManager.Helpers
             return fileDialog;
         }
 
+        /// <summary>
+        /// Saves the scene manager settings, with path to the scene manager schema file.
+        /// </summary>
+        /// <param name="path">The path to the scene manager schema file.</param>
         public static void SaveSceneManagerSettings(string path)
         {
             SceneManagerSettings sceneManagerSettings = new()
@@ -39,11 +55,20 @@ namespace MoF.Addons.ScenesManager.Helpers
             FileSystemHelper.SaveAndCreateFolder(sceneManagerSettings, AddonConstants.SettingsFilePath);
         }
 
+        /// <summary>
+        /// Gets the title of a scene graph node.
+        /// </summary>
+        /// <param name="node">The node for which to get the title.</param>
+        /// <returns>The title of the scene graph node.</returns>
         public static string GetSceneGraphNodeTitle(Node node)
         {
             return $"{Path.GetFileNameWithoutExtension(node.SceneFilePath)}::{node.Name}";
         }
 
+        /// <summary>
+        /// Creates a configured <see cref="OptionButton"/>.
+        /// </summary>
+        /// <returns>The created <see cref="OptionButton"/>.</returns>
         public static OptionButton CreateOptionButton()
         {
             return new OptionButton
@@ -54,6 +79,11 @@ namespace MoF.Addons.ScenesManager.Helpers
             };
         }
 
+        /// <summary>
+        /// Converts a file name to a more readable format.
+        /// </summary>
+        /// <param name="fileName">The file name to convert.</param>
+        /// <returns>A readable version of the file name.</returns>
         public static string ToReadableFileName(string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName))
@@ -82,3 +112,4 @@ namespace MoF.Addons.ScenesManager.Helpers
         }
     }
 }
+#endif

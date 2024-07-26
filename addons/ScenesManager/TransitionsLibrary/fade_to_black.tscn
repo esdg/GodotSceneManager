@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bacq1k0fw88ul"]
 
-[ext_resource type="Script" path="res://addons/ScenesManager/TransitionCanvas.cs" id="1_q5yua"]
+[ext_resource type="Script" path="res://addons/ScenesManager/TransitionNode.cs" id="1_q5yua"]
 
 [sub_resource type="Animation" id="Animation_ua1vh"]
 resource_name = "TRANSITION"

@@ -3,7 +3,7 @@ using Godot;
 namespace MoF.Addons.ScenesManager.Scripts.Resources
 {
 
-    [Tool, GlobalClass]
+    [Tool]
     public partial class SceneManagerSettings : Resource
     {
         [Export] public string SceneManagerSchemaPath { get; set; }

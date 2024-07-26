@@ -1,3 +1,4 @@
+#if TOOLS
 using System.Linq;
 using Godot;
 using Godot.Collections;
@@ -62,8 +63,8 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 		public override void _LoadResources()
 		{
-			_sceneGraphNodeStylePanel ??= ResourceLoader.Load<StyleBoxFlat>(AddonConstants.GraphNode.SceneGraphNode.GraphNodeStylePanelPath);
-			_sceneGraphNodeStyleTitlebar ??= ResourceLoader.Load<StyleBoxFlat>(AddonConstants.GraphNode.SceneGraphNode.GraphNodeStyleTitlebarPath);
+			_sceneGraphNodeStylePanel ??= ResourceLoader.Load<StyleBoxFlat>(Plugin.PathToPlugin + AddonConstants.GraphNode.SceneGraphNode.GraphNodeStylePanelPath);
+			_sceneGraphNodeStyleTitlebar ??= ResourceLoader.Load<StyleBoxFlat>(Plugin.PathToPlugin + AddonConstants.GraphNode.SceneGraphNode.GraphNodeStyleTitlebarPath);
 		}
 
 		public override void _SetupGraphNode()
@@ -205,3 +206,4 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		}
 	}
 }
+#endif

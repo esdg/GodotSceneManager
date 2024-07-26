@@ -1,8 +1,11 @@
+#if TOOLS
 using System.Linq;
 using Godot;
+using Godot.Collections;
 using MoF.Addons.ScenesManager.Helpers;
 using MoF.Addons.ScenesManager.Scripts.Editor;
 using MoF.Addons.ScenesManager.Scripts.Resources;
+
 
 namespace MoF.Addons.ScenesManager
 {
@@ -11,25 +14,20 @@ namespace MoF.Addons.ScenesManager
 	{
 		private GraphEdit graphEdit;
 		private int nodeCount = 0;
-		private Texture2D trashCanIconTexture;
 		public MenuBar MainMenuBar { get; set; }
 		private MenuBar mainContextualMenuBar;
-		private GraphNode selectedNode;
 		private SceneManagerSchema currentSceneManagerSchema = new();
+
+		private ScenesManagerBaseGraphNode selectedNode;
+		private Array<SceneGraphNode> selectedNodes = new();
 
 		private string saveFilePath = "";
 
 		public override void _Ready()
 		{
-			LoadResources();
 			InitializeNodes();
 			SetupEventHandlers();
 			CreateTopMenuBar();
-		}
-
-		private void LoadResources()
-		{
-			trashCanIconTexture = ResourceLoader.Load<Texture2D>("res://addons/ScenesManager/Assets/Icons/trashcan.svg");
 		}
 
 		private void InitializeNodes()
@@ -143,11 +141,6 @@ namespace MoF.Addons.ScenesManager
 			graphEdit.GetChildren().OfType<QuitAppGraphNode>().First().QueueFree();
 		}
 
-		private static void CreateTransitionNode()
-		{
-			// Implement Create Transition Node logic here
-		}
-
 		private void OnGraphMenuItemPressed(long index)
 		{
 			switch (index)
@@ -173,9 +166,6 @@ namespace MoF.Addons.ScenesManager
 			{
 				case 0:
 					CreateSceneNode();
-					break;
-				case 1:
-					CreateTransitionNode();
 					break;
 				case 2:
 					var nodeMenu = MainMenuBar.GetChildren().OfType<PopupMenu>().FirstOrDefault(o => o.Name == "Node menu");
@@ -210,15 +200,26 @@ namespace MoF.Addons.ScenesManager
 
 		private void OnNodeSelected(Node node)
 		{
-			selectedNode = node as ScenesManagerBaseGraphNode;
-			if (selectedNode is not StartAppGraphNode && selectedNode is not QuitAppGraphNode)
-				mainContextualMenuBar.Visible = true;
+			if (node is SceneGraphNode)
+			{
+				selectedNode = node as ScenesManagerBaseGraphNode;
+				selectedNodes.Add(node as SceneGraphNode);
+				if (selectedNodes.Count == 1)
+					mainContextualMenuBar.Visible = true;
+				else
+					mainContextualMenuBar.Visible = false;
+			}
+
 		}
 
 		private void OnNodeDeselected(Node node)
 		{
 			selectedNode = null;
-			mainContextualMenuBar.Visible = false;
+			selectedNodes.Remove(node as SceneGraphNode);
+			if (selectedNodes.Count == 1)
+				mainContextualMenuBar.Visible = true;
+			else
+				mainContextualMenuBar.Visible = false;
 		}
 
 		private void _on_graph_edit_connection_request(StringName from_node, long from_port, StringName to_node, long to_port)
@@ -238,6 +239,13 @@ namespace MoF.Addons.ScenesManager
 
 		private void _on_delete_node_button_pressed()
 		{
+			var connectionList = graphEdit.GetConnectionList().Where(o => (StringName)o["from_node"] == selectedNode.Name || (StringName)o["to_node"] == selectedNode.Name);
+
+			foreach (var connection in connectionList)
+			{
+				graphEdit.DisconnectNode((StringName)connection["from_node"], (int)connection["from_port"], (StringName)connection["to_node"], (int)connection["to_port"]);
+			}
+
 			graphEdit.RemoveChild(selectedNode);
 			selectedNode.QueueFree();
 			selectedNode = null;
@@ -245,3 +253,4 @@ namespace MoF.Addons.ScenesManager
 		}
 	}
 }
+#endif

@@ -7,17 +7,24 @@ namespace MoF.Addons.ScenesManager
 	[Tool]
 	public partial class Plugin : EditorPlugin
 	{
+		public static string PathToPlugin { get; set; }
 		private ScenesManagerEditor instantiatedEditorScene;
 		public override void _EnterTree()
 		{
 			Resource currentScript = (Resource)GetScript();
-			var script = GD.Load<Script>(currentScript.GetPath() + "ScenesManager.cs");
-			var texture = GD.Load<Texture2D>(currentScript.GetPath() + "/Assets/Icons/scenes-manager-icon.svg");
-			AddCustomType("ScenesManager", "Node", script, texture);
+			PathToPlugin = currentScript.GetPath();
+			// Declare custom type TransitionNode
+			var script = GD.Load<Script>(PathToPlugin + "TransitionNode.cs");
+			var texture = GD.Load<Texture2D>(PathToPlugin + "/Assets/Icons/TransitionIconOn.svg");
+			AddCustomType("TransitionNode", "Node", script, texture);
+
+			// Add Graph Editor
 			var editorScene = GD.Load<PackedScene>(currentScript.GetPath() + "/Assets/Scenes/ScenesManagerEditor.tscn");
 			instantiatedEditorScene = editorScene.Instantiate<ScenesManagerEditor>();
 			AddControlToBottomPanel(instantiatedEditorScene, "Scenes Manager");
-			AddAutoloadSingleton("ScenesManagerController", currentScript.GetPath() + "ScenesManager.cs");
+
+			// Add SceneManager Singleton
+			AddAutoloadSingleton("ScenesManagerController", PathToPlugin + "ScenesManager.cs");
 		}
 
 		public override void _ExitTree()

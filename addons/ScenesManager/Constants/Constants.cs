@@ -9,8 +9,9 @@ namespace MoF.Addons.ScenesManager.Constants
     {
         // General constants
         public const string PopupMenuSeparator = "------";
-        public const string SettingsFilePath = "res://addons/ScenesManager/Settings/SceneManagerSettings.tres";
-        public const string TransitionFolderPath = "res://addons/ScenesManager/TransitionsLibrary";
+        public const string SettingsFilePath = "/Settings/SceneManagerSettings.tres";
+        public const string TransitionFolderPath = "/TransitionsLibrary";
+        public const string TransitionNone = "none";
 
         /// <summary>
         /// Constants related to graph nodes.
@@ -28,9 +29,9 @@ namespace MoF.Addons.ScenesManager.Constants
 
             public static partial class Icons
             {
-                public const string SignalIconTexture = "res://addons/ScenesManager/Assets/Icons/SignalIcon.svg";
-                public const string TrashcanIconTexture = "res://addons/ScenesManager/Assets/Icons/trashcan.svg";
-                public static readonly string[] TransitionIconsTexture = { "res://addons/ScenesManager/Assets/Icons/TransitionIconOff.svg", "res://addons/ScenesManager/Assets/Icons/TransitionIconOn.svg" };
+                public const string SignalIconTexture = "/Assets/Icons/SignalIcon.svg";
+                public const string TrashcanIconTexture = "/Assets/Icons/trashcan.svg";
+                public static readonly string[] TransitionIconsTexture = { "/Assets/Icons/TransitionIconOff.svg", "/Assets/Icons/TransitionIconOn.svg" };
             }
 
 
@@ -40,10 +41,10 @@ namespace MoF.Addons.ScenesManager.Constants
             public static partial class SceneGraphNode
             {
                 public const string Title = "Scene Node";
-                public const string GraphNodeStylePanelPath = "res://addons/ScenesManager/Assets/Styles/SceneGraphNodeStylePanel.tres";
-                public const string GraphNodeStyleTitlebarPath = "res://addons/ScenesManager/Assets/Styles/SceneGraphNodeStyleTitlebar.tres";
+                public const string GraphNodeStylePanelPath = "/Assets/Styles/SceneGraphNodeStylePanel.tres";
+                public const string GraphNodeStyleTitlebarPath = "/Assets/Styles/SceneGraphNodeStyleTitlebar.tres";
                 public static readonly Vector2 InitialSize = new(250, 10);
-                public static readonly string[] linkImagesTransition = { "res://addons/ScenesManager/Assets/Icons/LinkTransitionIconOff.svg", "res://addons/ScenesManager/Assets/Icons/LinkTransitionIconOn.svg" };
+                public static readonly string[] linkImagesTransition = { "/Assets/Icons/LinkTransitionIconOff.svg", "/Assets/Icons/LinkTransitionIconOn.svg" };
             }
 
             /// <summary>
@@ -52,18 +53,18 @@ namespace MoF.Addons.ScenesManager.Constants
             public static partial class StartAppGraphNode
             {
                 public const string Title = "Starting App Node";
-                public const string GraphNodeStylePanelPath = "res://addons/ScenesManager/Assets/Styles/StartingAppGraphNodeStylePanel.tres";
-                public const string GraphNodeStyleTitlebarPath = "res://addons/ScenesManager/Assets/Styles/StartingAppGraphNodeStyleTitlebar.tres";
-                public const string StartingAppIconTexturePath = "res://addons/ScenesManager/Assets/Icons/starting-app-icon.svg";
+                public const string GraphNodeStylePanelPath = "/Assets/Styles/StartingAppGraphNodeStylePanel.tres";
+                public const string GraphNodeStyleTitlebarPath = "/Assets/Styles/StartingAppGraphNodeStyleTitlebar.tres";
+                public const string StartingAppIconTexturePath = "/Assets/Icons/starting-app-icon.svg";
                 public static readonly Vector2 InitialSize = new(250, 10);
             }
 
             public static partial class QuitAppGraphNode
             {
                 public const string Title = "Quit App Node";
-                public const string GraphNodeStylePanelPath = "res://addons/ScenesManager/Assets/Styles/QuitAppGraphNodeStylePanel.tres";
-                public const string GraphNodeStyleTitlebarPath = "res://addons/ScenesManager/Assets/Styles/QuitAppGraphNodeStyleTitlebar.tres";
-                public const string StartingAppIconTexturePath = "res://addons/ScenesManager/Assets/Icons/quit-app-icon.svg";
+                public const string GraphNodeStylePanelPath = "/Assets/Styles/QuitAppGraphNodeStylePanel.tres";
+                public const string GraphNodeStyleTitlebarPath = "/Assets/Styles/QuitAppGraphNodeStyleTitlebar.tres";
+                public const string StartingAppIconTexturePath = "/Assets/Icons/quit-app-icon.svg";
                 public static readonly Vector2 InitialSize = new(250, 10);
             }
         }

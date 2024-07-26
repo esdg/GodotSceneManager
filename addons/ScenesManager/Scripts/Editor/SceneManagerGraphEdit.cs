@@ -1,3 +1,4 @@
+#if TOOLS
 using Godot;
 
 namespace MoF.Addons.ScenesManager.Scripts.Editor
@@ -16,7 +17,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		}
 	}
 }
-
+#endif
 
 
 

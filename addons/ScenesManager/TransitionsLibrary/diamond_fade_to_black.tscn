@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bpm6cwd2rdb1"]
 
-[ext_resource type="Script" path="res://addons/ScenesManager/TransitionCanvas.cs" id="1_kt5id"]
+[ext_resource type="Script" path="res://addons/ScenesManager/TransitionNode.cs" id="1_kt5id"]
 [ext_resource type="Shader" path="res://addons/ScenesManager/Assets/Shaders/diamondShader.gdshader" id="2_ay8aq"]
 
 [sub_resource type="Animation" id="Animation_2564u"]

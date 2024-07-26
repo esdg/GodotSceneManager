@@ -6,7 +6,7 @@ namespace MoF.Addons.ScenesManager.Scripts
     /// An abstract base class for transition canvas nodes in the scenes manager.
     /// </summary>
     [Tool]
-    public abstract partial class TransitionCanvasBase : Node
+    public abstract partial class TransitionNodeBase : Node
     {
         /// <summary>
         /// Signal emitted when the transition is finished.
