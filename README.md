@@ -18,6 +18,10 @@ The **Scene Manager** plugin enhances your Godot development workflow by providi
 - Simplifies scene management
 - Improves project organization
 
+[![Godot Scene Manager Cover image](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/cover-image.png?raw=true)](#header)
+[![Godot Scene Manager Cover image](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/cover-image.png?raw=true)](#header)
+[![Godot Scene Manager Cover image](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/cover-image.png?raw=true)](#header)
+
 ## Installation
 
 1. Download the plugin from the [repository](#).
@@ -38,6 +42,9 @@ The **Scene Manager** plugin enhances your Godot development workflow by providi
 
 [![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/1?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/1?closed=1)
 [![GitHub milestone details](https://img.shields.io/github/milestones/issues-closed/esdg/GodotSceneManager/1?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/1?closed=1)
+
+[![GitHub Downloads (all assets, specific tag)](https://img.shields.io/github/downloads/esdg/GodotSceneManager/1.0.0-alpha.1/total?style=flat-square)](https://github.com/esdg/GodotSceneManager/releases/tag/1.0.0-alpha.1)
+
 The initial release of the Scene Manager Plugin, providing the core functionality required for basic scene management in Godot. This version focuses on delivering a minimum viable product (MVP) to gather early feedback from users and to identify and address critical issues.
 
 <a name="beta"></a>
@@ -73,8 +80,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-[![itch.io](https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white)](https://mid-or-feed.itch.io/godot-scene-manager)
-[![FaceBook](https://img.shields.io/badge/facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/people/Mid-or-Feed/61559305242385/)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/esdg/GodotSceneManager)
-[![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com)
+[![itch.io](https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white)](https://mid-or-feed.itch.io/godot-scene-manager){:title="Click to Visit our ItchIo page"}{:target="_blank"}
+[![FaceBook](https://img.shields.io/badge/facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/people/Mid-or-Feed/61559305242385/){:title="Click to Visit our Facebook page"}{:target="_blank"}
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/esdg/GodotSceneManager){:title="Click to Visit the GitHub project pages"}{:target="_blank"}
+[![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com){:title="Click to Visit our X account"}{:target="_blank"}
 
