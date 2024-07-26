@@ -2,7 +2,7 @@
 
 [![Godot Scene Manager Cover image](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/cover-image.png?raw=true)](#header)
 
-[![GitHub Release](https://img.shields.io/github/v/release/esdg/GodotSceneManager?include_prereleases)](https://github.com/esdg/GodotSceneManager/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/esdg/GodotSceneManager?include_prereleases&style=flat-square)](https://github.com/esdg/GodotSceneManager/releases)
 [![GitHub repo size](https://img.shields.io/github/repo-size/esdg/GodotSceneManager?style=flat-square)](#header)
 
 # Scene Manager Plugin for Godot
