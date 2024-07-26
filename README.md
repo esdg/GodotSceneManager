@@ -18,10 +18,6 @@ The **Scene Manager** plugin enhances your Godot development workflow by providi
 - Simplifies scene management
 - Improves project organization
 
-[![Godot Scene Manager Cover image](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/cover-image.png?raw=true)](#header)
-[![Godot Scene Manager Cover image](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/cover-image.png?raw=true)](#header)
-[![Godot Scene Manager Cover image](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/cover-image.png?raw=true)](#header)
-
 ## Installation
 
 1. Download the plugin from the [repository](#).
