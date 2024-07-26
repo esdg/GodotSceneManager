@@ -13,10 +13,10 @@ namespace MoF.Addons.ScenesManager
 		{
 			Resource currentScript = (Resource)GetScript();
 			PathToPlugin = currentScript.GetPath();
-			// Declare custom type TransitionCanvas
-			var script = GD.Load<Script>(PathToPlugin + "TransitionCanvas.cs");
+			// Declare custom type TransitionNode
+			var script = GD.Load<Script>(PathToPlugin + "TransitionNode.cs");
 			var texture = GD.Load<Texture2D>(PathToPlugin + "/Assets/Icons/TransitionIconOn.svg");
-			AddCustomType("TransitionCanvas", "Node", script, texture);
+			AddCustomType("TransitionNode", "Node", script, texture);
 
 			// Add Graph Editor
 			var editorScene = GD.Load<PackedScene>(currentScript.GetPath() + "/Assets/Scenes/ScenesManagerEditor.tscn");

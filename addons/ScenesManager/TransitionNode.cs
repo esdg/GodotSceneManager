@@ -5,7 +5,7 @@ using MoF.Addons.ScenesManager.Scripts;
 namespace MoF.Addons.ScenesManager
 {
 	[Tool, GlobalClass]
-	public partial class TransitionCanvas : TransitionCanvasBase
+	public partial class TransitionNode : TransitionNodeBase
 	{
 		[Export]
 		private AnimationPlayer AnimationPlayer { get; set; }

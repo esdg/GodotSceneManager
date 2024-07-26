@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dxh1mnt3463bh"]
 
-[ext_resource type="Script" path="res://addons/ScenesManager/TransitionCanvas.cs" id="1_utesx"]
+[ext_resource type="Script" path="res://addons/ScenesManager/TransitionNode.cs" id="1_utesx"]
 [ext_resource type="Shader" path="res://addons/ScenesManager/Assets/Shaders/texturefader.gdshader" id="2_aldxx"]
 [ext_resource type="Texture2D" uid="uid://cb6csea36vchj" path="res://addons/ScenesManager/Assets/Shaders/from_center.png" id="3_scg54"]
 

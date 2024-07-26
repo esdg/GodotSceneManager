@@ -18,7 +18,7 @@ namespace MoF.Addons.ScenesManager
 		private static PackedScene _currentPackedScene;
 		private static SceneTree _tree;
 		private static Node _currentScene;
-		private static TransitionCanvasBase _transitionCanvas;
+		private static TransitionNodeBase _transitionNode;
 		private static Node _targetSceneRootNode = new();
 
 		public override void _Ready()
@@ -79,30 +79,30 @@ namespace MoF.Addons.ScenesManager
 
 			if (string.IsNullOrEmpty(sceneManagerOutSlotSignal.TransitionFileName))
 			{
-				_transitionCanvas = new JumpCutTransitionCanvas();
+				_transitionNode = new JumpCutTransitionNode();
 			}
 			else
 			{
 				string transitionPath = $"{PathToPlugin + AddonConstants.TransitionFolderPath}/{sceneManagerOutSlotSignal.TransitionFileName}";
 				PackedScene transitionPackedScene = ResourceLoader.Load<PackedScene>(transitionPath);
-				_transitionCanvas = transitionPackedScene.Instantiate<TransitionCanvas>();
+				_transitionNode = transitionPackedScene.Instantiate<TransitionNode>();
 			}
 
-			_transitionCanvas.TransitionFinished += OnTransitionFinished;
-			if (_transitionCanvas is TransitionCanvas transitionCanvas)
+			_transitionNode.TransitionFinished += OnTransitionFinished;
+			if (_transitionNode is TransitionNode transitionNode)
 			{
-				transitionCanvas.CurrentSceneRoot = _currentScene;
+				transitionNode.CurrentSceneRoot = _currentScene;
 			}
-			_transitionCanvas.TargetNodeName = sceneManagerOutSlotSignal.TargetScene.graphNodeName;
-			_transitionCanvas.TargetPackedScene = targetPackedScene;
+			_transitionNode.TargetNodeName = sceneManagerOutSlotSignal.TargetScene.graphNodeName;
+			_transitionNode.TargetPackedScene = targetPackedScene;
 			_tree.Root.RemoveChild(_tree.CurrentScene);
-			_tree.Root.AddChild(_transitionCanvas);
+			_tree.Root.AddChild(_transitionNode);
 		}
 
 		private static void OnTransitionFinished(Node currentScene)
 		{
-			_transitionCanvas.TransitionFinished -= OnTransitionFinished;
-			_tree.Root.RemoveChild(_transitionCanvas);
+			_transitionNode.TransitionFinished -= OnTransitionFinished;
+			_tree.Root.RemoveChild(_transitionNode);
 			_tree.Root.AddChild(currentScene);
 			_tree.CurrentScene = currentScene;
 			_tree.Root.GetChildren().OfType<ScenesManager>().FirstOrDefault()?.CallDeferred(nameof(SetSignals), currentScene);
