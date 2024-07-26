@@ -239,6 +239,13 @@ namespace MoF.Addons.ScenesManager
 
 		private void _on_delete_node_button_pressed()
 		{
+			var connectionList = graphEdit.GetConnectionList().Where(o => (StringName)o["from_node"] == selectedNode.Name || (StringName)o["to_node"] == selectedNode.Name);
+
+			foreach (var connection in connectionList)
+			{
+				graphEdit.DisconnectNode((StringName)connection["from_node"], (int)connection["from_port"], (StringName)connection["to_node"], (int)connection["to_port"]);
+			}
+
 			graphEdit.RemoveChild(selectedNode);
 			selectedNode.QueueFree();
 			selectedNode = null;
