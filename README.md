@@ -37,7 +37,7 @@ The **Scene Manager** plugin enhances your Godot development workflow by providi
 ### v1 Alpha (MVP)
 
 [![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/1?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/1?closed=1)
-[![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/1?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/1?closed=1)
+[![GitHub milestone details](https://img.shields.io/github/milestones/issues-closed/esdg/GodotSceneManager/1?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/1?closed=1)
 The initial release of the Scene Manager Plugin, providing the core functionality required for basic scene management in Godot. This version focuses on delivering a minimum viable product (MVP) to gather early feedback from users and to identify and address critical issues.
 
 <a name="beta"></a>
