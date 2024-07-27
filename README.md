@@ -75,7 +75,7 @@ The official release of the Scene Manager Plugin, offering a robust and fully-fe
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU License - see the [LICENSE](LICENSE) file for details.
 
 ---
 <a href="https://mid-or-feed.itch.io/godot-scene-manager" target="_blank"><img src="https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white" alt="Gitch.io"></a>
