@@ -119,6 +119,7 @@ namespace MoF.Addons.ScenesManager.Helpers
             {
                 DirAccess.MakeDirRecursiveAbsolute(directoryPath);
             }
+
             ResourceSaver.Save(resource, path);
         }
     }

@@ -167,7 +167,7 @@ namespace MoF.Addons.ScenesManager
 			}
 
 			var schemaResource = ResourceLoader.Load<Resource>(_sceneManagerSettings.SceneManagerSchemaPath);
-			//ResourceLoader.LoadThreadedRequest(_sceneManagerSettings.SceneManagerSchemaPath);
+
 			if (schemaResource is SceneManagerSchema schema)
 			{
 				SceneManagerSchema = schema;
