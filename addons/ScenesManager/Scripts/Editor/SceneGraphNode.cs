@@ -140,7 +140,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		{
 			_inSlotNode = new Label { Text = "In" };
 			AddChild(_inSlotNode);
-			SetSlot(_inSlotNode.GetIndex(), true, 0, AddonConstants.GraphNode.InSlotColor, false, 0, Colors.White);
+			SetSlot(_inSlotNode.GetIndex(), true, 0, AddonConstants.GraphNode.SceneGraphNode.Color, false, 0, AddonConstants.GraphNode.SceneGraphNode.Color);
 		}
 
 		private void CreateAddOutSlotButton()
@@ -160,7 +160,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 			AddChild(outSignalNode);
 			_outSlotNodes.Add(outSignalNode);
-			SetSlot(outSignalNode.GetIndex(), false, 0, Colors.White, true, 0, AddonConstants.GraphNode.OutSlotColor);
+			SetSlot(outSignalNode.GetIndex(), false, 0, AddonConstants.GraphNode.SceneGraphNode.Color, true, 0, AddonConstants.GraphNode.SceneGraphNode.Color);
 		}
 
 		private void UpdateAddOutSlotButtonState()

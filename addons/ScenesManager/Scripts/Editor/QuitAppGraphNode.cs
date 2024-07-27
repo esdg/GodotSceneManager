@@ -48,7 +48,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
             };
             AddChild(textureRect);
-            SetSlot(textureRect.GetIndex(), true, 0, AddonConstants.GraphNode.InSlotColor, false, 0, AddonConstants.GraphNode.OutSlotColor);
+            SetSlot(textureRect.GetIndex(), true, 0, AddonConstants.GraphNode.QuitAppGraphNode.Color, false, 0, AddonConstants.GraphNode.QuitAppGraphNode.Color);
             EmitSignal(SignalName.GraphNodeReady);
         }
     }

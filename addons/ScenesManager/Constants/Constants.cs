@@ -22,11 +22,6 @@ namespace MoF.Addons.ScenesManager.Constants
             public const int MaxNumberOfInSlots = 4;
             public const int MaxNumberOfOutSlots = 4;
 
-            public static readonly Color InSlotColor = new("45F576");
-            public static readonly Color OutSlotColor = new("FF5F5F");
-
-
-
             public static partial class Icons
             {
                 public const string SignalIconTexture = "Assets/Icons/SignalIcon.svg";
@@ -45,6 +40,7 @@ namespace MoF.Addons.ScenesManager.Constants
                 public const string GraphNodeStyleTitlebarPath = "Assets/Styles/SceneGraphNodeStyleTitlebar.tres";
                 public static readonly Vector2 InitialSize = new(250, 10);
                 public static readonly string[] linkImagesTransition = { "Assets/Icons/LinkTransitionIconOff.svg", "Assets/Icons/LinkTransitionIconOn.svg" };
+                public static readonly Color Color = new("00aeef");
             }
 
             /// <summary>
@@ -57,6 +53,7 @@ namespace MoF.Addons.ScenesManager.Constants
                 public const string GraphNodeStyleTitlebarPath = "Assets/Styles/StartingAppGraphNodeStyleTitlebar.tres";
                 public const string StartingAppIconTexturePath = "Assets/Icons/starting-app-icon.svg";
                 public static readonly Vector2 InitialSize = new(250, 10);
+                public static readonly Color Color = new("ec008c");
             }
 
             public static partial class QuitAppGraphNode
@@ -66,6 +63,7 @@ namespace MoF.Addons.ScenesManager.Constants
                 public const string GraphNodeStyleTitlebarPath = "Assets/Styles/QuitAppGraphNodeStyleTitlebar.tres";
                 public const string StartingAppIconTexturePath = "Assets/Icons/quit-app-icon.svg";
                 public static readonly Vector2 InitialSize = new(250, 10);
+                public static readonly Color Color = new("fff200");
             }
         }
     }
