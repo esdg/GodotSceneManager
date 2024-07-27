@@ -26,10 +26,11 @@ namespace MoF.Addons.ScenesManager.Helpers
         /// <returns>The created <see cref="FileDialog"/>.</returns>
         public static FileDialog CreateFileDialog(FileDialog.FileModeEnum mode, string title, Action<FileDialog, string, FileDialog.FileModeEnum> onFileSelected, Control parent)
         {
-            FileDialog fileDialog = new FileDialog
+            FileDialog fileDialog = new()
+
             {
                 FileMode = mode,
-                Access = FileDialog.AccessEnum.Filesystem,
+                Access = FileDialog.AccessEnum.Resources,
                 ModeOverridesTitle = true,
                 Title = title,
                 Filters = new[] { "*.tres" },
