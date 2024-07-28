@@ -8,6 +8,7 @@ namespace MoF.Addons.ScenesManager.Constants
     public static partial class AddonConstants
     {
         // General constants
+        public const string PluginName = "Scene Manager";
         public const string PopupMenuSeparator = "------";
         public const string SettingsFilePath = "Settings/SceneManagerSettings.tres";
         public const string TransitionFolderPath = "TransitionsLibrary";
