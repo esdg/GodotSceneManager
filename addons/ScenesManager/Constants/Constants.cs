@@ -48,7 +48,8 @@ namespace MoF.Addons.ScenesManager.Constants
             /// </summary>
             public static partial class StartAppGraphNode
             {
-                public const string Title = "Starting App Node";
+                public const string Title = "Game start";
+                public const string descriptionLabelText = "This node is the starting point of your game.";
                 public const string GraphNodeStylePanelPath = "Assets/Styles/StartingAppGraphNodeStylePanel.tres";
                 public const string GraphNodeStyleTitlebarPath = "Assets/Styles/StartingAppGraphNodeStyleTitlebar.tres";
                 public const string StartingAppIconTexturePath = "Assets/Icons/starting-app-icon.svg";
@@ -58,7 +59,8 @@ namespace MoF.Addons.ScenesManager.Constants
 
             public static partial class QuitAppGraphNode
             {
-                public const string Title = "Quit App Node";
+                public const string Title = "Game quit";
+                public const string descriptionLabelText = "This node triggers the end of the game, closing the application.";
                 public const string GraphNodeStylePanelPath = "Assets/Styles/QuitAppGraphNodeStylePanel.tres";
                 public const string GraphNodeStyleTitlebarPath = "Assets/Styles/QuitAppGraphNodeStyleTitlebar.tres";
                 public const string StartingAppIconTexturePath = "Assets/Icons/quit-app-icon.svg";

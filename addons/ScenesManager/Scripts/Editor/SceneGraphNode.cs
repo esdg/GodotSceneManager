@@ -92,7 +92,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			if (Scene != null)
 			{
 				_sceneResourcePicker.EditedResource = Scene;
-				SetScene(Scene);
+				SetSceneGraphNode(Scene);
 			}
 			_sceneResourcePicker.ResourceChanged += OnSceneResourcePickerChanged;
 
@@ -117,7 +117,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			SetSize(new Vector2(250, 10));
 		}
 
-		private void SetScene(PackedScene packedScene)
+		private void SetSceneGraphNode(PackedScene packedScene)
 		{
 			_sceneRootNode = packedScene.Instantiate<Node>();
 			Title = GodotHelpers.GetSceneGraphNodeTitle(_sceneRootNode);
@@ -139,6 +139,9 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private void CreateInSlotNode()
 		{
 			_inSlotNode = new Label { Text = "In" };
+			FontFile fontFileBold = ResourceLoader.Load<FontFile>("res://addons/ScenesManager/Assets/Fonts/JetBrainsMono-Bold.ttf");
+			_inSlotNode.Set("theme_override_colors/font_color", AddonConstants.GraphNode.SceneGraphNode.Color);
+			_inSlotNode.Set("theme_override_fonts/font", fontFileBold);
 			AddChild(_inSlotNode);
 			SetSlot(_inSlotNode.GetIndex(), true, 0, AddonConstants.GraphNode.SceneGraphNode.Color, false, 0, AddonConstants.GraphNode.SceneGraphNode.Color);
 		}
@@ -180,7 +183,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			{
 				_scene = packedScene;
 				InitializeGraphNode();
-				SetScene(packedScene);
+				SetSceneGraphNode(packedScene);
 			}
 			else
 			{

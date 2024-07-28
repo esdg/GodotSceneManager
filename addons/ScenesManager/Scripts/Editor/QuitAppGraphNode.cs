@@ -2,6 +2,7 @@
 using Godot;
 using Godot.Collections;
 using MoF.Addons.ScenesManager.Constants;
+using MoF.Addons.ScenesManager.Helpers;
 
 namespace MoF.Addons.ScenesManager.Scripts.Editor
 {
@@ -40,15 +41,10 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
         public override void _ReadyNode()
         {
-            TextureRect textureRect = new()
-            {
-                Texture = quitAppIconTexture,
-                ExpandMode = TextureRect.ExpandModeEnum.KeepSize,
-                StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+            HBoxContainer mainContainer = GodotHelpers.CreateSlotWithDescription(AddonConstants.GraphNode.QuitAppGraphNode.Color, Enums.SlotMode.In, AddonConstants.GraphNode.QuitAppGraphNode.descriptionLabelText);
 
-            };
-            AddChild(textureRect);
-            SetSlot(textureRect.GetIndex(), true, 0, AddonConstants.GraphNode.QuitAppGraphNode.Color, false, 0, AddonConstants.GraphNode.QuitAppGraphNode.Color);
+            AddChild(mainContainer);
+            SetSlot(mainContainer.GetIndex(), true, 0, AddonConstants.GraphNode.QuitAppGraphNode.Color, false, 0, AddonConstants.GraphNode.QuitAppGraphNode.Color);
             EmitSignal(SignalName.GraphNodeReady);
         }
     }

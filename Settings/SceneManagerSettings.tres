@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b8nncj14oovhq"]
+
+[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSettings.cs" id="1_q7e4n"]
+
+[resource]
+script = ExtResource("1_q7e4n")
+SceneManagerSchemaPath = "res://Demo/SceneManagerSchemas/DemoGraph.tres"
