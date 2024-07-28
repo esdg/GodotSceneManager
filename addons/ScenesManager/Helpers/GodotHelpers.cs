@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Godot;
 using MoF.Addons.ScenesManager.Constants;
+using MoF.Addons.ScenesManager.Enums;
 using MoF.Addons.ScenesManager.Scripts.Resources;
 using static Godot.Control;
 
@@ -63,7 +64,7 @@ namespace MoF.Addons.ScenesManager.Helpers
         /// <returns>The title of the scene graph node.</returns>
         public static string GetSceneGraphNodeTitle(Node node)
         {
-            return $"{Path.GetFileNameWithoutExtension(node.SceneFilePath)}::{node.Name}";
+            return $"Scene: {ToReadableFileName(Path.GetFileNameWithoutExtension(node.SceneFilePath))}"; //node.Name
         }
 
         /// <summary>
@@ -110,6 +111,49 @@ namespace MoF.Addons.ScenesManager.Helpers
             readableName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(readableName.ToLower());
 
             return readableName;
+        }
+
+        public static HBoxContainer CreateSlotWithDescription(Color nodeColor, SlotMode slotMode, string descriptionLabelText)
+        {
+
+            HBoxContainer mainContainer = new();
+
+            Label descriptionLabel = new()
+            {
+                Text = descriptionLabelText,
+                SizeFlagsHorizontal = SizeFlags.ExpandFill,
+                AutowrapMode = TextServer.AutowrapMode.Word,
+            };
+            descriptionLabel.Set("theme_override_colors/font_color", "808080");
+            descriptionLabel.Set("theme_override_font_sizes/font_size", 12);
+            FontFile fontFileItalic = ResourceLoader.Load<FontFile>("res://addons/ScenesManager/Assets/Fonts/JetBrainsMono-Italic.ttf");
+            FontVariation fontVariation = new()
+            {
+                BaseFont = fontFileItalic,
+                SpacingBottom = -4,
+            };
+            descriptionLabel.Set("theme_override_fonts/font", fontVariation);
+            descriptionLabel.SetSize(new Vector2(180, 0));
+
+            FontFile fontFileBold = ResourceLoader.Load<FontFile>("res://addons/ScenesManager/Assets/Fonts/JetBrainsMono-Bold.ttf");
+            Label slotLabel = new();
+            slotLabel.Set("theme_override_colors/font_color", nodeColor);
+            slotLabel.Set("theme_override_fonts/font", fontFileBold);
+
+            if (slotMode == SlotMode.In)
+            {
+                slotLabel.Text = "In";
+                mainContainer.AddChild(slotLabel);
+                mainContainer.AddChild(descriptionLabel);
+            }
+            else
+            {
+                slotLabel.Text = "Out";
+                mainContainer.AddChild(descriptionLabel);
+                mainContainer.AddChild(slotLabel);
+            }
+
+            return mainContainer;
         }
     }
 }
