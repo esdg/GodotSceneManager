@@ -114,7 +114,6 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 			this.RemoveChildren(_outSlotNodes.ToArray());
 			_outSlotNodes.Clear();
-			SetSize(new Vector2(250, 10));
 		}
 
 		private void SetSceneGraphNode(PackedScene packedScene)
@@ -205,7 +204,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			RemoveChild(node);
 			_outSlotNodes.Remove(node);
 			UpdateAddOutSlotButtonState();
-			SetSize(new Vector2(250, 10));
+			SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using Godot;
 using Godot.Collections;
+using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Helpers;
 using MoF.Addons.ScenesManager.Scripts.Editor;
 using MoF.Addons.ScenesManager.Scripts.Resources;
@@ -113,8 +114,10 @@ namespace MoF.Addons.ScenesManager
 
 		private void CreateInitialStartAppNode()
 		{
-			StartAppGraphNode node = new();
-			node.PositionOffset += new Vector2(100, 100);
+			StartAppGraphNode node = new()
+			{
+				PositionOffset = new Vector2(100, 100)
+			};
 			graphEdit.AddChild(node);
 			node.GraphNodeName = node.Name;
 		}
@@ -122,8 +125,10 @@ namespace MoF.Addons.ScenesManager
 		private void CreateSceneNode()
 		{
 			SceneGraphNode node = new();
-			node.PositionOffset += new Vector2(40, 40) + (nodeCount * new Vector2(30, 30));
+			var viewportSize = graphEdit.Size;
+
 			graphEdit.AddChild(node);
+			node.PositionOffset = (graphEdit.ScrollOffset + (viewportSize / 2) - (AddonConstants.GraphNode.SceneGraphNode.InitialSize / 2)) / graphEdit.Zoom + (nodeCount * new Vector2(30, 30));
 			node.GraphNodeName = node.Name;
 			nodeCount++;
 		}
@@ -131,7 +136,8 @@ namespace MoF.Addons.ScenesManager
 		private void CreateQuitAppNode()
 		{
 			QuitAppGraphNode node = new();
-			node.PositionOffset += new Vector2(600, 100);
+			var viewportSize = graphEdit.Size;
+			node.PositionOffset = (graphEdit.ScrollOffset + (viewportSize / 2) - (AddonConstants.GraphNode.QuitAppGraphNode.InitialSize / 2)) / graphEdit.Zoom;
 			graphEdit.AddChild(node);
 			node.GraphNodeName = node.Name;
 		}
