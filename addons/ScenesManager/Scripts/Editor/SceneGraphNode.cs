@@ -57,6 +57,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private Button _addOutSlotButton;
 		private EditorResourcePicker _sceneResourcePicker;
 		private PackedScene _scene;
+		private Array<string> _transitionNameList;
 
 		private static StyleBoxFlat _sceneGraphNodeStylePanel;
 		private static StyleBoxFlat _sceneGraphNodeStyleTitlebar;
@@ -65,6 +66,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		{
 			_sceneGraphNodeStylePanel ??= ResourceLoader.Load<StyleBoxFlat>(Plugin.PathToPlugin + AddonConstants.GraphNode.SceneGraphNode.GraphNodeStylePanelPath);
 			_sceneGraphNodeStyleTitlebar ??= ResourceLoader.Load<StyleBoxFlat>(Plugin.PathToPlugin + AddonConstants.GraphNode.SceneGraphNode.GraphNodeStyleTitlebarPath);
+			_transitionNameList = FileSystemHelper.DirScenes<TransitionNode>(Plugin.PathToPlugin + AddonConstants.TransitionFolderPath, false, "*.tscn");
 		}
 
 		public override void _SetupGraphNode()
@@ -157,7 +159,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 		private void CreateOutSlotNode(string signalName = "", string transitionPath = "")
 		{
-			var outSignalNode = new OutSlotSceneGraphNode(_sceneRootNode, signalName, transitionPath);
+			var outSignalNode = new OutSlotSceneGraphNode(_sceneRootNode, _transitionNameList, signalName, transitionPath);
 			outSignalNode.DeleteButtonPressed += () => OnDeleteOutSignalNode(outSignalNode);
 
 			AddChild(outSignalNode);

@@ -26,7 +26,8 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private HBoxContainer _mainContainer;
 		private Node _sceneRootNode;
 		private string _selectedSignalName;
-		private string _transitionPath;
+		private string _selectedTransitionPath;
+		private Array<string> _transitionNameList;
 		private TextureRect _linkImage;
 
 		private static Texture2D _signalIconTexture;
@@ -37,11 +38,12 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 		private TransitionState nodeTransitionSate = TransitionState.Off;
 
-		public OutSlotSceneGraphNode(Node sceneRootNode, string selectedSignalName = "", string selectedTransitionPath = "")
+		public OutSlotSceneGraphNode(Node sceneRootNode, Array<string> transitionNameList, string selectedSignalName = "", string selectedTransitionPath = "")
 		{
 			_sceneRootNode = sceneRootNode;
 			_selectedSignalName = selectedSignalName;
-			_transitionPath = selectedTransitionPath;
+			_selectedTransitionPath = selectedTransitionPath;
+			_transitionNameList = transitionNameList;
 		}
 
 		public override void _Ready()
@@ -70,7 +72,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			HBoxContainer hSignalContainer = new();
 			vSubMainContainer.AddChild(hSignalContainer);
 
-			_transitionSelect = CreateTransitionSelectBox(_transitionPath);
+			_transitionSelect = CreateTransitionSelectBox(_transitionNameList, _selectedTransitionPath);
 			TransitionSelect.ItemSelected += (index) => { TransitionSelected((int)index); };
 			vSubMainContainer.AddChild(TransitionSelect);
 
@@ -124,11 +126,11 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			return optionButton;
 		}
 
-		private OptionButton CreateTransitionSelectBox(string selectedTransitionPath = "")
+		private OptionButton CreateTransitionSelectBox(Array<string> transitionNameList, string selectedTransitionPath = "")
 		{
 			OptionButton optionButton = GodotHelpers.CreateOptionButton();
 			optionButton.AddIconItem(_transitionIconTextures[(int)TransitionState.Off], Constants.AddonConstants.TransitionNone);
-			foreach (string transitionPath in FileSystemHelper.DirScenes<TransitionNode>(Plugin.PathToPlugin + AddonConstants.TransitionFolderPath, false, "*.tscn"))
+			foreach (string transitionPath in transitionNameList)
 			{
 				_transitionPaths.Add(Path.GetFileName(transitionPath));
 				optionButton.AddIconItem(_transitionIconTextures[(int)TransitionState.On], GodotHelpers.ToReadableFileName(transitionPath));

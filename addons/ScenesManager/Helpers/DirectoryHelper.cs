@@ -1,4 +1,5 @@
 #if TOOLS
+using System.IO;
 using System.Text.RegularExpressions;
 using Godot;
 using Godot.Collections;
@@ -21,6 +22,8 @@ namespace MoF.Addons.ScenesManager.Helpers
         /// </returns>
         public static Array<string> DirContent(string path, bool recursive = false, string extension = "*.*")
         {
+            Array<string> fileNames = new();
+
             if (!path.EndsWith("/"))
             {
                 path += "/";
@@ -52,19 +55,20 @@ namespace MoF.Addons.ScenesManager.Helpers
                 {
                     if (recursive)
                     {
-                        GD.Print($"Found folder: {fullPath}/");
+                        GD.Print($"Found folder: {fullPath}");
                         items.AddRange(DirContent(fullPath, true, extension));
                     }
                 }
                 else if (FileNameMatchesPattern(fileName, extension))
                 {
                     items.Add(fullPath);
-                    GD.Print($"Found file: {fullPath}.");
+                    fileNames.Add(Path.GetFileName(fullPath));
                 }
 
                 fileName = dir.GetNext();
             }
 
+            GD.Print($"Found {items.Count} file(s): {fileNames}.");
             return items;
         }
 
