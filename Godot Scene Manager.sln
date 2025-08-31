@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Godot Scene Manager", "Godot Scene Manager.csproj", "{9E1BBD28-552B-42E1-A398-C5E9F997611D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Godot Scene Manager", "Godot Scene Manager.csproj", "{2AC6E4BE-E44F-4930-837A-0BD450C64485}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,11 +9,11 @@ Global
 	ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9E1BBD28-552B-42E1-A398-C5E9F997611D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E1BBD28-552B-42E1-A398-C5E9F997611D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E1BBD28-552B-42E1-A398-C5E9F997611D}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{9E1BBD28-552B-42E1-A398-C5E9F997611D}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{9E1BBD28-552B-42E1-A398-C5E9F997611D}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{9E1BBD28-552B-42E1-A398-C5E9F997611D}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{2AC6E4BE-E44F-4930-837A-0BD450C64485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AC6E4BE-E44F-4930-837A-0BD450C64485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AC6E4BE-E44F-4930-837A-0BD450C64485}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{2AC6E4BE-E44F-4930-837A-0BD450C64485}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{2AC6E4BE-E44F-4930-837A-0BD450C64485}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{2AC6E4BE-E44F-4930-837A-0BD450C64485}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 	EndGlobalSection
 EndGlobal

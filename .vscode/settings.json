@@ -1,5 +1,6 @@
 {
-    "cSpell.words": [
-        "titlebar"
-    ]
+    "files.exclude": {
+        "**/*.uid": true
+    },
+    "godotTools.lsp.serverPort": 6005
 }

@@ -9,18 +9,19 @@ namespace MoF.Addons.ScenesManager
 	public partial class Plugin : EditorPlugin
 	{
 		public static string PathToPlugin { get; set; }
+
 		private ScenesManagerEditor instantiatedEditorScene;
+
 		public override void _EnterTree()
 		{
-			Resource currentScript = (Resource)GetScript();
-			PathToPlugin = currentScript.GetPath();
+			PathToPlugin = GetPathToPlugin();
 			// Declare custom type TransitionNode
 			var script = GD.Load<Script>(PathToPlugin + "TransitionNode.cs");
-			var texture = GD.Load<Texture2D>(PathToPlugin + "/Assets/Icons/TransitionIconOn.svg");
+			var texture = GD.Load<Texture2D>(PathToPlugin + "Assets/Icons/TransitionIconOn.svg");
 			AddCustomType("TransitionNode", "Node", script, texture);
 
 			// Add Graph Editor
-			var editorScene = GD.Load<PackedScene>(currentScript.GetPath() + "/Assets/Scenes/ScenesManagerEditor.tscn");
+			var editorScene = GD.Load<PackedScene>(PathToPlugin + "Assets/Scenes/ScenesManagerEditor.tscn");
 			instantiatedEditorScene = editorScene.Instantiate<ScenesManagerEditor>();
 			//AddControlToBottomPanel(instantiatedEditorScene, "Scenes Manager");
 
@@ -43,10 +44,7 @@ namespace MoF.Addons.ScenesManager
 			}
 		}
 
-		public override bool _HasMainScreen()
-		{
-			return true;
-		}
+		public override bool _HasMainScreen() => true;
 
 		public override void _MakeVisible(bool visible)
 		{
@@ -56,16 +54,14 @@ namespace MoF.Addons.ScenesManager
 			}
 		}
 
-		public override string _GetPluginName()
-		{
-			return AddonConstants.PluginName;
-		}
+		public override string _GetPluginName() => AddonConstants.PluginName;
 
-		public override Texture2D _GetPluginIcon()
+		public override Texture2D _GetPluginIcon() => GD.Load<Texture2D>(GetPathToPlugin() + "Assets/Icons/scenes-manager-icon.svg");
+
+		private string GetPathToPlugin()
 		{
-			// Must return some kind of Texture for the icon.
-			var texture = GD.Load<Texture2D>(((Resource)GetScript()).GetPath() + "/Assets/Icons/scenes-manager-icon.svg");
-			return texture;
+			Resource currentScript = (Resource)GetScript();
+			return currentScript.GetPath().GetBaseDir() + "/";
 		}
 	}
 }

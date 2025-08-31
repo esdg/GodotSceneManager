@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://2yg2v508os2v"]
 
-[ext_resource type="Script" path="res://addons/ScenesManager/ScenesManagerEditor.cs" id="1_qfdo0"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Editor/SceneManagerGraphEdit.cs" id="2_cae0k"]
+[ext_resource type="Script" uid="uid://tj5af4k6lhhh" path="res://addons/ScenesManager/ScenesManagerEditor.cs" id="1_qfdo0"]
+[ext_resource type="Script" uid="uid://d4dbuysd0xe1r" path="res://addons/ScenesManager/Scripts/Editor/SceneManagerGraphEdit.cs" id="2_cae0k"]
 [ext_resource type="Texture2D" uid="uid://ddsuobbfsgvb7" path="res://addons/ScenesManager/Assets/Icons/trashcan.svg" id="2_j23dq"]
 [ext_resource type="Theme" uid="uid://cnx3frmwk865e" path="res://addons/ScenesManager/Assets/Styles/graph_edit_theme.tres" id="3_kw225"]
 

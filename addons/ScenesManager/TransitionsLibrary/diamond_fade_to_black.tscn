@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bpm6cwd2rdb1"]
 
-[ext_resource type="Script" path="res://addons/ScenesManager/TransitionNode.cs" id="1_kt5id"]
-[ext_resource type="Shader" path="res://addons/ScenesManager/Assets/Shaders/diamondShader.gdshader" id="2_ay8aq"]
+[ext_resource type="Script" uid="uid://dykbvfdh88gxr" path="res://addons/ScenesManager/TransitionNode.cs" id="1_kt5id"]
+[ext_resource type="Shader" uid="uid://4ttq2xa4gypy" path="res://addons/ScenesManager/Assets/Shaders/diamondShader.gdshader" id="2_ay8aq"]
 
 [sub_resource type="Animation" id="Animation_2564u"]
 resource_name = "RESET"
@@ -98,8 +98,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mvcip"]
 _data = {
-"RESET": SubResource("Animation_2564u"),
-"TRANSITION": SubResource("Animation_ua1vh")
+&"RESET": SubResource("Animation_2564u"),
+&"TRANSITION": SubResource("Animation_ua1vh")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ick6y"]

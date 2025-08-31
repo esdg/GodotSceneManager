@@ -1,16 +1,16 @@
 [gd_resource type="Resource" load_steps=35 format=3 uid="uid://b0vt1fr4jswxl"]
 
 [ext_resource type="PackedScene" uid="uid://cn1obwdrx5x5w" path="res://Demo/Scenes/MenuScreen.tscn" id="1_rk1f1"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/TargetScene.cs" id="2_0f778"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerOutSlotSignal.cs" id="3_48qe8"]
+[ext_resource type="Script" uid="uid://qanjbp7xd0m6" path="res://addons/ScenesManager/Scripts/Resources/TargetScene.cs" id="2_0f778"]
+[ext_resource type="Script" uid="uid://r51as0hbf388" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerOutSlotSignal.cs" id="3_48qe8"]
 [ext_resource type="PackedScene" uid="uid://cgmbwovvih6mf" path="res://Demo/Scenes/StartScreen.tscn" id="4_gi18r"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerItem.cs" id="5_spp78"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/StartAppSceneManagerItem.cs" id="6_owixq"]
+[ext_resource type="Script" uid="uid://cbrakqmuvb0vq" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerItem.cs" id="5_spp78"]
+[ext_resource type="Script" uid="uid://di2yysxas8igl" path="res://addons/ScenesManager/Scripts/Resources/StartAppSceneManagerItem.cs" id="6_owixq"]
 [ext_resource type="PackedScene" uid="uid://d4da4cvaeycms" path="res://Demo/Scenes/GameLoop.tscn" id="7_q76uk"]
 [ext_resource type="PackedScene" uid="uid://5ngv11d5jkdx" path="res://Demo/Scenes/SettingsScreen.tscn" id="8_016ua"]
 [ext_resource type="PackedScene" uid="uid://cvluusjjkjqw3" path="res://Demo/Scenes/GameOver.tscn" id="9_uajxo"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/QuitAppSceneManagerItem.cs" id="10_tkmk2"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="11_d7wtm"]
+[ext_resource type="Script" uid="uid://bynvm6dxy7b7p" path="res://addons/ScenesManager/Scripts/Resources/QuitAppSceneManagerItem.cs" id="10_tkmk2"]
+[ext_resource type="Script" uid="uid://c3am13fnfqxec" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="11_d7wtm"]
 
 [sub_resource type="Resource" id="Resource_1jd1n"]
 script = ExtResource("2_0f778")
