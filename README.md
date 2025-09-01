@@ -11,7 +11,7 @@ The **Scene Manager** plugin enhances your Godot development workflow by providi
 
 ## Compatibility
 
-**Scene Manager** have been updated for 4.4 by @malachite23. Stays compatible with 4.3.
+**Scene Manager** have been updated for Godot 4.4 by @malachite23. Stays compatible with Godot 4.3.
 
 ## Features
 
