@@ -47,8 +47,7 @@ namespace MoF.Addons.ScenesManager.Helpers
             var menuItemNodes = CreatePopupMenu("Nodes", Array.Empty<string>(), eventHandler);
             var nodesAddSubMenuItem = CreatePopupMenu("NodesAddSubMenu", nodesAddSubMenuItems, eventHandler);
 
-            menuItemNodes.AddSubmenuItem("Add", nodesAddSubMenuItem.Name);
-            menuItemNodes.AddChild(nodesAddSubMenuItem);
+            menuItemNodes.AddSubmenuNodeItem("Add", nodesAddSubMenuItem);
             menuItemNodes.AddSeparator();
             menuItemNodes.AddIconRadioCheckItem(null, "Quit Node");
 
