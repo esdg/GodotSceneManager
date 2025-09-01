@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cvluusjjkjqw3"]
 
-[ext_resource type="Script" path="res://Demo/Scenes/Scripts/GameOverScript.cs" id="1_2mkx3"]
+[ext_resource type="Script" uid="uid://g1ggsq168o87" path="res://Demo/Scenes/Scripts/GameOverScript.cs" id="1_2mkx3"]
 [ext_resource type="PackedScene" uid="uid://dvu7sukpc3esy" path="res://Demo/Assets/Scenes/back_ground.tscn" id="1_axk10"]
 [ext_resource type="FontFile" uid="uid://cwo7itfgiwtrg" path="res://Demo/Assets/Fonts/TT Fors Trial Light.ttf" id="2_7qisu"]
 [ext_resource type="Theme" uid="uid://c310ectd8gxb1" path="res://Demo/Assets/Theme/demo_theme.tres" id="3_ac34o"]

@@ -22,7 +22,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_if4e6"]
 _data = {
-"pulse": SubResource("Animation_4d8fp")
+&"pulse": SubResource("Animation_4d8fp")
 }
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_komwr"]

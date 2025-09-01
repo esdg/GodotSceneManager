@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://d4da4cvaeycms"]
 
-[ext_resource type="Script" path="res://Demo/Scenes/Scripts/GameLoopScript.cs" id="1_3l3cx"]
+[ext_resource type="Script" uid="uid://cqaylbwdv6guw" path="res://Demo/Scenes/Scripts/GameLoopScript.cs" id="1_3l3cx"]
 
 [sub_resource type="Environment" id="Environment_cvbb1"]
 background_mode = 1
@@ -41,7 +41,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_44el5"]
 _data = {
-"CubeAnnimation": SubResource("Animation_4vflo")
+&"CubeAnnimation": SubResource("Animation_4vflo")
 }
 
 [node name="GameLoop" type="Node3D"]
