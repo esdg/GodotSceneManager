@@ -9,6 +9,10 @@
 
 The **Scene Manager** plugin enhances your Godot development workflow by providing a visual graph editor for managing transitions between nodes. This tool allows you to easily create and visualize relationships and transitions between different scenes and nodes within your project. With a user-friendly interface, you can drag and drop nodes, define transitions, and see an intuitive representation of your scene flow. This plugin is perfect for developers looking to streamline scene management and improve project organization.
 
+## Compatibility
+
+**Scene Manager** have been updated for 4.4 by @malachite23. Stays compatible with 4.3.
+
 ## Features
 
 - Visual graph editor for node transitions
