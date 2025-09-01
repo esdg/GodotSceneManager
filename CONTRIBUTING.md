@@ -72,3 +72,6 @@ We appreciate code contributions! To contribute code:
 
 ### Stay Updated: Keep an eye on the repository for updates and ongoing discussions.
 Thank you for contributing to the Scene Manager Plugin for Godot! Your help is invaluable in improving this tool for all users.
+
+### Github contributors
+- malachite23
