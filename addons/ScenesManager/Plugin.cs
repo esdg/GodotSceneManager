@@ -9,18 +9,23 @@ namespace MoF.Addons.ScenesManager
 	public partial class Plugin : EditorPlugin
 	{
 		public static string PathToPlugin { get; set; }
+
 		private ScenesManagerEditor instantiatedEditorScene;
+
+		public Plugin()
+		{
+			PathToPlugin = GetPathToPlugin();
+		}
+
 		public override void _EnterTree()
 		{
-			Resource currentScript = (Resource)GetScript();
-			PathToPlugin = currentScript.GetPath();
 			// Declare custom type TransitionNode
 			var script = GD.Load<Script>(PathToPlugin + "TransitionNode.cs");
-			var texture = GD.Load<Texture2D>(PathToPlugin + "/Assets/Icons/TransitionIconOn.svg");
+			var texture = GD.Load<Texture2D>(PathToPlugin + "Assets/Icons/TransitionIconOn.svg");
 			AddCustomType("TransitionNode", "Node", script, texture);
 
 			// Add Graph Editor
-			var editorScene = GD.Load<PackedScene>(currentScript.GetPath() + "/Assets/Scenes/ScenesManagerEditor.tscn");
+			var editorScene = GD.Load<PackedScene>(PathToPlugin + "Assets/Scenes/ScenesManagerEditor.tscn");
 			instantiatedEditorScene = editorScene.Instantiate<ScenesManagerEditor>();
 			//AddControlToBottomPanel(instantiatedEditorScene, "Scenes Manager");
 
@@ -64,8 +69,14 @@ namespace MoF.Addons.ScenesManager
 		public override Texture2D _GetPluginIcon()
 		{
 			// Must return some kind of Texture for the icon.
-			var texture = GD.Load<Texture2D>(((Resource)GetScript()).GetPath() + "/Assets/Icons/scenes-manager-icon.svg");
+			var texture = GD.Load<Texture2D>(GetPathToPlugin() + "Assets/Icons/scenes-manager-icon.svg");
 			return texture;
+		}
+
+		private string GetPathToPlugin()
+		{
+			var curScript = (Resource)GetScript();
+			return curScript.GetPath().GetBaseDir() + "/";
 		}
 	}
 }

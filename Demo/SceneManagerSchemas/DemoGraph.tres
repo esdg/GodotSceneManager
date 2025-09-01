@@ -1,16 +1,17 @@
-[gd_resource type="Resource" load_steps=35 format=3 uid="uid://b0vt1fr4jswxl"]
+[gd_resource type="Resource" load_steps=36 format=3 uid="uid://b0vt1fr4jswxl"]
 
+[ext_resource type="Script" uid="uid://b3n8gvjvuhrei" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerBaseItem.cs" id="1_ajv68"]
 [ext_resource type="PackedScene" uid="uid://cn1obwdrx5x5w" path="res://Demo/Scenes/MenuScreen.tscn" id="1_rk1f1"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/TargetScene.cs" id="2_0f778"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerOutSlotSignal.cs" id="3_48qe8"]
+[ext_resource type="Script" uid="uid://bvdaxqjxdra0d" path="res://addons/ScenesManager/Scripts/Resources/TargetScene.cs" id="2_0f778"]
+[ext_resource type="Script" uid="uid://cpwpg1bklrcj2" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerOutSlotSignal.cs" id="3_48qe8"]
 [ext_resource type="PackedScene" uid="uid://cgmbwovvih6mf" path="res://Demo/Scenes/StartScreen.tscn" id="4_gi18r"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerItem.cs" id="5_spp78"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/StartAppSceneManagerItem.cs" id="6_owixq"]
+[ext_resource type="Script" uid="uid://t12h2hyelwci" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerItem.cs" id="5_spp78"]
+[ext_resource type="Script" uid="uid://45cauvoiowce" path="res://addons/ScenesManager/Scripts/Resources/StartAppSceneManagerItem.cs" id="6_owixq"]
 [ext_resource type="PackedScene" uid="uid://d4da4cvaeycms" path="res://Demo/Scenes/GameLoop.tscn" id="7_q76uk"]
 [ext_resource type="PackedScene" uid="uid://5ngv11d5jkdx" path="res://Demo/Scenes/SettingsScreen.tscn" id="8_016ua"]
 [ext_resource type="PackedScene" uid="uid://cvluusjjkjqw3" path="res://Demo/Scenes/GameOver.tscn" id="9_uajxo"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/QuitAppSceneManagerItem.cs" id="10_tkmk2"]
-[ext_resource type="Script" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="11_d7wtm"]
+[ext_resource type="Script" uid="uid://dhnbsptbfym12" path="res://addons/ScenesManager/Scripts/Resources/QuitAppSceneManagerItem.cs" id="10_tkmk2"]
+[ext_resource type="Script" uid="uid://is0orukmed30" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerSchema.cs" id="11_d7wtm"]
 
 [sub_resource type="Resource" id="Resource_1jd1n"]
 script = ExtResource("2_0f778")
@@ -29,7 +30,7 @@ TransitionFileName = "diamond_fade_to_black.tscn"
 script = ExtResource("5_spp78")
 Scene = ExtResource("4_gi18r")
 Name = "@GraphNode@20088"
-OutSignals = [SubResource("Resource_krgvc")]
+OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_krgvc")])
 Position = Vector2(560, 120)
 
 [sub_resource type="Resource" id="Resource_mr6j7"]
@@ -48,7 +49,7 @@ TransitionFileName = ""
 [sub_resource type="Resource" id="Resource_1v7fj"]
 script = ExtResource("6_owixq")
 Name = "@GraphNode@17387"
-OutSignals = [SubResource("Resource_0acdx")]
+OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_0acdx")])
 Position = Vector2(100, 160)
 
 [sub_resource type="Resource" id="Resource_ue747"]
@@ -93,7 +94,7 @@ TransitionFileName = "horizontal_curtain_to_black.tscn"
 script = ExtResource("5_spp78")
 Scene = ExtResource("1_rk1f1")
 Name = "@GraphNode@20314"
-OutSignals = [SubResource("Resource_1bft2"), SubResource("Resource_2g7i5"), SubResource("Resource_rqw1l")]
+OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_1bft2"), SubResource("Resource_2g7i5"), SubResource("Resource_rqw1l")])
 Position = Vector2(1060, 80)
 
 [sub_resource type="Resource" id="Resource_l2abs"]
@@ -113,7 +114,7 @@ TransitionFileName = ""
 script = ExtResource("5_spp78")
 Scene = ExtResource("9_uajxo")
 Name = "@GraphNode@20456"
-OutSignals = [SubResource("Resource_yfei7")]
+OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_yfei7")])
 Position = Vector2(2140, 180)
 
 [sub_resource type="Resource" id="Resource_v8757"]
@@ -133,7 +134,7 @@ TransitionFileName = "horizontal_curtain_to_black.tscn"
 script = ExtResource("5_spp78")
 Scene = ExtResource("8_016ua")
 Name = "@GraphNode@20190"
-OutSignals = [SubResource("Resource_udqqt")]
+OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_udqqt")])
 Position = Vector2(1580, 540)
 
 [sub_resource type="Resource" id="Resource_63m7t"]
@@ -153,15 +154,15 @@ TransitionFileName = "diamond_fade_to_black.tscn"
 script = ExtResource("5_spp78")
 Scene = ExtResource("7_q76uk")
 Name = "@GraphNode@20431"
-OutSignals = [SubResource("Resource_6mfov")]
+OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_6mfov")])
 Position = Vector2(1580, 240)
 
 [sub_resource type="Resource" id="Resource_m236w"]
 script = ExtResource("10_tkmk2")
 Name = "@GraphNode@20427"
-OutSignals = []
+OutSignals = Array[ExtResource("3_48qe8")]([])
 Position = Vector2(1580, 80)
 
 [resource]
 script = ExtResource("11_d7wtm")
-Items = [SubResource("Resource_lox7e"), SubResource("Resource_1v7fj"), SubResource("Resource_5fmia"), SubResource("Resource_bquhc"), SubResource("Resource_cmrwq"), SubResource("Resource_uuqp3"), SubResource("Resource_m236w")]
+Items = Array[ExtResource("1_ajv68")]([SubResource("Resource_lox7e"), SubResource("Resource_1v7fj"), SubResource("Resource_5fmia"), SubResource("Resource_bquhc"), SubResource("Resource_cmrwq"), SubResource("Resource_uuqp3"), SubResource("Resource_m236w")])

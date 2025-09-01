@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cgmbwovvih6mf"]
 
-[ext_resource type="Script" path="res://Demo/Scenes/Scripts/StartscreenScript.cs" id="1_op5bk"]
+[ext_resource type="Script" uid="uid://cw35gy5m7vkwu" path="res://Demo/Scenes/Scripts/StartscreenScript.cs" id="1_op5bk"]
 [ext_resource type="Texture2D" uid="uid://2jbo0apxdgih" path="res://Demo/Assets/Textures/GodotSceneManagerLogo.png" id="2_x4ocy"]
 [ext_resource type="FontFile" uid="uid://cwo7itfgiwtrg" path="res://Demo/Assets/Fonts/TT Fors Trial Light.ttf" id="3_ccm5q"]
 [ext_resource type="Theme" uid="uid://c310ectd8gxb1" path="res://Demo/Assets/Theme/demo_theme.tres" id="4_0sm2l"]
@@ -59,7 +59,7 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tj4k5"]
 _data = {
-"Intro": SubResource("Animation_k4gqv")
+&"Intro": SubResource("Animation_k4gqv")
 }
 
 [node name="Control" type="Control"]
@@ -73,7 +73,7 @@ script = ExtResource("1_op5bk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_tj4k5")
+&"": SubResource("AnimationLibrary_tj4k5")
 }
 autoplay = "Intro"
 

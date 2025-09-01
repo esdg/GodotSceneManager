@@ -21,10 +21,13 @@ namespace MoF.Addons.ScenesManager
 		private static TransitionNodeBase _transitionNode;
 		private static Node _targetSceneRootNode = new();
 
+		public ScenesManager()
+		{
+			PathToPlugin = GetPathToPlugin();
+		}
+
 		public override void _Ready()
 		{
-			PathToPlugin = ((Resource)GetScript()).GetPath();
-
 			_tree = GetTree();
 			LoadSettings();
 			LoadSchema();
@@ -176,6 +179,12 @@ namespace MoF.Addons.ScenesManager
 			{
 				GD.PrintErr($"[SceneManager] Failed to load schema from path: {_sceneManagerSettings.SceneManagerSchemaPath}");
 			}
+		}
+
+		private string GetPathToPlugin()
+		{
+			var curScript = (Resource)GetScript();
+			return curScript.GetPath().GetBaseDir() + "/";
 		}
 	}
 }

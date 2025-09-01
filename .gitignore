@@ -16,3 +16,6 @@ mono_crash.*.json
 
 # Project-specific ignores
 .workfiles/
+
+# VSCode ignores
+.vscode/

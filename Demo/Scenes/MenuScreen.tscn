@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cn1obwdrx5x5w"]
 
-[ext_resource type="Script" path="res://Demo/Scenes/Scripts/MenuScreenScript.cs" id="1_v3t5t"]
+[ext_resource type="Script" uid="uid://dynknq4b0hmtr" path="res://Demo/Scenes/Scripts/MenuScreenScript.cs" id="1_v3t5t"]
 [ext_resource type="PackedScene" uid="uid://dvu7sukpc3esy" path="res://Demo/Assets/Scenes/back_ground.tscn" id="2_trw84"]
 [ext_resource type="Theme" uid="uid://c310ectd8gxb1" path="res://Demo/Assets/Theme/demo_theme.tres" id="3_8cf7k"]
 
