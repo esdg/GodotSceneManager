@@ -5,85 +5,154 @@
 [![GitHub Release](https://img.shields.io/github/v/release/esdg/GodotSceneManager?include_prereleases&style=flat-square)](https://github.com/esdg/GodotSceneManager/releases)
 [![GitHub repo size](https://img.shields.io/github/repo-size/esdg/GodotSceneManager?style=flat-square)](#header)
 
-# Scene Manager Plugin for Godot
+# Godot Scene Manager Plugin
 
-The **Scene Manager** plugin enhances your Godot development workflow by providing a visual graph editor for managing transitions between nodes. This tool allows you to easily create and visualize relationships and transitions between different scenes and nodes within your project. With a user-friendly interface, you can drag and drop nodes, define transitions, and see an intuitive representation of your scene flow. This plugin is perfect for developers looking to streamline scene management and improve project organization.
+The **Scene Manager** plugin streamlines your Godot development workflow with a visual graph editor for managing transitions between scenes and nodes. Effortlessly create, visualize, and organize scene relationships using an intuitive drag-and-drop interface.
 
-## Compatibility
+---
 
-**Scene Manager** have been updated for Godot 4.4 by @malachite23. Stays compatible with Godot 4.3.
+## Table of Contents
+
+- [Features](#features)
+- [Compatibility](#compatibility)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Folder Structure](#folder-structure)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Troubleshooting](#troubleshooting)
+- [FAQ](#faq)
+- [Planned Releases](#planned-releases)
+- [Contributing](#contributing)
+- [License](#license)
+- [Links](#links)
+
+---
 
 ## Features
 
-- Visual graph editor for node transitions
-- Large collection of transitions effects
-- Easy drag-and-drop interface
-- Intuitive representation of scene flow
-- Simplifies scene management
-- Improves project organization
+- Visual graph editor for scene and node transitions
+- Extensive collection of transition effects
+- Drag-and-drop interface
+- Intuitive scene flow visualization
+- Simplified scene management
+- Improved project organization
+
+## Compatibility
+
+- Compatible with Godot 4.3 and 4.4
+- Updated for Godot 4.4 by [@malachite23](https://github.com/malachite23)
 
 ## Installation
 
-1. Download the plugin from the [repository](#).
+1. [Download the plugin](https://github.com/esdg/GodotSceneManager/releases).
 2. Copy the plugin folder into your project's `addons` directory.
-3. Enable the plugin in the Project Settings under the `Plugins` tab.
+3. Enable the plugin in **Project Settings > Plugins**.
+
+## Quick Start
+
+```gdscript
+# Example: Switching scenes using SceneManager
+var scene_manager = get_node("/root/SceneManager")
+scene_manager.change_scene("res://scenes/MainMenu.tscn")
+```
+
+1. Open the Scene Manager from the Godot editor.
+2. Create nodes and define transitions between them.
+3. Visualize and manage your scene relationships.
+
+![Screenshot](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/screenshot.png)
+
+## Folder Structure
+
+```
+addons/
+└── ScenesManager/
+    ├── Docs/           # Documentation and images
+    ├── GraphEditor/    # Visual graph editor scripts
+    ├── Transitions/    # Transition effects
+    ├── SceneManager.gd # Main plugin script
+    └── ...             # Other supporting files
+```
+
+## Configuration
+
+- Access plugin settings via **Project > Project Settings > Plugins > Scene Manager**.
+- Customize transition effects and graph editor options in the plugin panel.
 
 ## Usage
 
 1. Open the Scene Manager from the Godot editor.
-2. Create nodes and define transitions between them.
-3. Visualize and manage your scene relationships with ease.
+2. Use the graph editor to create nodes and transitions.
+3. Double-click nodes to edit scene properties.
+4. Drag to connect nodes and define transitions.
+5. Save your scene graph for future use.
 
-## Planned releases
+## Troubleshooting
 
-<a name="alpha"></a>
+- **Plugin not showing up:** Ensure the folder is in `addons/ScenesManager` and enabled in Project Settings.
+- **Transition effects not working:** Check that your scenes are compatible with the selected effects.
+- **Graph editor issues:** Try restarting the editor or updating Godot to the latest supported version.
 
-### v1 Alpha (MVP)
+## FAQ
 
-[![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/5?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/5?closed=1)
-[![GitHub milestone details](https://img.shields.io/github/milestones/issues-closed/esdg/GodotSceneManager/5?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/5?closed=1)
+**Q: Which Godot versions are supported?**  
+A: Godot 4.3 and 4.4.
 
-[![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/1?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/1?closed=1)
-[![GitHub milestone details](https://img.shields.io/github/milestones/issues-closed/esdg/GodotSceneManager/1?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/1?closed=1)
+**Q: Can I use custom transition effects?**  
+A: Yes, add your scripts to the `Transitions` folder.
 
-[![GitHub Downloads (all assets, specific tag)](https://img.shields.io/github/downloads/esdg/GodotSceneManager/1.0.1-alpha.1/total?style=flat-square)](https://github.com/esdg/GodotSceneManager/releases/tag/1.0.1-alpha.1)
+**Q: Does this plugin support nested scenes?**  
+A: Yes, you can manage transitions between nested scenes and nodes.
 
-The initial release of the Scene Manager Plugin, providing the core functionality required for basic scene management in Godot. This version focuses on delivering a minimum viable product (MVP) to gather early feedback from users and to identify and address critical issues.
+**Q: Where can I report bugs or request features?**  
+A: Please use the [GitHub Issues](https://github.com/esdg/GodotSceneManager/issues) page.
 
-<a name="beta"></a>
+## Planned Releases
 
-## v1 Beta
+### [v1 Alpha (MVP)](#alpha)
 
-[![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/2?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/2)
-[![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/2?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/2)
+- Core functionality for basic scene management.
+- Focused on gathering early feedback and addressing critical issues.
+- [Milestone progress](https://github.com/esdg/GodotSceneManager/milestone/5?closed=1)
+- [Downloads](https://github.com/esdg/GodotSceneManager/releases/tag/1.0.1-alpha.1)
 
-The beta release introduces additional features and improvements based on feedback from the alpha release. This version aims to refine the user experience and add more functionality to enhance scene management capabilities.
+### [v1 Beta](#beta)
 
-<a name="rc"></a>
+- Additional features and improvements based on alpha feedback.
+- Enhanced user experience and functionality.
+- [Milestone progress](https://github.com/esdg/GodotSceneManager/milestone/2)
 
-## v1 RC
+### [v1 RC](#rc)
 
-[![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/3?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/3)
-[![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/3?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/3)
+- Nearly complete version with all planned features.
+- Final testing and quality assurance.
+- [Milestone progress](https://github.com/esdg/GodotSceneManager/milestone/3)
 
-The release candidate is a nearly complete version of the plugin, incorporating all planned features and addressing issues identified in previous releases. This version is intended for final testing and quality assurance before the official release.
+### [v1 Release](#release)
 
-<a name="release"></a>
+- Stable, fully-featured, and production-ready.
+- Thoroughly tested for robust scene management.
+- [Milestone progress](https://github.com/esdg/GodotSceneManager/milestone/4)
 
-## v1 Release
+## Contributing
 
-[![GitHub milestone details](https://img.shields.io/github/milestones/progress-percent/esdg/GodotSceneManager/4?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/4)
-[![GitHub milestone details](https://img.shields.io/github/milestones/issues-open/esdg/GodotSceneManager/4?style=flat-square)](https://github.com/esdg/GodotSceneManager/milestone/4)
+Contributions are welcome! Please open issues or submit pull requests via [GitHub](https://github.com/esdg/GodotSceneManager).
 
-The official release of the Scene Manager Plugin, offering a robust and fully-featured tool for managing scene transitions in Godot. This version is stable, thoroughly tested, and ready for use in production environments.
+### Contributors
+
+- [@malachite23](https://github.com/malachite23)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
-<a href="https://mid-or-feed.itch.io/godot-scene-manager" target="_blank"><img src="https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white" alt="Gitch.io"></a>
-<a href="https://www.facebook.com/people/Mid-or-Feed/61559305242385/" target="_blank"><img src="https://img.shields.io/badge/facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="FaceBook"></a>
+
+## Links
+
+<a href="https://mid-or-feed.itch.io/godot-scene-manager" target="_blank"><img src="https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white" alt="Itch.io"></a>
+<a href="https://www.facebook.com/people/Mid-or-Feed/61559305242385/" target="_blank"><img src="https://img.shields.io/badge/facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"></a>
 <a href="https://github.com/esdg/GodotSceneManager" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
 <a href="https://x.com/MidorFeed270577" target="_blank"><img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" alt="GitHub"></a>
 
