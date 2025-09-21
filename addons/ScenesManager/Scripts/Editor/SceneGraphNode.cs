@@ -202,6 +202,11 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			SetSlot(outSignalNode.GetIndex(), false, 0, AddonConstants.GraphNode.SceneGraphNode.Color, true, 0, AddonConstants.GraphNode.SceneGraphNode.Color);
 
 			AddChild(outSignalModifiers);
+			if (transitionModifiers.Speed == 1.0f)
+			{
+				outSignalModifiers.Folded = true;
+			}
+
 			VBoxContainer vBoxContainer = new VBoxContainer();
 			outSignalModifiers.AddChild(vBoxContainer);
 			HBoxContainer hBoxContainer = new HBoxContainer();
