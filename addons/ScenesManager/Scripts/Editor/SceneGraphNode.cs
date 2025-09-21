@@ -148,7 +148,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		{
 			foreach (var outSignals in OutSignalsToLoad)
 			{
-				CreateOutSlotNode(outSignals.OutSlotSignalName, outSignals.TransitionFileName);
+				CreateOutSlotNode(outSignals.OutSlotSignalName, outSignals.TransitionFileName, outSignals.TransitionModifier);
 			}
 		}
 
@@ -172,26 +172,26 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			AddChild(_addOutSlotButton);
 		}
 
-		private void CreateOutSlotNode(string signalName = "", string transitionPath = "")
+		private void CreateOutSlotNode(string signalName = "", string transitionPath = "", TransitionModifier transitionModifiers = null)
 		{
 			var outSignalNode = new OutSlotSceneGraphNode(_sceneRootNode, _transitionNameList, signalName, transitionPath);
-			var outSignalOtpions = new FoldableContainer()
+			var outSignalModifiers = new FoldableContainer()
 			{
 				Title = $"Transition options", //TODO: make transition foldable panel design
 			};
-			outSignalOtpions.Visible = false;
-			outSignalNode.DeleteButtonPressed += () => OnDeleteOutSignalNode(outSignalNode, outSignalOtpions);
+
+			outSignalNode.DeleteButtonPressed += () => OnDeleteOutSignalNode(outSignalNode, outSignalModifiers);
 			outSignalNode.SelectTransitionChanged += (bool isTransitionSelect) =>
 			{
 				if (isTransitionSelect)
-					outSignalOtpions.Visible = true;
+					outSignalModifiers.Visible = true;
 				else
 				{
-					outSignalOtpions.Visible = false;
+					outSignalModifiers.Visible = false;
 					SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
 				}
 			};
-			outSignalOtpions.FoldingChanged += (bool folded) =>
+			outSignalModifiers.FoldingChanged += (bool folded) =>
 			{
 				if (folded)
 					SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
@@ -201,9 +201,9 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			_outSlotNodes.Add(outSignalNode);
 			SetSlot(outSignalNode.GetIndex(), false, 0, AddonConstants.GraphNode.SceneGraphNode.Color, true, 0, AddonConstants.GraphNode.SceneGraphNode.Color);
 
-			AddChild(outSignalOtpions);
+			AddChild(outSignalModifiers);
 			VBoxContainer vBoxContainer = new VBoxContainer();
-			outSignalOtpions.AddChild(vBoxContainer);
+			outSignalModifiers.AddChild(vBoxContainer);
 			HBoxContainer hBoxContainer = new HBoxContainer();
 			vBoxContainer.AddChild(hBoxContainer);
 			hBoxContainer.AddChild(new Label { Text = "speed:" });
@@ -212,7 +212,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 				MinValue = 0,
 				MaxValue = 2.0f,
 				Step = 0.1,
-				Value = outSignalNode.TransitionModifier.Speed,
+				Value = transitionModifiers.Speed,
 				SizeFlagsHorizontal = SizeFlags.ExpandFill
 			};
 			hBoxContainer.AddChild(speedSlider);
