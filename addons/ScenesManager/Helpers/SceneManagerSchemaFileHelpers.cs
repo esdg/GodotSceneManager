@@ -1,4 +1,5 @@
 #if TOOLS
+using System;
 using System.Linq;
 using Godot;
 using MoF.Addons.ScenesManager.Scripts.Editor;
@@ -197,6 +198,7 @@ namespace MoF.Addons.ScenesManager.Helpers
 				var fromNodeInstance = graphEdit.GetNode<ScenesManagerBaseGraphNode>((string)connection["from_node"]);
 				var toNodeInstance = graphEdit.GetNode<ScenesManagerBaseGraphNode>((string)connection["to_node"]);
 
+
 				var sceneManagerOutSlotSignal = new SceneManagerOutSlotSignal
 				{
 					OutSlotSignalName = fromNodeInstance.OutSignalsNames[(int)connection["from_port"]]
@@ -208,6 +210,7 @@ namespace MoF.Addons.ScenesManager.Helpers
 					if (fromNodeInstance is SceneGraphNode sceneGraphNode)
 					{
 						sceneManagerOutSlotSignal.TransitionFileName = sceneGraphNode.OutTransitionPackedScenePaths[(int)connection["from_port"]];
+						sceneManagerOutSlotSignal.TransitionModifier = sceneGraphNode.OutTransitionModifers[(int)connection["from_port"]];
 					}
 
 					sceneManagerOutSlotSignal.TargetSceneType = Enums.TargetSceneType.SceneGraphNode;
@@ -224,6 +227,8 @@ namespace MoF.Addons.ScenesManager.Helpers
 				}
 
 				sceneManagerOutSlotSignal.Index = sceneManagerBaseItem.OutSignals.Count;
+
+
 
 				sceneManagerBaseItem.OutSignals.Add(sceneManagerOutSlotSignal);
 			}

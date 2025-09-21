@@ -94,6 +94,7 @@ namespace MoF.Addons.ScenesManager
 			_transitionNode.TransitionFinished += OnTransitionFinished;
 			if (_transitionNode is TransitionNode transitionNode)
 			{
+				transitionNode.TransitionSpeed = sceneManagerOutSlotSignal.TransitionModifier.Speed;
 				transitionNode.CurrentSceneRoot = _currentScene;
 			}
 			_transitionNode.TargetNodeName = sceneManagerOutSlotSignal.TargetScene.graphNodeName;

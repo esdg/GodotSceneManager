@@ -5,6 +5,8 @@ using Godot.Collections;
 using MoF.Addons.ScenesManager.Extensions;
 using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Helpers;
+using System;
+using MoF.Addons.ScenesManager.Scripts.Resources;
 
 namespace MoF.Addons.ScenesManager.Scripts.Editor
 {
@@ -15,10 +17,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		public PackedScene Scene
 		{
 			get => _scene;
-			set
-			{
-				_scene = value;
-			}
+			set => _scene = value;
 		}
 
 		public override Array<string> OutSignalsNames
@@ -47,6 +46,22 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 						transitions.Add("");
 				}
 				return transitions;
+			}
+		}
+
+		public Array<TransitionModifier> OutTransitionModifers
+		{
+			get
+			{
+				var transitionsModifers = new Array<TransitionModifier>();
+				foreach (OutSlotSceneGraphNode node in _outSlotNodes.Cast<OutSlotSceneGraphNode>())
+				{
+					if (node.TransitionSelect.Selected != 0)
+						transitionsModifers.Add(node.TransitionModifier);
+					else
+						transitionsModifers.Add(new TransitionModifier());
+				}
+				return transitionsModifers;
 			}
 		}
 
@@ -160,11 +175,49 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private void CreateOutSlotNode(string signalName = "", string transitionPath = "")
 		{
 			var outSignalNode = new OutSlotSceneGraphNode(_sceneRootNode, _transitionNameList, signalName, transitionPath);
-			outSignalNode.DeleteButtonPressed += () => OnDeleteOutSignalNode(outSignalNode);
+			var outSignalOtpions = new FoldableContainer()
+			{
+				Title = $"Transition options", //TODO: make transition foldable panel design
+			};
+			outSignalOtpions.Visible = false;
+			outSignalNode.DeleteButtonPressed += () => OnDeleteOutSignalNode(outSignalNode, outSignalOtpions);
+			outSignalNode.SelectTransitionChanged += (bool isTransitionSelect) =>
+			{
+				if (isTransitionSelect)
+					outSignalOtpions.Visible = true;
+				else
+				{
+					outSignalOtpions.Visible = false;
+					SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
+				}
+			};
+			outSignalOtpions.FoldingChanged += (bool folded) =>
+			{
+				if (folded)
+					SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
+			};
 
 			AddChild(outSignalNode);
 			_outSlotNodes.Add(outSignalNode);
 			SetSlot(outSignalNode.GetIndex(), false, 0, AddonConstants.GraphNode.SceneGraphNode.Color, true, 0, AddonConstants.GraphNode.SceneGraphNode.Color);
+
+			AddChild(outSignalOtpions);
+			VBoxContainer vBoxContainer = new VBoxContainer();
+			outSignalOtpions.AddChild(vBoxContainer);
+			HBoxContainer hBoxContainer = new HBoxContainer();
+			vBoxContainer.AddChild(hBoxContainer);
+			hBoxContainer.AddChild(new Label { Text = "speed:" });
+			HSlider speedSlider = new HSlider
+			{
+				MinValue = 0,
+				MaxValue = 2.0f,
+				Step = 0.1,
+				Value = outSignalNode.TransitionModifier.Speed,
+				SizeFlagsHorizontal = SizeFlags.ExpandFill
+			};
+			hBoxContainer.AddChild(speedSlider);
+			speedSlider.ValueChanged += (double value) =>
+			{ outSignalNode.TransitionModifier.Speed = (float)value; };
 		}
 
 		private void UpdateAddOutSlotButtonState()
@@ -201,10 +254,14 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			UpdateAddOutSlotButtonState();
 		}
 
-		private void OnDeleteOutSignalNode(Node node)
+		private void OnDeleteOutSignalNode(Node node, Node transitionOptionNode)
 		{
 			RemoveChild(node);
+			RemoveChild(transitionOptionNode);
+			node.QueueFree();
+			transitionOptionNode.QueueFree();
 			_outSlotNodes.Remove(node);
+			_outSlotNodes.Remove(transitionOptionNode);
 			UpdateAddOutSlotButtonState();
 			SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
 		}

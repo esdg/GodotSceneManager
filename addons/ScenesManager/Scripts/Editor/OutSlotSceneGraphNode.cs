@@ -5,6 +5,7 @@ using Godot;
 using Godot.Collections;
 using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Helpers;
+using MoF.Addons.ScenesManager.Scripts.Resources;
 
 namespace MoF.Addons.ScenesManager.Scripts.Editor
 {
@@ -12,6 +13,8 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 	public partial class OutSlotSceneGraphNode : HBoxContainer
 	{
 		[Signal] public delegate void DeleteButtonPressedEventHandler();
+
+		[Signal] public delegate void SelectTransitionChangedEventHandler(bool isTansitionSelected);
 
 		private enum TransitionState { Off, On }
 
@@ -37,6 +40,13 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private static readonly Texture2D[] _linkTextures = new Texture2D[2];
 
 		private TransitionState nodeTransitionSate = TransitionState.Off;
+
+		private TransitionModifier _transitionModifier = new();
+		public TransitionModifier TransitionModifier
+		{
+			get => _transitionModifier;
+			set => _transitionModifier = value;
+		}
 
 		public OutSlotSceneGraphNode(Node sceneRootNode, Array<string> transitionNameList, string selectedSignalName = "", string selectedTransitionPath = "")
 		{
@@ -91,11 +101,13 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			{
 				nodeTransitionSate = TransitionState.Off;
 				_linkImage.Texture = _linkTextures[(int)nodeTransitionSate];
+				EmitSignal(SignalName.SelectTransitionChanged, false);
 			}
 			else
 			{
 				nodeTransitionSate = TransitionState.On;
 				_linkImage.Texture = _linkTextures[(int)TransitionState.On];
+				EmitSignal(SignalName.SelectTransitionChanged, true);
 			}
 
 		}
