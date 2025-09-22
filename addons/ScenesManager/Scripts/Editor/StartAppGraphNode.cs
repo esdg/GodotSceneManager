@@ -6,14 +6,35 @@ using MoF.Addons.ScenesManager.Helpers;
 
 namespace MoF.Addons.ScenesManager.Scripts.Editor
 {
+    /// <summary>
+    /// Represents a custom graph node for starting the application in the Scenes Manager editor.
+    /// </summary>
     [Tool]
     public partial class StartAppGraphNode : ScenesManagerBaseGraphNode
     {
+        /// <summary>
+        /// Cached texture for the starting app icon.
+        /// </summary>
         private static Texture2D startingAppIconTexture;
+
+        /// <summary>
+        /// Cached style for the graph node panel.
+        /// </summary>
         private static StyleBoxFlat startingAppGraphNodeStylePanel;
+
+        /// <summary>
+        /// Cached style for the graph node titlebar.
+        /// </summary>
         private static StyleBoxFlat startingAppGraphNodeStyleTitlebar;
+
+        /// <summary>
+        /// Reference to the output slot node.
+        /// </summary>
         private Node outSlot;
 
+        /// <summary>
+        /// Gets the names of the output signals for this node.
+        /// </summary>
         public override Array<string> OutSignalsNames
         {
             get
@@ -23,6 +44,9 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
             }
         }
 
+        /// <summary>
+        /// Loads required resources for the node, such as textures and styles.
+        /// </summary>
         public override void _LoadResources()
         {
             startingAppIconTexture ??= ResourceLoader.Load<Texture2D>(Plugin.PathToPlugin + AddonConstants.GraphNode.StartAppGraphNode.StartingAppIconTexturePath);
@@ -30,6 +54,9 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
             startingAppGraphNodeStyleTitlebar ??= ResourceLoader.Load<StyleBoxFlat>(Plugin.PathToPlugin + AddonConstants.GraphNode.StartAppGraphNode.GraphNodeStyleTitlebarPath);
         }
 
+        /// <summary>
+        /// Sets up the graph node's appearance and properties.
+        /// </summary>
         public override void _SetupGraphNode()
         {
             Title = AddonConstants.GraphNode.StartAppGraphNode.Title;
@@ -39,6 +66,9 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
             Set("theme_override_styles/titlebar", startingAppGraphNodeStyleTitlebar);
         }
 
+        /// <summary>
+        /// Initializes the node's UI and emits the ready signal.
+        /// </summary>
         public override void _ReadyNode()
         {
             HBoxContainer mainContainer = GodotHelpers.CreateSlotWithDescription(AddonConstants.GraphNode.StartAppGraphNode.Color, Enums.SlotMode.Out, AddonConstants.GraphNode.StartAppGraphNode.descriptionLabelText);
