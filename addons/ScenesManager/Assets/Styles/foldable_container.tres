@@ -28,6 +28,7 @@ FoldableContainer/styles/title_collapsed_hover_panel = SubResource("StyleBoxFlat
 FoldableContainer/styles/title_collapsed_panel = SubResource("StyleBoxFlat_1ceai")
 FoldableContainer/styles/title_hover_panel = SubResource("StyleBoxFlat_1ceai")
 FoldableContainer/styles/title_panel = SubResource("StyleBoxFlat_1ceai")
+HBoxContainer/constants/separation = 12
 Label/font_sizes/font_size = 12
 Label/fonts/font = ExtResource("1_1ceai")
 TabBar/font_sizes/font_size = 11
