@@ -12,5 +12,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Resources
         /// Gets or sets the speed of the transition.
         /// </summary>
         [Export] public float Speed = 1.0f;
+
+        [Export] public Color Color = Colors.Black;
     }
 }

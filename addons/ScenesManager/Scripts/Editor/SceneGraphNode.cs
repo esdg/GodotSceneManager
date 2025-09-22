@@ -5,7 +5,6 @@ using Godot.Collections;
 using MoF.Addons.ScenesManager.Extensions;
 using MoF.Addons.ScenesManager.Constants;
 using MoF.Addons.ScenesManager.Helpers;
-using System;
 using MoF.Addons.ScenesManager.Scripts.Resources;
 
 namespace MoF.Addons.ScenesManager.Scripts.Editor
@@ -77,10 +76,13 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private static StyleBoxFlat _sceneGraphNodeStylePanel;
 		private static StyleBoxFlat _sceneGraphNodeStyleTitlebar;
 
+		private static Theme _foldablePanelStyleTitlebar;
+
 		public override void _LoadResources()
 		{
 			_sceneGraphNodeStylePanel ??= ResourceLoader.Load<StyleBoxFlat>(Plugin.PathToPlugin + AddonConstants.GraphNode.SceneGraphNode.GraphNodeStylePanelPath);
 			_sceneGraphNodeStyleTitlebar ??= ResourceLoader.Load<StyleBoxFlat>(Plugin.PathToPlugin + AddonConstants.GraphNode.SceneGraphNode.GraphNodeStyleTitlebarPath);
+			_foldablePanelStyleTitlebar ??= ResourceLoader.Load<Theme>(Plugin.PathToPlugin + AddonConstants.GraphNode.SceneGraphNode.FoldablePanelStyleTitlebarPath);
 			_transitionNameList = FileSystemHelper.DirScenes<TransitionNode>(Plugin.PathToPlugin + AddonConstants.TransitionFolderPath, false, "*.tscn");
 		}
 
@@ -175,23 +177,21 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private void CreateOutSlotNode(string signalName = "", string transitionPath = "", TransitionModifier transitionModifiers = null)
 		{
 			var outSignalNode = new OutSlotSceneGraphNode(_sceneRootNode, _transitionNameList, signalName, transitionPath);
-			var outSignalModifiers = new FoldableContainer()
-			{
-				Title = $"Transition options", //TODO: make transition foldable panel design
-			};
+			var outSignalModifiersContainer = CreateTransitionOptionsContainer(transitionPath);
 
-			outSignalNode.DeleteButtonPressed += () => OnDeleteOutSignalNode(outSignalNode, outSignalModifiers);
+			// Event: Delete out signal node
+			outSignalNode.DeleteButtonPressed += () => OnDeleteOutSignalNode(outSignalNode, outSignalModifiersContainer);
+
+			// Event: Show/hide transition options
 			outSignalNode.SelectTransitionChanged += (bool isTransitionSelect) =>
 			{
-				if (isTransitionSelect)
-					outSignalModifiers.Visible = true;
-				else
-				{
-					outSignalModifiers.Visible = false;
+				outSignalModifiersContainer.Visible = isTransitionSelect;
+				if (!isTransitionSelect)
 					SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
-				}
 			};
-			outSignalModifiers.FoldingChanged += (bool folded) =>
+
+			// Event: Folding changed
+			outSignalModifiersContainer.FoldingChanged += (bool folded) =>
 			{
 				if (folded)
 					SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
@@ -201,28 +201,87 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			_outSlotNodes.Add(outSignalNode);
 			SetSlot(outSignalNode.GetIndex(), false, 0, AddonConstants.GraphNode.SceneGraphNode.Color, true, 0, AddonConstants.GraphNode.SceneGraphNode.Color);
 
-			AddChild(outSignalModifiers);
-			if (transitionModifiers.Speed == 1.0f)
-			{
-				outSignalModifiers.Folded = true;
-			}
+			AddChild(outSignalModifiersContainer);
 
-			VBoxContainer vBoxContainer = new VBoxContainer();
-			outSignalModifiers.AddChild(vBoxContainer);
-			HBoxContainer hBoxContainer = new HBoxContainer();
-			vBoxContainer.AddChild(hBoxContainer);
-			hBoxContainer.AddChild(new Label { Text = "speed:" });
-			HSlider speedSlider = new HSlider
+			if (transitionModifiers?.Speed == 1.0f)
+				outSignalModifiersContainer.Folded = true;
+
+			CreateTransitionModifiersContent(outSignalModifiersContainer, outSignalNode, transitionModifiers);
+		}
+
+		private FoldableContainer CreateTransitionOptionsContainer(string transitionPath)
+		{
+			return new FoldableContainer
+			{
+				Title = "Transition options",
+				Theme = _foldablePanelStyleTitlebar,
+				Visible = !string.IsNullOrEmpty(transitionPath)
+			};
+		}
+
+		private void CreateTransitionModifiersContent(FoldableContainer container, OutSlotSceneGraphNode outSignalNode, TransitionModifier transitionModifiers)
+		{
+			var vBox = new VBoxContainer();
+			var hBoxSpeed = new HBoxContainer
+			{
+				SizeFlagsVertical = SizeFlags.ExpandFill
+			};
+			var hBoxColor = new HBoxContainer
+			{
+				SizeFlagsVertical = SizeFlags.ExpandFill
+			};
+
+			var labelSpeed = new Label
+			{
+				Text = "speed:",
+				SizeFlagsHorizontal = SizeFlags.ExpandFill,
+				SizeFlagsStretchRatio = 0.6f,
+			};
+
+			var labelColor = new Label
+			{
+				Text = "Color:",
+				SizeFlagsHorizontal = SizeFlags.ExpandFill,
+				SizeFlagsStretchRatio = 0.6f,
+			};
+
+			var speedSlider = new HSlider
 			{
 				MinValue = 0,
 				MaxValue = 2.0f,
 				Step = 0.1,
-				Value = transitionModifiers.Speed,
-				SizeFlagsHorizontal = SizeFlags.ExpandFill
+				Value = transitionModifiers?.Speed ?? 1.0f,
+				SizeFlagsHorizontal = SizeFlags.ExpandFill,
+				SizeFlagsVertical = SizeFlags.ShrinkCenter,
 			};
-			hBoxContainer.AddChild(speedSlider);
+
+			var colorPicker = new ColorPickerButton
+			{
+				Color = transitionModifiers?.Color ?? Colors.Black,
+				SizeFlagsHorizontal = SizeFlags.ExpandFill,
+				SizeFlagsVertical = SizeFlags.ExpandFill,
+			};
+
+			colorPicker.ColorChanged += (Color color) =>
+			{
+				outSignalNode.TransitionModifier.Color = color;
+			};
+
 			speedSlider.ValueChanged += (double value) =>
-			{ outSignalNode.TransitionModifier.Speed = (float)value; };
+			{
+				outSignalNode.TransitionModifier.Speed = (float)value;
+			};
+
+			hBoxSpeed.AddChild(labelSpeed);
+			hBoxSpeed.AddChild(speedSlider);
+
+			hBoxColor.AddChild(labelColor);
+			hBoxColor.AddChild(colorPicker);
+
+			vBox.AddChild(hBoxSpeed);
+			vBox.AddChild(hBoxColor);
+
+			container.AddChild(vBox);
 		}
 
 		private void UpdateAddOutSlotButtonState()

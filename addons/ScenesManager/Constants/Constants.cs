@@ -42,6 +42,7 @@ namespace MoF.Addons.ScenesManager.Constants
                 public static readonly Vector2 InitialSize = new(250, 10);
                 public static readonly string[] linkImagesTransition = { "Assets/Icons/LinkTransitionIconOff.svg", "Assets/Icons/LinkTransitionIconOn.svg" };
                 public static readonly Color Color = new("00aeef");
+                public const string FoldablePanelStyleTitlebarPath = "Assets/Styles/foldable_container.tres";
             }
 
             /// <summary>

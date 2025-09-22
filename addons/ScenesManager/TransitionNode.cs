@@ -18,20 +18,44 @@ namespace MoF.Addons.ScenesManager
 		private AnimationPlayer AnimationPlayer { get; set; }
 
 		/// <summary>
+		/// ColorRect used to display the transition color overlay.
+		/// </summary>
+		[Export]
+		private ColorRect TransitionColorRect { get; set; }
+
+		/// <summary>
 		/// Assigns the root node of the current scene.
 		/// </summary>
+		/// <value>
+		/// The root node of the current scene to be transitioned out.
+		/// </value>
 		public Node CurrentSceneRoot
 		{
 			set => _currentSceneNode = value;
 		}
 
 		/// <summary>
-		/// Sets the playback speed for the transition animation.
+		/// Sets or gets the playback speed for the transition animation.
 		/// </summary>
+		/// <value>
+		/// The speed scale for the AnimationPlayer.
+		/// </value>
 		public float TransitionSpeed
 		{
 			set => AnimationPlayer.SpeedScale = value;
 			get => AnimationPlayer.SpeedScale;
+		}
+
+		/// <summary>
+		/// Sets or gets the color used for the transition overlay.
+		/// </summary>
+		/// <value>
+		/// The color of the transition overlay.
+		/// </value>
+		public Color TransitionColor
+		{
+			set => TransitionColorRect.Color = value;
+			get => TransitionColorRect.Color;
 		}
 
 		/// <summary>
@@ -51,7 +75,9 @@ namespace MoF.Addons.ScenesManager
 		/// <summary>
 		/// Checks if AnimationPlayer exists and contains the required "TRANSITION" animation.
 		/// </summary>
-		/// <returns>True if valid, otherwise false.</returns>
+		/// <returns>
+		/// True if the AnimationPlayer is valid and contains the "TRANSITION" animation; otherwise, false.
+		/// </returns>
 		private bool ValidateAnimationPlayer()
 		{
 			if (AnimationPlayer == null)
