@@ -9,65 +9,16 @@ using MoF.Addons.ScenesManager.Scripts.Resources;
 
 namespace MoF.Addons.ScenesManager.Scripts.Editor
 {
+	/// <summary>
+	/// Represents a graph node for a scene in the Scenes Manager editor.
+	/// Handles the UI and logic for connecting scenes and transitions.
+	/// </summary>
 	[Tool]
 	public partial class SceneGraphNode : ScenesManagerBaseGraphNode
 	{
-
-		public PackedScene Scene
-		{
-			get => _scene;
-			set => _scene = value;
-		}
-
-		public override Array<string> OutSignalsNames
-		{
-			get
-			{
-				var signals = new Array<string>();
-				foreach (OutSlotSceneGraphNode node in _outSlotNodes.Cast<OutSlotSceneGraphNode>())
-				{
-					signals.Add(node.SignalSelect.GetItemText(node.SignalSelect.Selected));
-				}
-				return signals;
-			}
-		}
-
-		public Array<string> OutTransitionPackedScenePaths
-		{
-			get
-			{
-				var transitions = new Array<string>();
-				foreach (OutSlotSceneGraphNode node in _outSlotNodes.Cast<OutSlotSceneGraphNode>())
-				{
-					if (node.TransitionSelect.Selected != 0)
-						transitions.Add(node.TransitionPaths[node.TransitionSelect.Selected - 1]);
-					else
-						transitions.Add("");
-				}
-				return transitions;
-			}
-		}
-
-		public Array<TransitionModifier> OutTransitionModifers
-		{
-			get
-			{
-				var transitionsModifers = new Array<TransitionModifier>();
-				foreach (OutSlotSceneGraphNode node in _outSlotNodes.Cast<OutSlotSceneGraphNode>())
-				{
-					if (node.TransitionSelect.Selected != 0)
-						transitionsModifers.Add(node.TransitionModifier);
-					else
-						transitionsModifers.Add(new TransitionModifier());
-				}
-				return transitionsModifers;
-			}
-		}
-
-
 		private Node _sceneRootNode;
 		private Node _inSlotNode;
-		private Array<Node> _outSlotNodes = new(); // probably remove this? using children?
+		private Array<Node> _outSlotNodes = new();
 		private Button _addOutSlotButton;
 		private EditorResourcePicker _sceneResourcePicker;
 		private PackedScene _scene;
@@ -75,9 +26,48 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 		private static StyleBoxFlat _sceneGraphNodeStylePanel;
 		private static StyleBoxFlat _sceneGraphNodeStyleTitlebar;
-
 		private static Theme _foldablePanelStyleTitlebar;
 
+		/// <summary>
+		/// Gets or sets the PackedScene associated with this node.
+		/// </summary>
+		public PackedScene Scene
+		{
+			get => _scene;
+			set => _scene = value;
+		}
+
+		/// <summary>
+		/// Gets the list of signal names for all out slots.
+		/// </summary>
+		public override Array<string> OutSignalsNames =>
+			[.. _outSlotNodes
+				.Cast<OutSlotSceneGraphNode>()
+				.Select(node => node.SignalSelect.GetItemText(node.SignalSelect.Selected))];
+
+		/// <summary>
+		/// Gets the list of transition PackedScene paths for all out slots.
+		/// </summary>
+		public Array<string> OutTransitionPackedScenePaths =>
+			[.. _outSlotNodes
+				.Cast<OutSlotSceneGraphNode>()
+				.Select(node => node.TransitionSelect.Selected != 0
+					? node.TransitionPaths[node.TransitionSelect.Selected - 1]
+					: "")];
+
+		/// <summary>
+		/// Gets the list of transition modifiers for all out slots.
+		/// </summary>
+		public Array<TransitionModifier> OutTransitionModifers =>
+			[.. _outSlotNodes
+				.Cast<OutSlotSceneGraphNode>()
+				.Select(node => node.TransitionSelect.Selected != 0
+					? node.TransitionModifier
+					: new TransitionModifier())];
+
+		/// <summary>
+		/// Loads required resources for the node (styles, themes, transitions).
+		/// </summary>
 		public override void _LoadResources()
 		{
 			_sceneGraphNodeStylePanel ??= ResourceLoader.Load<StyleBoxFlat>(Plugin.PathToPlugin + AddonConstants.GraphNode.SceneGraphNode.GraphNodeStylePanelPath);
@@ -86,6 +76,9 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			_transitionNameList = FileSystemHelper.DirScenes<TransitionNode>(Plugin.PathToPlugin + AddonConstants.TransitionFolderPath, false, "*.tscn");
 		}
 
+		/// <summary>
+		/// Sets up the graph node's appearance and initial state.
+		/// </summary>
 		public override void _SetupGraphNode()
 		{
 			Title = AddonConstants.GraphNode.SceneGraphNode.Title;
@@ -95,17 +88,17 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			Set("theme_override_styles/titlebar", _sceneGraphNodeStyleTitlebar);
 		}
 
-		public override void _ReadyNode()
-		{
-			CreateSceneResourcePicker();
-		}
+		/// <summary>
+		/// Called when the node is ready. Initializes the resource picker.
+		/// </summary>
+		public override void _ReadyNode() => CreateSceneResourcePicker();
 
+		/// <summary>
+		/// Creates the resource picker for selecting a scene.
+		/// </summary>
 		private void CreateSceneResourcePicker()
 		{
-			_sceneResourcePicker = new EditorResourcePicker
-			{
-				BaseType = nameof(PackedScene)
-			};
+			_sceneResourcePicker = new EditorResourcePicker { BaseType = nameof(PackedScene) };
 			AddChild(_sceneResourcePicker);
 
 			if (Scene != null)
@@ -114,27 +107,39 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 				SetSceneGraphNode(Scene);
 			}
 			_sceneResourcePicker.ResourceChanged += OnSceneResourcePickerChanged;
-
 		}
 
+		/// <summary>
+		/// Removes and frees all child nodes and resets the out slot list.
+		/// </summary>
 		private void InitializeGraphNode()
 		{
-			if (_inSlotNode != null)
-			{
-				RemoveChild(_inSlotNode);
-				_inSlotNode.QueueFree();
-			}
-
-			if (_addOutSlotButton != null)
-			{
-				RemoveChild(_addOutSlotButton);
-				_addOutSlotButton.QueueFree();
-			}
+			RemoveAndFreeNode(ref _inSlotNode);
+			RemoveAndFreeNode(ref _addOutSlotButton);
 
 			this.RemoveChildren(_outSlotNodes.ToArray());
 			_outSlotNodes.Clear();
 		}
 
+		/// <summary>
+		/// Removes and frees a node if it exists.
+		/// </summary>
+		/// <typeparam name="T">Type of the node.</typeparam>
+		/// <param name="node">Reference to the node to remove and free.</param>
+		private void RemoveAndFreeNode<T>(ref T node) where T : Node
+		{
+			if (node != null)
+			{
+				RemoveChild(node);
+				node.QueueFree();
+				node = null;
+			}
+		}
+
+		/// <summary>
+		/// Sets up the graph node UI and logic for the given scene.
+		/// </summary>
+		/// <param name="packedScene">The scene to display in this node.</param>
 		private void SetSceneGraphNode(PackedScene packedScene)
 		{
 			_sceneRootNode = packedScene.Instantiate<Node>();
@@ -146,6 +151,9 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			EmitSignal(SignalName.GraphNodeReady);
 		}
 
+		/// <summary>
+		/// Creates out slot nodes for all signals to load.
+		/// </summary>
 		private void SetSignalsSlot()
 		{
 			foreach (var outSignals in OutSignalsToLoad)
@@ -154,44 +162,50 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			}
 		}
 
+		/// <summary>
+		/// Creates the input slot node.
+		/// </summary>
 		private void CreateInSlotNode()
 		{
 			_inSlotNode = new Label { Text = "In" };
-			FontFile fontFileBold = ResourceLoader.Load<FontFile>("res://addons/ScenesManager/Assets/Fonts/JetBrainsMono-Bold.ttf");
+			var fontFileBold = ResourceLoader.Load<FontFile>("res://addons/ScenesManager/Assets/Fonts/JetBrainsMono-Bold.ttf");
 			_inSlotNode.Set("theme_override_colors/font_color", AddonConstants.GraphNode.SceneGraphNode.Color);
 			_inSlotNode.Set("theme_override_fonts/font", fontFileBold);
 			AddChild(_inSlotNode);
 			SetSlot(_inSlotNode.GetIndex(), true, 0, AddonConstants.GraphNode.SceneGraphNode.Color, false, 0, AddonConstants.GraphNode.SceneGraphNode.Color);
 		}
 
+		/// <summary>
+		/// Creates the button for adding new out slots.
+		/// </summary>
 		private void CreateAddOutSlotButton()
 		{
-			_addOutSlotButton = new Button
-			{
-				Text = GetAddOutSlotButtonText()
-			};
+			_addOutSlotButton = new Button { Text = GetAddOutSlotButtonText() };
 			_addOutSlotButton.Pressed += OnAddOutSlot;
 			AddChild(_addOutSlotButton);
 		}
 
+		/// <summary>
+		/// Creates an out slot node with optional signal and transition data.
+		/// </summary>
+		/// <param name="signalName">Signal name for the out slot.</param>
+		/// <param name="transitionPath">Transition scene path.</param>
+		/// <param name="transitionModifiers">Transition modifier data.</param>
 		private void CreateOutSlotNode(string signalName = "", string transitionPath = "", TransitionModifier transitionModifiers = null)
 		{
 			var outSignalNode = new OutSlotSceneGraphNode(_sceneRootNode, _transitionNameList, signalName, transitionPath);
 			var outSignalModifiersContainer = CreateTransitionOptionsContainer(transitionPath);
 
-			// Event: Delete out signal node
 			outSignalNode.DeleteButtonPressed += () => OnDeleteOutSignalNode(outSignalNode, outSignalModifiersContainer);
 
-			// Event: Show/hide transition options
-			outSignalNode.SelectTransitionChanged += (bool isTransitionSelect) =>
+			outSignalNode.SelectTransitionChanged += (isTransitionSelect) =>
 			{
 				outSignalModifiersContainer.Visible = isTransitionSelect;
 				if (!isTransitionSelect)
 					SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
 			};
 
-			// Event: Folding changed
-			outSignalModifiersContainer.FoldingChanged += (bool folded) =>
+			outSignalModifiersContainer.FoldingChanged += (folded) =>
 			{
 				if (folded)
 					SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
@@ -203,53 +217,54 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 			AddChild(outSignalModifiersContainer);
 
-			//if default values, fold the container
 			if (transitionModifiers?.Speed == 1.0f && transitionModifiers?.Color == Colors.Black)
 				outSignalModifiersContainer.Folded = true;
 
 			CreateTransitionModifiersContent(outSignalModifiersContainer, outSignalNode, transitionModifiers);
 		}
 
-		private FoldableContainer CreateTransitionOptionsContainer(string transitionPath)
-		{
-			return new FoldableContainer
+		/// <summary>
+		/// Creates a foldable container for transition options.
+		/// </summary>
+		/// <param name="transitionPath">Transition scene path.</param>
+		/// <returns>A new FoldableContainer instance.</returns>
+		private FoldableContainer CreateTransitionOptionsContainer(string transitionPath) =>
+			new()
 			{
 				Title = AddonConstants.GraphNode.SceneGraphNode.TransitionFolderContainerLabelText,
 				Theme = _foldablePanelStyleTitlebar,
 				Visible = !string.IsNullOrEmpty(transitionPath)
 			};
-		}
 
+		/// <summary>
+		/// Creates the UI for editing transition modifiers (speed and color).
+		/// </summary>
+		/// <param name="container">The parent container for the controls.</param>
+		/// <param name="outSignalNode">The out slot node to bind values to.</param>
+		/// <param name="transitionModifiers">Initial modifier values.</param>
 		private void CreateTransitionModifiersContent(FoldableContainer container, OutSlotSceneGraphNode outSignalNode, TransitionModifier transitionModifiers)
 		{
 			var vBox = new VBoxContainer();
-			var hBoxSpeed = new HBoxContainer
-			{
-				SizeFlagsVertical = SizeFlags.ExpandFill
-			};
-			var hBoxColor = new HBoxContainer
-			{
-				SizeFlagsVertical = SizeFlags.ExpandFill
-			};
+			var hBoxSpeed = new HBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
+			var hBoxColor = new HBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
 
 			var labelSpeed = new Label
 			{
 				Text = "speed:",
-				SizeFlagsHorizontal = SizeFlags.ExpandFill,
-				SizeFlagsStretchRatio = 0.6f,
+				SizeFlagsHorizontal = SizeFlags.ShrinkBegin,
 			};
 			var labelSpeedValue = new Label
 			{
-				Text = (transitionModifiers?.Speed ?? 1.0f).ToString(),
-				SizeFlagsHorizontal = SizeFlags.ExpandFill,
-				SizeFlagsStretchRatio = 0.4f,
+				Text = (transitionModifiers?.Speed ?? 1.0f).ToString() + "x",
+				SizeFlagsHorizontal = SizeFlags.Fill,
+				HorizontalAlignment = HorizontalAlignment.Right,
+				CustomMinimumSize = new Vector2(30, 0),
 			};
 
 			var labelColor = new Label
 			{
 				Text = "Color:",
-				SizeFlagsHorizontal = SizeFlags.ExpandFill,
-				SizeFlagsStretchRatio = 0.6f,
+				SizeFlagsHorizontal = SizeFlags.ShrinkBegin,
 			};
 
 			var speedSlider = new HSlider
@@ -269,15 +284,12 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 				SizeFlagsVertical = SizeFlags.ExpandFill,
 			};
 
-			colorPicker.ColorChanged += (Color color) =>
-			{
-				outSignalNode.TransitionModifier.Color = color;
-			};
+			colorPicker.ColorChanged += color => outSignalNode.TransitionModifier.Color = color;
 
-			speedSlider.ValueChanged += (double value) =>
+			speedSlider.ValueChanged += value =>
 			{
 				outSignalNode.TransitionModifier.Speed = (float)value;
-				labelSpeedValue.Text = value.ToString();
+				labelSpeedValue.Text = value.ToString() + "x";
 			};
 
 			hBoxSpeed.AddChild(labelSpeed);
@@ -293,17 +305,28 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			container.AddChild(vBox);
 		}
 
+		/// <summary>
+		/// Updates the add out slot button's text and enabled state.
+		/// </summary>
 		private void UpdateAddOutSlotButtonState()
 		{
 			_addOutSlotButton.Text = GetAddOutSlotButtonText();
 			_addOutSlotButton.Disabled = _outSlotNodes.Count >= AddonConstants.GraphNode.MaxNumberOfOutSlots;
 		}
 
-		private string GetAddOutSlotButtonText()
-		{
-			return $"Add Out slot {_outSlotNodes.Count}/{AddonConstants.GraphNode.MaxNumberOfOutSlots}";
-		}
+		/// <summary>
+		/// Gets the display text for the add out slot button.
+		/// </summary>
+		/// <returns>The button text.</returns>
+		private string GetAddOutSlotButtonText() =>
+			$"Add Out slot {_outSlotNodes.Count}/{AddonConstants.GraphNode.MaxNumberOfOutSlots}";
 
+		// Event Handlers
+
+		/// <summary>
+		/// Handles changes to the scene resource picker.
+		/// </summary>
+		/// <param name="resource">The selected resource.</param>
 		private void OnSceneResourcePickerChanged(Resource resource)
 		{
 			if (resource is PackedScene packedScene)
@@ -318,6 +341,9 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			}
 		}
 
+		/// <summary>
+		/// Handles the add out slot button press event.
+		/// </summary>
 		private void OnAddOutSlot()
 		{
 			if (_outSlotNodes.Count < AddonConstants.GraphNode.MaxNumberOfOutSlots)
@@ -327,6 +353,11 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			UpdateAddOutSlotButtonState();
 		}
 
+		/// <summary>
+		/// Handles the deletion of an out signal node and its transition option node.
+		/// </summary>
+		/// <param name="node">The out slot node to remove.</param>
+		/// <param name="transitionOptionNode">The associated transition option node to remove.</param>
 		private void OnDeleteOutSignalNode(Node node, Node transitionOptionNode)
 		{
 			RemoveChild(node);
