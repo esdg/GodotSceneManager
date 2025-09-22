@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bpm6cwd2rdb1"]
 
-[ext_resource type="Script" uid="uid://ca8du2arqs8k4" path="res://addons/ScenesManager/TransitionNode.cs" id="1_kt5id"]
+[ext_resource type="Script" uid="uid://cic1u3c104yud" path="res://addons/ScenesManager/TransitionNodeWithColor.cs" id="1_m7et0"]
 [ext_resource type="Shader" uid="uid://4ttq2xa4gypy" path="res://addons/ScenesManager/Assets/Shaders/diamondShader.gdshader" id="2_ay8aq"]
 
 [sub_resource type="Animation" id="Animation_2564u"]
@@ -107,10 +107,10 @@ shader = ExtResource("2_ay8aq")
 shader_parameter/progress = 0.0
 shader_parameter/diamondPixelSize = 10.0
 
-[node name="HorizontalCurtainToBlackRoot" type="CanvasLayer" node_paths=PackedStringArray("AnimationPlayer", "TransitionColorRect")]
-script = ExtResource("1_kt5id")
-AnimationPlayer = NodePath("AnimationPlayer")
+[node name="HorizontalCurtainToBlackRoot" type="CanvasLayer" node_paths=PackedStringArray("TransitionColorRect", "AnimationPlayer")]
+script = ExtResource("1_m7et0")
 TransitionColorRect = NodePath("ColorLayer")
+AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

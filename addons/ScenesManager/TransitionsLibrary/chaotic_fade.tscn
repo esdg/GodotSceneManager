@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dur2gdij67j35"]
 
-[ext_resource type="Script" uid="uid://ca8du2arqs8k4" path="res://addons/ScenesManager/TransitionNode.cs" id="1_k5817"]
+[ext_resource type="Script" uid="uid://cic1u3c104yud" path="res://addons/ScenesManager/TransitionNodeWithColor.cs" id="1_h3yxt"]
 [ext_resource type="Shader" uid="uid://cfolhhfcx2gyp" path="res://addons/ScenesManager/Assets/Shaders/texturefader.gdshader" id="2_17j76"]
 [ext_resource type="Texture2D" uid="uid://cwynohqo7cdyo" path="res://addons/ScenesManager/Assets/Shaders/shards.png" id="3_qfnbs"]
 
@@ -110,10 +110,11 @@ shader_parameter/smooth_size = 0.49
 shader_parameter/mask = ExtResource("3_qfnbs")
 shader_parameter/color = Color(0, 0, 0, 1)
 
-[node name="ChaoticFadeToBlackRoot" type="CanvasLayer" node_paths=PackedStringArray("AnimationPlayer", "TransitionColorRect")]
-script = ExtResource("1_k5817")
-AnimationPlayer = NodePath("AnimationPlayer")
+[node name="ChaoticFadeToBlackRoot" type="Node" node_paths=PackedStringArray("TransitionColorRect", "AnimationPlayer")]
+script = ExtResource("1_h3yxt")
 TransitionColorRect = NodePath("ColorLayer")
+AnimationPlayer = NodePath("AnimationPlayer")
+metadata/_custom_type_script = "uid://cic1u3c104yud"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -127,6 +128,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -136,6 +139,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
 grow_horizontal = 2
 grow_vertical = 2
 

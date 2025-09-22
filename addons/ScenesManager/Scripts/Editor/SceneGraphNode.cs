@@ -203,7 +203,8 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 			AddChild(outSignalModifiersContainer);
 
-			if (transitionModifiers?.Speed == 1.0f)
+			//if default values, fold the container
+			if (transitionModifiers?.Speed == 1.0f && transitionModifiers?.Color == Colors.Black)
 				outSignalModifiersContainer.Folded = true;
 
 			CreateTransitionModifiersContent(outSignalModifiersContainer, outSignalNode, transitionModifiers);
@@ -213,7 +214,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		{
 			return new FoldableContainer
 			{
-				Title = "Transition options",
+				Title = AddonConstants.GraphNode.SceneGraphNode.TransitionFolderContainerLabelText,
 				Theme = _foldablePanelStyleTitlebar,
 				Visible = !string.IsNullOrEmpty(transitionPath)
 			};
@@ -236,6 +237,12 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 				Text = "speed:",
 				SizeFlagsHorizontal = SizeFlags.ExpandFill,
 				SizeFlagsStretchRatio = 0.6f,
+			};
+			var labelSpeedValue = new Label
+			{
+				Text = (transitionModifiers?.Speed ?? 1.0f).ToString(),
+				SizeFlagsHorizontal = SizeFlags.ExpandFill,
+				SizeFlagsStretchRatio = 0.4f,
 			};
 
 			var labelColor = new Label
@@ -270,10 +277,12 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 			speedSlider.ValueChanged += (double value) =>
 			{
 				outSignalNode.TransitionModifier.Speed = (float)value;
+				labelSpeedValue.Text = value.ToString();
 			};
 
 			hBoxSpeed.AddChild(labelSpeed);
 			hBoxSpeed.AddChild(speedSlider);
+			hBoxSpeed.AddChild(labelSpeedValue);
 
 			hBoxColor.AddChild(labelColor);
 			hBoxColor.AddChild(colorPicker);

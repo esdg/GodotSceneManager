@@ -95,7 +95,8 @@ namespace MoF.Addons.ScenesManager
 			if (_transitionNode is TransitionNode transitionNode)
 			{
 				transitionNode.TransitionSpeed = sceneManagerOutSlotSignal.TransitionModifier.Speed;
-				transitionNode.TransitionColor = sceneManagerOutSlotSignal.TransitionModifier.Color;
+				if (transitionNode is TransitionNodeWithColor transitionNodeWithColor)
+					transitionNodeWithColor.TransitionColor = sceneManagerOutSlotSignal.TransitionModifier.Color;
 				transitionNode.CurrentSceneRoot = _currentScene;
 			}
 			_transitionNode.TargetNodeName = sceneManagerOutSlotSignal.TargetScene.graphNodeName;

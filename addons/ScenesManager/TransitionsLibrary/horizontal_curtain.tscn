@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dxh1mnt3463bh"]
 
-[ext_resource type="Script" uid="uid://ca8du2arqs8k4" path="res://addons/ScenesManager/TransitionNode.cs" id="1_utesx"]
+[ext_resource type="Script" uid="uid://cic1u3c104yud" path="res://addons/ScenesManager/TransitionNodeWithColor.cs" id="1_aayds"]
 [ext_resource type="Shader" uid="uid://cfolhhfcx2gyp" path="res://addons/ScenesManager/Assets/Shaders/texturefader.gdshader" id="2_aldxx"]
 [ext_resource type="Texture2D" uid="uid://cb6csea36vchj" path="res://addons/ScenesManager/Assets/Shaders/from_center.png" id="3_scg54"]
 
@@ -110,10 +110,10 @@ shader_parameter/smooth_size = 0.49
 shader_parameter/mask = ExtResource("3_scg54")
 shader_parameter/color = Color(0, 0, 0, 1)
 
-[node name="HorizontalCurtainToBlackRoot" type="CanvasLayer" node_paths=PackedStringArray("AnimationPlayer", "TransitionColorRect")]
-script = ExtResource("1_utesx")
-AnimationPlayer = NodePath("AnimationPlayer")
+[node name="HorizontalCurtainToBlackRoot" type="CanvasLayer" node_paths=PackedStringArray("TransitionColorRect", "AnimationPlayer")]
+script = ExtResource("1_aayds")
 TransitionColorRect = NodePath("ColorLayer")
+AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

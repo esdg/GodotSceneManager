@@ -18,12 +18,6 @@ namespace MoF.Addons.ScenesManager
 		private AnimationPlayer AnimationPlayer { get; set; }
 
 		/// <summary>
-		/// ColorRect used to display the transition color overlay.
-		/// </summary>
-		[Export]
-		private ColorRect TransitionColorRect { get; set; }
-
-		/// <summary>
 		/// Assigns the root node of the current scene.
 		/// </summary>
 		/// <value>
@@ -44,18 +38,6 @@ namespace MoF.Addons.ScenesManager
 		{
 			set => AnimationPlayer.SpeedScale = value;
 			get => AnimationPlayer.SpeedScale;
-		}
-
-		/// <summary>
-		/// Sets or gets the color used for the transition overlay.
-		/// </summary>
-		/// <value>
-		/// The color of the transition overlay.
-		/// </value>
-		public Color TransitionColor
-		{
-			set => TransitionColorRect.Color = value;
-			get => TransitionColorRect.Color;
 		}
 
 		/// <summary>
