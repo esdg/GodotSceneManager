@@ -1,20 +1,49 @@
-using System;
 using Godot;
 using MoF.Addons.ScenesManager.Scripts;
 
 namespace MoF.Addons.ScenesManager
 {
+	/// <summary>
+	/// Handles animated scene transitions in Godot using an AnimationPlayer.
+	/// Sets up containers for current and target scenes, manages animation playback,
+	/// and provides preview scenes if none are assigned.
+	/// </summary>
 	[Tool, GlobalClass]
 	public partial class TransitionNode : TransitionNodeBase
 	{
+		/// <summary>
+		/// AnimationPlayer responsible for playing the transition animation.
+		/// </summary>
 		[Export]
 		private AnimationPlayer AnimationPlayer { get; set; }
 
+		/// <summary>
+		/// Assigns the root node of the current scene.
+		/// </summary>
+		/// <value>
+		/// The root node of the current scene to be transitioned out.
+		/// </value>
 		public Node CurrentSceneRoot
 		{
 			set => _currentSceneNode = value;
 		}
 
+		/// <summary>
+		/// Sets or gets the playback speed for the transition animation.
+		/// </summary>
+		/// <value>
+		/// The speed scale for the AnimationPlayer.
+		/// </value>
+		public float TransitionSpeed
+		{
+			set => AnimationPlayer.SpeedScale = value;
+			get => AnimationPlayer.SpeedScale;
+		}
+
+		/// <summary>
+		/// Called when the transition is ready to begin.
+		/// Validates the AnimationPlayer, sets up scene containers, and starts the animation.
+		/// </summary>
 		public override void _TransitionReady()
 		{
 			if (!ValidateAnimationPlayer()) return;
@@ -25,6 +54,12 @@ namespace MoF.Addons.ScenesManager
 			AnimationPlayer.Play("TRANSITION");
 		}
 
+		/// <summary>
+		/// Checks if AnimationPlayer exists and contains the required "TRANSITION" animation.
+		/// </summary>
+		/// <returns>
+		/// True if the AnimationPlayer is valid and contains the "TRANSITION" animation; otherwise, false.
+		/// </returns>
 		private bool ValidateAnimationPlayer()
 		{
 			if (AnimationPlayer == null)
@@ -42,6 +77,10 @@ namespace MoF.Addons.ScenesManager
 			return true;
 		}
 
+		/// <summary>
+		/// Prepares the container for the target scene and instantiates it.
+		/// If no target scene is set, creates a preview scene.
+		/// </summary>
 		private void SetupTargetSceneRoot()
 		{
 			if (!HasNode("%target_scene"))
@@ -53,16 +92,22 @@ namespace MoF.Addons.ScenesManager
 
 			if (_targetPackedScene == null)
 			{
+				// Create a preview scene if no target scene is specified
 				AddDummySceneNode(_targetSceneRoot, Colors.MediumPurple, "Scene B");
 			}
 			else
 			{
+				// Instantiate the actual target scene
 				_targetSceneNode = _targetPackedScene.Instantiate();
 				_targetSceneRoot.AddChild(_targetSceneNode);
 				_targetSceneNode.Name = TargetNodeName;
 			}
 		}
 
+		/// <summary>
+		/// Prepares the container for the current scene and adds it.
+		/// If no current scene is set, creates a preview scene.
+		/// </summary>
 		private void SetupCurrentSceneRoot()
 		{
 			if (!HasNode("%current_scene"))
@@ -74,6 +119,7 @@ namespace MoF.Addons.ScenesManager
 
 			if (_currentSceneNode == null)
 			{
+				// Create a preview scene if no current scene is set
 				AddDummySceneNode(_currentSceneRoot, Colors.MediumSeaGreen, "Scene A");
 			}
 			else
@@ -82,6 +128,10 @@ namespace MoF.Addons.ScenesManager
 			}
 		}
 
+		/// <summary>
+		/// Creates a new Control node to serve as a scene container with the given name.
+		/// </summary>
+		/// <param name="nodeName">Name for the new scene container node.</param>
 		private void AddSceneNode(string nodeName)
 		{
 			var sceneNode = new Control();
@@ -92,6 +142,12 @@ namespace MoF.Addons.ScenesManager
 			sceneNode.UniqueNameInOwner = true;
 		}
 
+		/// <summary>
+		/// Adds a dummy scene with a colored background and label for preview purposes.
+		/// </summary>
+		/// <param name="sceneNode">The container to add the dummy scene to.</param>
+		/// <param name="backgroundColor">Background color for the dummy scene.</param>
+		/// <param name="labelText">Text to display in the dummy scene.</param>
 		private static void AddDummySceneNode(Control sceneNode, Color backgroundColor, string labelText)
 		{
 			var background = new ColorRect { Color = backgroundColor };

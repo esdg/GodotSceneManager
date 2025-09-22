@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bacq1k0fw88ul"]
 
-[ext_resource type="Script" uid="uid://ca8du2arqs8k4" path="res://addons/ScenesManager/TransitionNode.cs" id="1_q5yua"]
+[ext_resource type="Script" uid="uid://cic1u3c104yud" path="res://addons/ScenesManager/TransitionNodeWithColor.cs" id="1_tds50"]
 
 [sub_resource type="Animation" id="Animation_isgpg"]
 resource_name = "RESET"
@@ -31,7 +31,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BlackLayer:modulate")
+tracks/2/path = NodePath("ColorLayer:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -47,7 +47,7 @@ length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BlackLayer:modulate")
+tracks/0/path = NodePath("ColorLayer:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -101,13 +101,14 @@ _data = {
 &"TRANSITION": SubResource("Animation_ua1vh")
 }
 
-[node name="FadeToBlackRoot" type="CanvasLayer" node_paths=PackedStringArray("AnimationPlayer")]
-script = ExtResource("1_q5yua")
+[node name="FadeToBlackRoot" type="CanvasLayer" node_paths=PackedStringArray("TransitionColorRect", "AnimationPlayer")]
+script = ExtResource("1_tds50")
+TransitionColorRect = NodePath("ColorLayer")
 AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_mvcip")
+&"": SubResource("AnimationLibrary_mvcip")
 }
 
 [node name="target_scene" type="Control" parent="."]
@@ -129,7 +130,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BlackLayer" type="ColorRect" parent="."]
+[node name="ColorLayer" type="ColorRect" parent="."]
 modulate = Color(0, 0, 0, 0)
 anchors_preset = 15
 anchor_right = 1.0

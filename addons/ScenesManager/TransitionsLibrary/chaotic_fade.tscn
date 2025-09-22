@@ -1,45 +1,46 @@
-[gd_scene load_steps=7 format=3 uid="uid://bpm6cwd2rdb1"]
+[gd_scene load_steps=8 format=3 uid="uid://dur2gdij67j35"]
 
-[ext_resource type="Script" uid="uid://ca8du2arqs8k4" path="res://addons/ScenesManager/TransitionNode.cs" id="1_kt5id"]
-[ext_resource type="Shader" uid="uid://4ttq2xa4gypy" path="res://addons/ScenesManager/Assets/Shaders/diamondShader.gdshader" id="2_ay8aq"]
+[ext_resource type="Script" uid="uid://cic1u3c104yud" path="res://addons/ScenesManager/TransitionNodeWithColor.cs" id="1_h3yxt"]
+[ext_resource type="Shader" uid="uid://cfolhhfcx2gyp" path="res://addons/ScenesManager/Assets/Shaders/texturefader.gdshader" id="2_17j76"]
+[ext_resource type="Texture2D" uid="uid://cwynohqo7cdyo" path="res://addons/ScenesManager/Assets/Shaders/shards.png" id="3_qfnbs"]
 
-[sub_resource type="Animation" id="Animation_2564u"]
+[sub_resource type="Animation" id="Animation_kbou5"]
 resource_name = "RESET"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("current_scene:visible")
+tracks/0/path = NodePath("target_scene:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("target_scene:visible")
+tracks/1/path = NodePath("current_scene:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BlackLayer:material:shader_parameter/progress")
+tracks/2/path = NodePath("ColorLayer:material:shader_parameter/cutoff")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [1.0]
 }
 
 [sub_resource type="Animation" id="Animation_ua1vh"]
@@ -86,34 +87,38 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("BlackLayer:material:shader_parameter/progress")
+tracks/3/path = NodePath("ColorLayer:material:shader_parameter/cutoff")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0, 1, 2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [0.0, 1.0, 0.0]
+"values": [1.0, 0.0, 1.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mvcip"]
 _data = {
-&"RESET": SubResource("Animation_2564u"),
+&"RESET": SubResource("Animation_kbou5"),
 &"TRANSITION": SubResource("Animation_ua1vh")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ick6y"]
-shader = ExtResource("2_ay8aq")
-shader_parameter/progress = 0.0
-shader_parameter/diamondPixelSize = 10.0
+shader = ExtResource("2_17j76")
+shader_parameter/cutoff = 1.0
+shader_parameter/smooth_size = 0.49
+shader_parameter/mask = ExtResource("3_qfnbs")
+shader_parameter/color = Color(0, 0, 0, 1)
 
-[node name="HorizontalCurtainToBlackRoot" type="CanvasLayer" node_paths=PackedStringArray("AnimationPlayer")]
-script = ExtResource("1_kt5id")
+[node name="ChaoticFadeToBlackRoot" type="Node" node_paths=PackedStringArray("TransitionColorRect", "AnimationPlayer")]
+script = ExtResource("1_h3yxt")
+TransitionColorRect = NodePath("ColorLayer")
 AnimationPlayer = NodePath("AnimationPlayer")
+metadata/_custom_type_script = "uid://cic1u3c104yud"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_mvcip")
+&"": SubResource("AnimationLibrary_mvcip")
 }
 
 [node name="target_scene" type="Control" parent="."]
@@ -123,6 +128,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -132,10 +139,12 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BlackLayer" type="ColorRect" parent="."]
+[node name="ColorLayer" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_ick6y")
 anchors_preset = 15
 anchor_right = 1.0
