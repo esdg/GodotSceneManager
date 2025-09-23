@@ -31,8 +31,12 @@ namespace MoF.Addons.ScenesManager
 		/// </summary>
 		public float TransitionSpeed
 		{
-			set => AnimationPlayer.SpeedScale = value;
-			get => AnimationPlayer.SpeedScale;
+			set
+			{
+				if (AnimationPlayer != null)
+					AnimationPlayer.SpeedScale = value;
+			}
+			get => AnimationPlayer != null ? AnimationPlayer.SpeedScale : 1.0f;
 		}
 
 		/// <summary>
@@ -238,11 +242,12 @@ namespace MoF.Addons.ScenesManager
 		{
 			var warnings = new List<string>();
 
+
 			if (AnimationPlayer == null)
 				warnings.Add("AnimationPlayer is not assigned. Transitions will not play.");
 
-			if (FindChildren(AnimationPlayer.Name, "AnimationPlayer", false).Count == 0)
-				warnings.Add($"'AnimationPlayer' named '{AnimationPlayer.Name}' is not a child of this node. It must be a direct child to function correctly.");
+			if (AnimationPlayer != null && FindChild(AnimationPlayer.Name) == null)
+				warnings.Add($"'AnimationPlayer' named '{AnimationPlayer.Name}' is referenced but does not seems to exist");
 
 			if (!HasNode("%target_scene"))
 				warnings.Add("Target scene container node ('%target_scene') is missing.");

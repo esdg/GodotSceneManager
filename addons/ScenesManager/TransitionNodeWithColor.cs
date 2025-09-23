@@ -77,8 +77,9 @@ namespace MoF.Addons.ScenesManager
 			if (TransitionColorRect == null)
 				warnings.Add("TransitionColorRect is not assigned. The color overlay will not be visible.");
 
-			if (FindChildren(TransitionColorRect.Name, "ColorRect", false).Count == 0)
-				warnings.Add($"'ColorRect' named '{TransitionColorRect.Name}' is not a child of this node. It must be a direct child to function correctly.");
+
+			if (TransitionColorRect != null && FindChild(TransitionColorRect.Name) == null)
+				warnings.Add($"'ColorRect' named '{TransitionColorRect.Name}' is referenced but does not seems to exist");
 
 			return warnings.ToArray();
 		}
