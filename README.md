@@ -61,7 +61,7 @@ scene_manager.change_scene("res://scenes/MainMenu.tscn")
 2. Create nodes and define transitions between them.
 3. Visualize and manage your scene relationships.
 
-![Screenshot](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/screenshot_1.png)
 
 ## Folder Structure
 
@@ -97,10 +97,10 @@ addons/
 ## FAQ
 
 **Q: Which Godot versions are supported?**  
-A: Godot 4.3 and 4.4.
+A: Godot 4.5.
 
 **Q: Can I use custom transition effects?**  
-A: Yes, add your scripts to the `Transitions` folder.
+A: Yes, add your scenes to the `Transitions` folder.
 
 **Q: Does this plugin support nested scenes?**  
 A: Yes, you can manage transitions between nested scenes and nodes.
