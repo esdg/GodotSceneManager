@@ -318,11 +318,15 @@ namespace MoF.Addons.ScenesManager
 		/// <returns>The SubViewport within the container.</returns>
 		private static SubViewport GetSubViewport(Control sceneContainer)
 		{
-			var subViewport = sceneContainer.GetNode<SubViewport>($"{AddonConstants.TransitionNode.SubViewportContainerName}/{AddonConstants.TransitionNode.SubViewportName}");
+			// Use safe lookups to avoid "Node not found" errors in the editor
+			var container = sceneContainer.GetNodeOrNull<SubViewportContainer>(AddonConstants.TransitionNode.SubViewportContainerName);
+			var subViewport = container?.GetNodeOrNull<SubViewport>(AddonConstants.TransitionNode.SubViewportName);
 			if (subViewport == null)
 			{
 				subViewport = CreateSubViewport();
-				sceneContainer.GetNode<SubViewportContainer>($"{AddonConstants.TransitionNode.SubViewportContainerName}").AddChild(subViewport);
+				// Create the SubViewport only if the container exists; the container is created
+				// alongside the scene container via AddSceneNode or is provided by the .tscn.
+				container?.AddChild(subViewport);
 			}
 
 			return subViewport;
@@ -565,10 +569,15 @@ namespace MoF.Addons.ScenesManager
 		{
 			if (_currentSceneNode != null)
 			{
-				GetSubViewport(_currentSceneRoot)?.RemoveChild(_currentSceneNode);
+				// Avoid creating new SubViewports during cleanup; only remove if present
+				var currentContainer = _currentSceneRoot?.GetNodeOrNull<SubViewportContainer>(AddonConstants.TransitionNode.SubViewportContainerName);
+				var currentVp = currentContainer?.GetNodeOrNull<SubViewport>(AddonConstants.TransitionNode.SubViewportName);
+				currentVp?.RemoveChild(_currentSceneNode);
 				_currentSceneNode.QueueFree();
 			}
-			GetSubViewport(_targetSceneRoot)?.RemoveChild(_targetSceneNode);
+			var targetContainer = _targetSceneRoot?.GetNodeOrNull<SubViewportContainer>(AddonConstants.TransitionNode.SubViewportContainerName);
+			var targetVp = targetContainer?.GetNodeOrNull<SubViewport>(AddonConstants.TransitionNode.SubViewportName);
+			targetVp?.RemoveChild(_targetSceneNode);
 			CallDeferred(MethodName.EmitSignal, SignalName.TransitionFinished, _targetSceneNode);
 		}
 
