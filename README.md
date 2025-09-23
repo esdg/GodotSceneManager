@@ -40,7 +40,7 @@ The **Scene Manager** plugin streamlines your Godot development workflow with a 
 
 ## Compatibility
 
-- Compatible with Godot 4.3 and 4.4
+- Compatible with Godot 4.5 .net
 - Updated for Godot 4.4 by [@malachite23](https://github.com/malachite23)
 
 ## Installation
@@ -97,7 +97,7 @@ addons/
 ## FAQ
 
 **Q: Which Godot versions are supported?**  
-A: Godot 4.5.
+A: Godot 4.5 .net.
 
 **Q: Can I use custom transition effects?**  
 A: Yes, add your scenes to the `Transitions` folder.
