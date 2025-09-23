@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 using MoF.Addons.ScenesManager.Scripts;
 
@@ -12,28 +13,22 @@ namespace MoF.Addons.ScenesManager
 	public partial class TransitionNode : TransitionNodeBase
 	{
 		/// <summary>
-		/// AnimationPlayer responsible for playing the transition animation.
+		/// Gets or sets the AnimationPlayer responsible for playing the transition animation.
 		/// </summary>
 		[Export]
-		private AnimationPlayer AnimationPlayer { get; set; }
+		protected AnimationPlayer AnimationPlayer { get; set; }
 
 		/// <summary>
-		/// Assigns the root node of the current scene.
+		/// Sets the root node of the current scene to be transitioned out.
 		/// </summary>
-		/// <value>
-		/// The root node of the current scene to be transitioned out.
-		/// </value>
 		public Node CurrentSceneRoot
 		{
 			set => _currentSceneNode = value;
 		}
 
 		/// <summary>
-		/// Sets or gets the playback speed for the transition animation.
+		/// Gets or sets the playback speed for the transition animation.
 		/// </summary>
-		/// <value>
-		/// The speed scale for the AnimationPlayer.
-		/// </value>
 		public float TransitionSpeed
 		{
 			set => AnimationPlayer.SpeedScale = value;
@@ -46,8 +41,7 @@ namespace MoF.Addons.ScenesManager
 		/// </summary>
 		public override void _TransitionReady()
 		{
-			if (!ValidateAnimationPlayer()) return;
-
+			SetupAnimationPlayer();
 			SetupTargetSceneRoot();
 			SetupCurrentSceneRoot();
 
@@ -55,33 +49,101 @@ namespace MoF.Addons.ScenesManager
 		}
 
 		/// <summary>
-		/// Checks if AnimationPlayer exists and contains the required "TRANSITION" animation.
+		/// Ensures the AnimationPlayer exists and contains the required "TRANSITION" animation.
 		/// </summary>
-		/// <returns>
-		/// True if the AnimationPlayer is valid and contains the "TRANSITION" animation; otherwise, false.
-		/// </returns>
-		private bool ValidateAnimationPlayer()
+		protected void SetupAnimationPlayer()
+		{
+			CreateAnimationPlayerIfNeeded();
+			CreateTransitionAnimationIfNeeded();
+		}
+
+		/// <summary>
+		/// Creates an AnimationPlayer if one does not already exist.
+		/// </summary>
+		private void CreateAnimationPlayerIfNeeded()
 		{
 			if (AnimationPlayer == null)
 			{
-				GD.PrintErr("'AnimationPlayer' property field is empty, add one in the inspector field");
-				return false;
+				AnimationPlayer = new AnimationPlayer { Name = "TransitionAnimationPlayer" };
+				AddChild(AnimationPlayer);
+				AnimationPlayer.Owner = this;
 			}
+		}
 
+		/// <summary>
+		/// Creates the "TRANSITION" animation if it does not already exist in the AnimationPlayer.
+		/// </summary>
+		private void CreateTransitionAnimationIfNeeded()
+		{
 			if (!AnimationPlayer.HasAnimation("TRANSITION"))
 			{
-				GD.PrintErr("Could not find animation named 'TRANSITION' in 'AnimationPlayer', create new animation in the 'AnimationPlayer' and name it 'TRANSITION'");
-				return false;
+				var animation = CreateBaseAnimation();
+				AddFinishedSignalTrack(animation);
+				AddSceneValueTrack(animation, "target_scene:visible", false, true);
+				AddSceneValueTrack(animation, "current_scene:visible", true, false);
+				AddAnimationToPlayer(animation);
 			}
+		}
 
-			return true;
+		/// <summary>
+		/// Creates a base Animation with a default length.
+		/// </summary>
+		/// <returns>A new Animation instance.</returns>
+		private Animation CreateBaseAnimation()
+		{
+			return new Animation
+			{
+				Length = 2.0f
+			};
+		}
+
+		/// <summary>
+		/// Adds a method track to the animation that signals when the transition is finished.
+		/// </summary>
+		/// <param name="animation">The animation to modify.</param>
+		private void AddFinishedSignalTrack(Animation animation)
+		{
+			var trackIndex = animation.AddTrack(Animation.TrackType.Method);
+			animation.TrackSetPath(trackIndex, new NodePath("."));
+			animation.TrackInsertKey(trackIndex, 2.0f, new Godot.Collections.Dictionary
+			{
+				{ "method", nameof(SendTransitionFinishedSignal) },
+				{ "args", new Godot.Collections.Array() }
+			});
+		}
+
+		/// <summary>
+		/// Adds a value track to the animation for toggling scene visibility.
+		/// </summary>
+		/// <param name="animation">The animation to modify.</param>
+		/// <param name="nodePath">The node path for the value track.</param>
+		/// <param name="initialVisibility">Initial visibility value.</param>
+		/// <param name="finalVisibility">Final visibility value.</param>
+		private void AddSceneValueTrack(Animation animation, string nodePath, bool initialVisibility, bool finalVisibility)
+		{
+			var trackIndex = animation.AddTrack(Animation.TrackType.Value);
+			animation.TrackSetPath(trackIndex, new NodePath(nodePath));
+			animation.ValueTrackSetUpdateMode(trackIndex, Animation.UpdateMode.Discrete);
+			animation.TrackInsertKey(trackIndex, 0.0f, initialVisibility);
+			animation.TrackInsertKey(trackIndex, 1.0f, finalVisibility);
+		}
+
+		/// <summary>
+		/// Adds the constructed animation to the AnimationPlayer.
+		/// </summary>
+		/// <param name="animation">The animation to add.</param>
+		private void AddAnimationToPlayer(Animation animation)
+		{
+			var animationLibrary = new AnimationLibrary();
+			animationLibrary.AddAnimation("TRANSITION", animation);
+			AnimationPlayer.AddAnimationLibrary("", animationLibrary);
 		}
 
 		/// <summary>
 		/// Prepares the container for the target scene and instantiates it.
 		/// If no target scene is set, creates a preview scene.
 		/// </summary>
-		private void SetupTargetSceneRoot()
+		protected void SetupTargetSceneRoot()
 		{
 			if (!HasNode("%target_scene"))
 			{
@@ -108,7 +170,7 @@ namespace MoF.Addons.ScenesManager
 		/// Prepares the container for the current scene and adds it.
 		/// If no current scene is set, creates a preview scene.
 		/// </summary>
-		private void SetupCurrentSceneRoot()
+		protected void SetupCurrentSceneRoot()
 		{
 			if (!HasNode("%current_scene"))
 			{
@@ -160,9 +222,36 @@ namespace MoF.Addons.ScenesManager
 				VerticalAlignment = VerticalAlignment.Center,
 				HorizontalAlignment = HorizontalAlignment.Center
 			};
+
 			label.SetAnchorsPreset(Control.LayoutPreset.FullRect);
 			label.AddThemeFontSizeOverride("font_size", 50);
 			background.AddChild(label);
+		}
+
+		/// <summary>
+		/// Returns a list of configuration warnings for this node in the Godot editor.
+		/// </summary>
+		/// <returns>A list of warning messages if configuration is incomplete; otherwise, an empty list.</returns>
+		public override string[] _GetConfigurationWarnings()
+		{
+			var warnings = new List<string>();
+
+			if (AnimationPlayer == null)
+				warnings.Add("AnimationPlayer is not assigned. Transitions will not play.");
+
+			if (FindChildren(AnimationPlayer.Name, "AnimationPlayer", false).Count == 0)
+				warnings.Add($"'AnimationPlayer' named '{AnimationPlayer.Name}' is not a child of this node. It must be a direct child to function correctly.");
+
+			if (!HasNode("%target_scene"))
+				warnings.Add("Target scene container node ('%target_scene') is missing.");
+
+			if (!HasNode("%current_scene"))
+				warnings.Add("Current scene container node ('%current_scene') is missing.");
+
+			if (AnimationPlayer != null && !AnimationPlayer.HasAnimation("TRANSITION"))
+				warnings.Add("AnimationPlayer does not contain a 'TRANSITION' animation.");
+
+			return warnings.ToArray();
 		}
 	}
 }

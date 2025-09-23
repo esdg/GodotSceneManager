@@ -24,8 +24,42 @@ namespace MoF.Addons.ScenesManager
 		/// </value>
 		public Color TransitionColor
 		{
-			set => TransitionColorRect.Color = value;
-			get => TransitionColorRect.Color;
+			set
+			{
+				TransitionColorRect.Color = value;
+				// If using a shader, update the shader parameter as well
+				if (TransitionColorRect.Material is ShaderMaterial)
+					TransitionColorRect.Material.Set("shader_parameter/color", value);
+			}
+			get
+			{
+				return TransitionColorRect.Color;
+			}
 		}
+
+		/// <summary>
+		/// Called when the transition is ready to begin.
+		/// Validates the AnimationPlayer, sets up scene containers, and starts the animation.
+		/// </summary>
+		public override void _TransitionReady()
+		{
+			base.SetupAnimationPlayer();
+			base.SetupTargetSceneRoot();
+			base.SetupCurrentSceneRoot();
+			SetupColorLayer();
+
+			base.AnimationPlayer.Play("TRANSITION");
+		}
+
+		protected void SetupColorLayer()
+		{
+			if (TransitionColorRect == null)
+			{
+				TransitionColorRect = new ColorRect { Name = "ColorLayer" };
+				AddChild(TransitionColorRect);
+				TransitionColorRect.Owner = this;
+			}
+		}
+
 	}
 }
