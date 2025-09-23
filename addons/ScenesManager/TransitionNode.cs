@@ -318,7 +318,14 @@ namespace MoF.Addons.ScenesManager
 		/// <returns>The SubViewport within the container.</returns>
 		private static SubViewport GetSubViewport(Control sceneContainer)
 		{
-			return sceneContainer.GetNode<SubViewport>($"{AddonConstants.TransitionNode.SubViewportContainerName}/{AddonConstants.TransitionNode.SubViewportName}");
+			var subViewport = sceneContainer.GetNode<SubViewport>($"{AddonConstants.TransitionNode.SubViewportContainerName}/{AddonConstants.TransitionNode.SubViewportName}");
+			if (subViewport == null)
+			{
+				subViewport = CreateSubViewport();
+				sceneContainer.GetNode<SubViewportContainer>($"{AddonConstants.TransitionNode.SubViewportContainerName}").AddChild(subViewport);
+			}
+
+			return subViewport;
 		}
 
 		/// <summary>
