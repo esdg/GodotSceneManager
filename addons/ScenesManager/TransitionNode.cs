@@ -155,6 +155,7 @@ namespace MoF.Addons.ScenesManager
 			if (_targetPackedScene == null)
 			{
 				// Create a preview scene if no target scene is specified
+				// Used in the editor to visualize the transition effect
 				AddDummySceneNode(_targetSceneRoot, Colors.MediumPurple, "Scene B");
 			}
 			else
@@ -182,6 +183,7 @@ namespace MoF.Addons.ScenesManager
 			if (_currentSceneNode == null)
 			{
 				// Create a preview scene if no current scene is set
+				// Used in the editor to visualize the transition effect
 				AddDummySceneNode(_currentSceneRoot, Colors.MediumSeaGreen, "Scene A");
 			}
 			else
