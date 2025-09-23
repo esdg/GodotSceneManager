@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://deh353onq4dqe"]
+[gd_scene load_steps=7 format=3 uid="uid://swe0w6mrr4mf"]
 
-[ext_resource type="Script" uid="uid://ca8du2arqs8k4" path="res://addons/ScenesManager/TransitionNode.cs" id="1_dnyef"]
-[ext_resource type="Shader" uid="uid://4ttq2xa4gypy" path="res://addons/ScenesManager/Assets/Shaders/diamondShader.gdshader" id="2_m7et0"]
+[ext_resource type="Script" uid="uid://ca8du2arqs8k4" path="res://addons/ScenesManager/TransitionNode.cs" id="1_ycnfs"]
+[ext_resource type="Shader" uid="uid://bq3j7yq8pv4v3" path="res://addons/ScenesManager/Assets/Shaders/transition.gdshader" id="2_m4hy0"]
 
-[sub_resource type="Animation" id="Animation_m7et0"]
+[sub_resource type="Animation" id="Animation_m4hy0"]
 length = 2.0
 tracks/0/type = "method"
 tracks/0/imported = false
@@ -27,12 +27,12 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
+"transitions": PackedFloat32Array(1.5157168, 1),
 "update": 0,
-"values": [1.0, 0.0]
+"values": [0.0, 1.0]
 }
 
-[sub_resource type="Animation" id="Animation_8fl3a"]
+[sub_resource type="Animation" id="Animation_3elc6"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -44,28 +44,45 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [1.295]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_8fl3a"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3elc6"]
 _data = {
-&"RESET": SubResource("Animation_8fl3a"),
-&"TRANSITION": SubResource("Animation_m7et0")
+&"RESET": SubResource("Animation_3elc6"),
+&"TRANSITION": SubResource("Animation_m4hy0")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_70g45"]
-shader = ExtResource("2_m7et0")
-shader_parameter/progress = 0.0
-shader_parameter/diamondPixelSize = 10.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fl8gd"]
+shader = ExtResource("2_m4hy0")
+shader_parameter/use_sprite_alpha = true
+shader_parameter/use_transition_texture = false
+shader_parameter/transition_type = 0
+shader_parameter/position = Vector2(0.5, 0.5)
+shader_parameter/invert = false
+shader_parameter/grid_size = Vector2(1, 1)
+shader_parameter/rotation_angle = 0.0
+shader_parameter/stagger = Vector2(0, 0)
+shader_parameter/stagger_frequency = Vector2i(2, 2)
+shader_parameter/flip_frequency = Vector2i(1, 1)
+shader_parameter/basic_feather = 0.0
+shader_parameter/use_mask_size = false
+shader_parameter/mask_size = Vector2(100, 100)
+shader_parameter/edges = 6
+shader_parameter/shape_feather = 0.0
+shader_parameter/sectors = 1
+shader_parameter/clock_feather = 0.0
+shader_parameter/progress = 1.295
+shader_parameter/progress_bias = Vector2(0, 0)
 
-[node name="DiamondFade" type="Node" node_paths=PackedStringArray("AnimationPlayer")]
-script = ExtResource("1_dnyef")
+[node name="Test" type="Node" node_paths=PackedStringArray("AnimationPlayer")]
+script = ExtResource("1_ycnfs")
 AnimationPlayer = NodePath("TransitionAnimationPlayer")
 metadata/_custom_type_script = "uid://ca8du2arqs8k4"
 
 [node name="TransitionAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_8fl3a")
+&"": SubResource("AnimationLibrary_3elc6")
 }
 
 [node name="target_scene" type="Control" parent="."]
@@ -93,7 +110,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="current_scene"]
-material = SubResource("ShaderMaterial_70g45")
+material = SubResource("ShaderMaterial_fl8gd")
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
