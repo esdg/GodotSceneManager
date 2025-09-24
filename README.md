@@ -15,7 +15,7 @@
 
 ## Table of Contents
 
-- [🚀 Key Highlights](#key-highlights)
+- [🚀 Key Highlights](#-key-highlights)
 - [⚙️ System Requirements](#system-requirements)
 - [📦 Installation](#installation)
 - [🚀 Quick Start](#quick-start)
@@ -33,7 +33,6 @@
 
 ---
 
-<a name="key-highlights"></a>
 ## 🚀 Key Highlights
 
 - **🎨 Visual Graph Editor**: Design scene flow without coding
