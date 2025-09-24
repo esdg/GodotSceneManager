@@ -106,7 +106,7 @@ While the plugin comes with 8 built-in transitions, you can create custom effect
 
 ### Video Tutorial
 
-[![Youtube video, quick tutorial: Custom transitions](imgs/youtube-video-quick-tutorial-custom-transitions.png)](https://studio.youtube.com/video/jBtL-dk0BqU/edit)
+[![Youtube video, quick tutorial: Custom transitions](imgs/youtube-video-quick-tutorial-custom-transitions.png)](https://www.youtube.com/watch?v=jBtL-dk0BqU)
 
 
 ### Transition Structure (checklist)
