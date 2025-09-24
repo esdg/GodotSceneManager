@@ -79,6 +79,7 @@ Tip: Keep schemas under `res://SceneManagerSchemas/` for clarity (as in the demo
 
 After enabling and configuring, confirm the following:
 - The `Scene Manager` tab is visible as a main-screen tab
+![Scene Manager Editor](/addons/ScenesManager/Docs/imgs/screenshot-beta-tab.png)
 - The plugin entry `SceneManager` is `Enabled` in Project Settings > Plugins
 - `ScenesManagerController` appears in `Project > Project Settings > AutoLoad` (added automatically)
 - Building the solution completes without errors
