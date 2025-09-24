@@ -77,7 +77,7 @@ Tip: After adding signals, build the solution (C#) or save the script (GDScript)
 
 1. Open the `Scene Manager` main-screen tab
 
-![Scene Manager Editor](/imgs/screenshot-beta-tab.png)
+![Scene Manager Editor tab](imgs/screenshot-beta-tab.png)
 
 2. Add a “Game start” node (created automatically in a new graph)
 3. Add a Scene Node for each `.tscn` you’ll use
@@ -90,7 +90,7 @@ Tip: After adding signals, build the solution (C#) or save the script (GDScript)
 6. Optional: Add a “Game quit” node to exit the game from a signal
 7. Save the schema (`File > Save`); the plugin updates `SceneManagerSettings.tres` automatically to point to it
 
-![Scene Manager Editor](/imgs/screenshot-beta-1.png)
+![Scene Manager Editor](imgs/screenshot-beta-1.png)
 
 ## 3) Run the game
 
