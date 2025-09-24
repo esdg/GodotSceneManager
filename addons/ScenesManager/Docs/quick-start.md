@@ -45,7 +45,33 @@ public partial class GameLevel : Node
 }
 ```
 
-Tip: After adding signals, build the solution so the editor can discover them.
+GDScript equivalents:
+
+Example: `MainMenu.tscn` root script (GDScript)
+
+```gdscript
+extends Control
+
+signal start_game
+signal open_settings
+
+func _ready():
+    %StartButton.pressed.connect(func(): emit_signal("start_game"))
+    %SettingsButton.pressed.connect(func(): emit_signal("open_settings"))
+```
+
+Example: `GameLevel.tscn` root script (GDScript)
+
+```gdscript
+extends Node
+
+signal player_died
+
+func _on_player_death():
+    emit_signal("player_died")
+```
+
+Tip: After adding signals, build the solution (C#) or save the script (GDScript) so the editor can discover them.
 
 ## 2) Create your schema visually
 
