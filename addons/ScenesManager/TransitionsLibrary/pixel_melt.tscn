@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhud3lpn4865v"]
+[gd_scene load_steps=7 format=3 uid="uid://j0h0x0rljwxa"]
 
-[ext_resource type="Script" uid="uid://ca8du2arqs8k4" path="res://addons/ScenesManager/TransitionNode.cs" id="1_ro21g"]
-[ext_resource type="Shader" uid="uid://bq3j7yq8pv4v3" path="res://addons/ScenesManager/Assets/Shaders/transition.gdshader" id="2_a7332"]
+[ext_resource type="Script" uid="uid://ca8du2arqs8k4" path="res://addons/ScenesManager/TransitionNode.cs" id="1_gglpa"]
+[ext_resource type="Shader" uid="uid://ciml1h5icysd4" path="res://addons/ScenesManager/Assets/Shaders/pixelMelt.gdshader" id="2_7jgd5"]
 
-[sub_resource type="Animation" id="Animation_3elc6"]
+[sub_resource type="Animation" id="Animation_ewcjl"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -15,10 +15,10 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.295]
+"values": [0.0]
 }
 
-[sub_resource type="Animation" id="Animation_m4hy0"]
+[sub_resource type="Animation" id="Animation_7jgd5"]
 length = 2.0
 tracks/0/type = "method"
 tracks/0/imported = false
@@ -42,47 +42,30 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1.5157168, 1),
+"transitions": PackedFloat32Array(2.3784146, 0.40612632),
 "update": 0,
-"values": [0.0, 1.06]
+"values": [0.0, 1.0]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_3elc6"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ewcjl"]
 _data = {
-&"RESET": SubResource("Animation_3elc6"),
-&"TRANSITION": SubResource("Animation_m4hy0")
+&"RESET": SubResource("Animation_ewcjl"),
+&"TRANSITION": SubResource("Animation_7jgd5")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fl8gd"]
-shader = ExtResource("2_a7332")
-shader_parameter/use_sprite_alpha = true
-shader_parameter/use_transition_texture = false
-shader_parameter/transition_type = 3
-shader_parameter/position = Vector2(0.5, 0.5)
-shader_parameter/invert = false
-shader_parameter/grid_size = Vector2(1, 1)
-shader_parameter/rotation_angle = 0.0
-shader_parameter/stagger = Vector2(0, 0)
-shader_parameter/stagger_frequency = Vector2i(2, 2)
-shader_parameter/flip_frequency = Vector2i(1, 1)
-shader_parameter/basic_feather = 0.0
-shader_parameter/use_mask_size = false
-shader_parameter/mask_size = Vector2(100, 100)
-shader_parameter/edges = 6
-shader_parameter/shape_feather = 0.0
-shader_parameter/sectors = 1
-shader_parameter/clock_feather = 0.370000017575
-shader_parameter/progress = 1.295
-shader_parameter/progress_bias = Vector2(0, 0)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jtnds"]
+shader = ExtResource("2_7jgd5")
+shader_parameter/progress = 0.0
+shader_parameter/meltiness = 0.9210000437475
 
-[node name="Test" type="Node" node_paths=PackedStringArray("AnimationPlayer")]
-script = ExtResource("1_ro21g")
+[node name="ChessFade" type="Node" node_paths=PackedStringArray("AnimationPlayer")]
+script = ExtResource("1_gglpa")
 AnimationPlayer = NodePath("TransitionAnimationPlayer")
 metadata/_custom_type_script = "uid://ca8du2arqs8k4"
 
 [node name="TransitionAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_3elc6")
+&"": SubResource("AnimationLibrary_ewcjl")
 }
 
 [node name="target_scene" type="Control" parent="."]
@@ -110,7 +93,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="current_scene"]
-material = SubResource("ShaderMaterial_fl8gd")
+material = SubResource("ShaderMaterial_jtnds")
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -1,0 +1,109 @@
+[gd_scene load_steps=9 format=3 uid="uid://ds25oo63hb148"]
+
+[ext_resource type="Script" uid="uid://ca8du2arqs8k4" path="res://addons/ScenesManager/TransitionNode.cs" id="1_yfcxp"]
+[ext_resource type="Shader" uid="uid://ddvpgmpce7pjn" path="res://addons/ScenesManager/Assets/Shaders/pixel_fade.gdshader" id="2_mg5b3"]
+
+[sub_resource type="Animation" id="Animation_mg5b3"]
+length = 2.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"SendTransitionFinishedSignal"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("current_scene/SubViewportContainer:material:shader_parameter/progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(0.42044824, 2.7320805),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_5snqf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("current_scene/SubViewportContainer:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5snqf"]
+_data = {
+&"RESET": SubResource("Animation_5snqf"),
+&"TRANSITION": SubResource("Animation_mg5b3")
+}
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5snqf"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dmiyq"]
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_5snqf")
+seamless_blend_skirt = 0.11
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2wxa2"]
+shader = ExtResource("2_mg5b3")
+shader_parameter/progress = 1.0
+shader_parameter/dissolve_amount = 0.0
+shader_parameter/pixel_size = 4.85200018297
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_dmiyq")
+
+[node name="PixelDisolve" type="Node" node_paths=PackedStringArray("AnimationPlayer")]
+script = ExtResource("1_yfcxp")
+AnimationPlayer = NodePath("TransitionAnimationPlayer")
+metadata/_custom_type_script = "uid://ca8du2arqs8k4"
+
+[node name="TransitionAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5snqf")
+}
+
+[node name="target_scene" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="target_scene"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+
+[node name="current_scene" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="current_scene"]
+material = SubResource("ShaderMaterial_2wxa2")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true

@@ -29,6 +29,13 @@ The Scene Manager includes a comprehensive library of professional transition ef
 | **Horizontal Curtain** | Side-to-side curtain effect | Menu transitions | `horizontal_cutrain.tscn` |
 | **Vertical Curtain** | Top-to-bottom curtain effect | Level changes | `vertical_cutrain.tscn` |
 | **Chaotic Fade** | Random fragment transition | Dynamic, energetic scenes | `chaotic_fade.tscn` |
+| **Center Rectangle Zoom Out** | Zooms out from the center with a rectangular shape. | Focusing on a central element. | `center_rectangle_zoom_out.tscn` |
+| **Circle Zoom** | A circular wipe reveals the next scene. | Modern and clean transitions. | `circle_zoom.tscn` |
+| **Heart Zoom** | A heart-shaped wipe reveals the next scene. | Romantic or lighthearted scenes. | `heart_zoom.tscn` |
+| **Pixel Melt** | The scene melts away in pixels. | Glitchy or retro effects. | `pixel_melt.tscn` |
+| **Pixel Noise** | The scene dissolves into pixelated noise. | Digital or sci-fi transitions. | `pixel_noise.tscn` |
+| **Radial Fade** | Fades in a circular motion from the center. | Highlighting a central point. | `radial_fade.tscn` |
+| **Star Zoom** | A star-shaped wipe reveals the next scene. | Fun and energetic transitions. | `star_zoom.tscn` |
 
 ### Color-Enhanced Transitions
 
@@ -48,13 +55,20 @@ All transition files are located in `addons/ScenesManager/TransitionsLibrary/`:
 
 ```
 TransitionsLibrary/
+├── center_rectangle_zoom_out.tscn
+├── chaotic_fade.tscn
+├── circle_zoom.tscn
+├── cloud_fade_to_color.tscn
 ├── cross_fade.tscn
 ├── cross_fade_to_color.tscn
 ├── diamond_fade.tscn
 ├── diamond_fade_to_color.tscn
-├── chaotic_fade.tscn
-├── cloud_fade_to_color.tscn
+├── heart_zoom.tscn
 ├── horizontal_cutrain.tscn
+├── pixel_melt.tscn
+├── pixel_noise.tscn
+├── radial_fade.tscn
+├── star_zoom.tscn
 └── vertical_cutrain.tscn
 ```
 
@@ -97,7 +111,7 @@ Notes:
 
 ## Creating Custom Transitions
 
-While the plugin comes with 8 built-in transitions, you can create custom effects by:
+While the plugin comes with 15 built-in transitions, you can create custom effects by:
 
 1. **Studying existing transitions** in the TransitionsLibrary folder
 2. **Creating new scene files** following the same structure
