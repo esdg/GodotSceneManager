@@ -76,7 +76,9 @@ Tip: After adding signals, build the solution (C#) or save the script (GDScript)
 ## 2) Create your schema visually
 
 1. Open the `Scene Manager` main-screen tab
-![Scene Manager Editor](/addons/ScenesManager/Docs/imgs/screenshot-beta-tab.png)
+
+![Scene Manager Editor](/imgs/screenshot-beta-tab.png)
+
 2. Add a “Game start” node (created automatically in a new graph)
 3. Add a Scene Node for each `.tscn` you’ll use
 4. For each Scene Node:
