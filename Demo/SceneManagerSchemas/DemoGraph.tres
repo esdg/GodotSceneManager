@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=45 format=3 uid="uid://b0vt1fr4jswxl"]
+[gd_resource type="Resource" load_steps=48 format=3 uid="uid://b0vt1fr4jswxl"]
 
 [ext_resource type="Script" uid="uid://b3n8gvjvuhrei" path="res://addons/ScenesManager/Scripts/Resources/SceneManagerBaseItem.cs" id="1_ajv68"]
 [ext_resource type="PackedScene" uid="uid://cn1obwdrx5x5w" path="res://Demo/Scenes/MenuScreen.tscn" id="1_rk1f1"]
@@ -40,157 +40,173 @@ script = ExtResource("2_0f778")
 PackedScene = ExtResource("1_rk1f1")
 graphNodeName = "@GraphNode@20314"
 
-[sub_resource type="Resource" id="Resource_edbij"]
+[sub_resource type="Resource" id="Resource_rvlvt"]
 script = ExtResource("5_rrifj")
 
-[sub_resource type="Resource" id="Resource_rvlvt"]
+[sub_resource type="Resource" id="Resource_ex3o7"]
 script = ExtResource("3_48qe8")
 OutSlotSignalName = "QuitToMenu"
 TargetScene = SubResource("Resource_vodrc")
 TargetSceneType = 1
-TransitionFileName = "cross_fade.tscn"
-TransitionModifier = SubResource("Resource_edbij")
+TransitionFileName = "heart_zoom.tscn"
+TransitionModifier = SubResource("Resource_rvlvt")
 
-[sub_resource type="Resource" id="Resource_ex3o7"]
+[sub_resource type="Resource" id="Resource_u4e0v"]
 script = ExtResource("5_spp78")
 Scene = ExtResource("9_uajxo")
 Name = "@GraphNode@20456"
-OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_rvlvt")])
+OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_ex3o7")])
 Position = Vector2(2140, 180)
 
-[sub_resource type="Resource" id="Resource_u4e0v"]
-script = ExtResource("2_0f778")
-PackedScene = ExtResource("1_rk1f1")
-graphNodeName = "@GraphNode@20314"
-
-[sub_resource type="Resource" id="Resource_7qkos"]
-script = ExtResource("5_rrifj")
-Speed = 1.1
-Color = Color(0.078431375, 0.05882353, 0.14117648, 1)
-
-[sub_resource type="Resource" id="Resource_1v5ys"]
-script = ExtResource("3_48qe8")
-OutSlotSignalName = "GoToPreviousScene"
-TargetScene = SubResource("Resource_u4e0v")
-TargetSceneType = 1
-TransitionFileName = "diamond_fade.tscn"
-TransitionModifier = SubResource("Resource_7qkos")
-
-[sub_resource type="Resource" id="Resource_ghbro"]
-script = ExtResource("5_spp78")
-Scene = ExtResource("8_016ua")
-Name = "@GraphNode@20190"
-OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_1v5ys")])
-Position = Vector2(1580, 540)
-
-[sub_resource type="Resource" id="Resource_v8m57"]
+[sub_resource type="Resource" id="Resource_bjr23"]
 script = ExtResource("2_0f778")
 PackedScene = ExtResource("9_uajxo")
 graphNodeName = "@GraphNode@20456"
 
-[sub_resource type="Resource" id="Resource_aijcy"]
+[sub_resource type="Resource" id="Resource_1v5ys"]
+script = ExtResource("5_rrifj")
+
+[sub_resource type="Resource" id="Resource_ghbro"]
+script = ExtResource("3_48qe8")
+OutSlotSignalName = "GameOver"
+TargetScene = SubResource("Resource_bjr23")
+TargetSceneType = 1
+TransitionFileName = "cross_fade_to_color.tscn"
+TransitionModifier = SubResource("Resource_1v5ys")
+
+[sub_resource type="Resource" id="Resource_bdsjq"]
+script = ExtResource("2_0f778")
+PackedScene = ExtResource("1_rk1f1")
+graphNodeName = "@GraphNode@20314"
+
+[sub_resource type="Resource" id="Resource_v8m57"]
 script = ExtResource("5_rrifj")
 
 [sub_resource type="Resource" id="Resource_a1sal"]
 script = ExtResource("3_48qe8")
-OutSlotSignalName = "GameOver"
-TargetScene = SubResource("Resource_v8m57")
+Index = 1
+OutSlotSignalName = "QuitToMenu"
+TargetScene = SubResource("Resource_bdsjq")
 TargetSceneType = 1
-TransitionFileName = "vertical_curtain.tscn"
-TransitionModifier = SubResource("Resource_aijcy")
+TransitionFileName = "cross_fade_to_color.tscn"
+TransitionModifier = SubResource("Resource_v8m57")
 
 [sub_resource type="Resource" id="Resource_o1hyg"]
 script = ExtResource("5_spp78")
 Scene = ExtResource("7_q76uk")
 Name = "@GraphNode@20431"
-OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_a1sal")])
+OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_ghbro"), SubResource("Resource_a1sal")])
 Position = Vector2(1580, 240)
 
-[sub_resource type="Resource" id="Resource_j7ygu"]
+[sub_resource type="Resource" id="Resource_edbij"]
 script = ExtResource("10_tkmk2")
 Name = "@GraphNode@20427"
 Position = Vector2(1580, 80)
 
-[sub_resource type="Resource" id="Resource_opmbd"]
-script = ExtResource("2_0f778")
-PackedScene = ExtResource("1_rk1f1")
-graphNodeName = "@GraphNode@20314"
-
-[sub_resource type="Resource" id="Resource_iice4"]
-script = ExtResource("5_rrifj")
-Color = Color(0.078431375, 0.05882353, 0.14117648, 1)
-
-[sub_resource type="Resource" id="Resource_jkml0"]
-script = ExtResource("3_48qe8")
-OutSlotSignalName = "GoToGameMenu"
-TargetScene = SubResource("Resource_opmbd")
-TargetSceneType = 1
-TransitionFileName = "chaotic_fade.tscn"
-TransitionModifier = SubResource("Resource_iice4")
-
-[sub_resource type="Resource" id="Resource_wjq5t"]
-script = ExtResource("5_spp78")
-Scene = ExtResource("4_gi18r")
-Name = "@GraphNode@20088"
-OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_jkml0")])
-Position = Vector2(560, 120)
-
-[sub_resource type="Resource" id="Resource_21a3j"]
+[sub_resource type="Resource" id="Resource_j7ygu"]
 script = ExtResource("2_0f778")
 graphNodeName = "@GraphNode@20427"
 
-[sub_resource type="Resource" id="Resource_j6vcc"]
+[sub_resource type="Resource" id="Resource_jkml0"]
 script = ExtResource("5_rrifj")
 
-[sub_resource type="Resource" id="Resource_kt2yy"]
+[sub_resource type="Resource" id="Resource_7qkos"]
 script = ExtResource("3_48qe8")
 OutSlotSignalName = "QuitGame"
-TargetScene = SubResource("Resource_21a3j")
+TargetScene = SubResource("Resource_j7ygu")
 TargetSceneType = 2
-TransitionModifier = SubResource("Resource_j6vcc")
+TransitionModifier = SubResource("Resource_jkml0")
 
-[sub_resource type="Resource" id="Resource_k0r7s"]
+[sub_resource type="Resource" id="Resource_wjq5t"]
 script = ExtResource("2_0f778")
 PackedScene = ExtResource("7_q76uk")
 graphNodeName = "@GraphNode@20431"
 
-[sub_resource type="Resource" id="Resource_bjr23"]
+[sub_resource type="Resource" id="Resource_21a3j"]
 script = ExtResource("5_rrifj")
+Color = Color(1, 0.4921875, 0, 1)
 
-[sub_resource type="Resource" id="Resource_iuuse"]
+[sub_resource type="Resource" id="Resource_j6vcc"]
 script = ExtResource("3_48qe8")
 Index = 1
 OutSlotSignalName = "StartGameScene"
-TargetScene = SubResource("Resource_k0r7s")
+TargetScene = SubResource("Resource_wjq5t")
 TargetSceneType = 1
-TransitionFileName = "horizontal_curtain.tscn"
-TransitionModifier = SubResource("Resource_bjr23")
+TransitionFileName = "diamond_fade_to_color.tscn"
+TransitionModifier = SubResource("Resource_21a3j")
 
-[sub_resource type="Resource" id="Resource_wivad"]
+[sub_resource type="Resource" id="Resource_aijcy"]
 script = ExtResource("2_0f778")
 PackedScene = ExtResource("8_016ua")
 graphNodeName = "@GraphNode@20190"
 
-[sub_resource type="Resource" id="Resource_bdsjq"]
+[sub_resource type="Resource" id="Resource_wivad"]
 script = ExtResource("5_rrifj")
-Color = Color(0.078431375, 0.05882353, 0.14117648, 1)
+Color = Color(1, 0.46875, 0, 1)
 
-[sub_resource type="Resource" id="Resource_yittk"]
+[sub_resource type="Resource" id="Resource_kt2yy"]
 script = ExtResource("3_48qe8")
 Index = 2
 OutSlotSignalName = "GoToSettings"
-TargetScene = SubResource("Resource_wivad")
+TargetScene = SubResource("Resource_aijcy")
 TargetSceneType = 1
-TransitionFileName = "diamond_fade.tscn"
-TransitionModifier = SubResource("Resource_bdsjq")
+TransitionFileName = "diamond_fade_to_color.tscn"
+TransitionModifier = SubResource("Resource_wivad")
 
-[sub_resource type="Resource" id="Resource_cpiyp"]
+[sub_resource type="Resource" id="Resource_k0r7s"]
 script = ExtResource("5_spp78")
 Scene = ExtResource("1_rk1f1")
 Name = "@GraphNode@20314"
-OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_kt2yy"), SubResource("Resource_iuuse"), SubResource("Resource_yittk")])
+OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_7qkos"), SubResource("Resource_j6vcc"), SubResource("Resource_kt2yy")])
 Position = Vector2(1060, 80)
+
+[sub_resource type="Resource" id="Resource_iuuse"]
+script = ExtResource("2_0f778")
+PackedScene = ExtResource("1_rk1f1")
+graphNodeName = "@GraphNode@20314"
+
+[sub_resource type="Resource" id="Resource_d18tm"]
+script = ExtResource("5_rrifj")
+
+[sub_resource type="Resource" id="Resource_iice4"]
+script = ExtResource("3_48qe8")
+OutSlotSignalName = "GoToPreviousScene"
+TargetScene = SubResource("Resource_iuuse")
+TargetSceneType = 1
+TransitionFileName = "pixel_melt.tscn"
+TransitionModifier = SubResource("Resource_d18tm")
+
+[sub_resource type="Resource" id="Resource_yittk"]
+script = ExtResource("5_spp78")
+Scene = ExtResource("8_016ua")
+Name = "@GraphNode@20190"
+OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_iice4")])
+Position = Vector2(1580, 640)
+
+[sub_resource type="Resource" id="Resource_cpiyp"]
+script = ExtResource("2_0f778")
+PackedScene = ExtResource("1_rk1f1")
+graphNodeName = "@GraphNode@20314"
+
+[sub_resource type="Resource" id="Resource_opmbd"]
+script = ExtResource("5_rrifj")
+Color = Color(1, 0.4921875, 0, 1)
+
+[sub_resource type="Resource" id="Resource_f848w"]
+script = ExtResource("3_48qe8")
+OutSlotSignalName = "GoToGameMenu"
+TargetScene = SubResource("Resource_cpiyp")
+TargetSceneType = 1
+TransitionFileName = "cross_fade_to_color.tscn"
+TransitionModifier = SubResource("Resource_opmbd")
+
+[sub_resource type="Resource" id="Resource_lyfwg"]
+script = ExtResource("5_spp78")
+Scene = ExtResource("4_gi18r")
+Name = "@GraphNode@20088"
+OutSignals = Array[ExtResource("3_48qe8")]([SubResource("Resource_f848w")])
+Position = Vector2(560, 120)
 
 [resource]
 script = ExtResource("11_d7wtm")
-Items = Array[ExtResource("1_ajv68")]([SubResource("Resource_c5joc"), SubResource("Resource_ex3o7"), SubResource("Resource_ghbro"), SubResource("Resource_o1hyg"), SubResource("Resource_j7ygu"), SubResource("Resource_wjq5t"), SubResource("Resource_cpiyp")])
+Items = Array[ExtResource("1_ajv68")]([SubResource("Resource_c5joc"), SubResource("Resource_u4e0v"), SubResource("Resource_o1hyg"), SubResource("Resource_edbij"), SubResource("Resource_k0r7s"), SubResource("Resource_yittk"), SubResource("Resource_lyfwg")])

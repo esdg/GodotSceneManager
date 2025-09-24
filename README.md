@@ -110,6 +110,21 @@ The Scene Manager includes a comprehensive library of professional transition ef
 | **Horizontal Curtain** | Side-to-side curtain effect | Menu transitions |
 | **Vertical Curtain** | Top-to-bottom curtain effect | Level changes |
 | **Chaotic Fade** | Random fragment transition | High-energy scenes |
+| **Center Rectangle Zoom Out** | Zooms out from the center with a rectangular shape. | Focusing on a central element. |
+| **Circle Zoom** | A circular wipe reveals the next scene. | Modern and clean transitions. |
+| **Heart Zoom** | A heart-shaped wipe reveals the next scene. | Romantic or lighthearted scenes. |
+| **Pixel Melt** | The scene melts away in pixels. | Glitchy or retro effects. |
+| **Pixel Noise** | The scene dissolves into pixelated noise. | Digital or sci-fi transitions. |
+| **Radial Fade** | Fades in a circular motion from the center. | Highlighting a central point. |
+| **Star Zoom** | A star-shaped wipe reveals the next scene. | Fun and energetic transitions. |
+
+### Color-Enhanced Transitions
+
+| Transition | Description | Customization |
+|------------|-------------|---------------|
+| **Cross Fade to Color** | Fade through custom color | Configurable overlay color |
+| **Diamond Fade to Color** | Diamond transition with color | Color and timing control |
+| **Cloud Fade to Color** | Organic cloud-like transition | Color and pattern options |
 
 ### Instant Transition
 - **Jump Cut**: Immediate scene change without animation (select “none” as transition)

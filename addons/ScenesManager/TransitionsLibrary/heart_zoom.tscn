@@ -1,0 +1,105 @@
+[gd_scene load_steps=8 format=3 uid="uid://befcew67ft6ko"]
+
+[ext_resource type="Script" uid="uid://ca8du2arqs8k4" path="res://addons/ScenesManager/TransitionNode.cs" id="1_t6oop"]
+[ext_resource type="Shader" uid="uid://c3e584vc8y5we" path="res://addons/ScenesManager/Assets/Shaders/texture_zoom.gdshader" id="2_m3c6c"]
+[ext_resource type="Texture2D" uid="uid://dyigibe53gxy1" path="res://addons/ScenesManager/Assets/Shaders/heart-mask.png" id="3_t6oop"]
+
+[sub_resource type="Animation" id="Animation_amiga"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("target_scene/SubViewportContainer:material:shader_parameter/zoom_progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_0uu0a"]
+length = 2.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"SendTransitionFinishedSignal"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("target_scene/SubViewportContainer:material:shader_parameter/zoom_progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(0.46651652, 1.7411013),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_amiga"]
+_data = {
+&"RESET": SubResource("Animation_amiga"),
+&"TRANSITION": SubResource("Animation_0uu0a")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2af0h"]
+shader = ExtResource("2_m3c6c")
+shader_parameter/mask_texture = ExtResource("3_t6oop")
+shader_parameter/zoom_progress = 0.0
+shader_parameter/zoom_ratio = 4.030000143925
+shader_parameter/mask_offset = Vector2(0, 0)
+shader_parameter/edge_softness = 0.05
+shader_parameter/invert_mask = true
+
+[node name="CircleZoom" type="Node" node_paths=PackedStringArray("AnimationPlayer")]
+script = ExtResource("1_t6oop")
+AnimationPlayer = NodePath("TransitionAnimationPlayer")
+metadata/_custom_type_script = "uid://ca8du2arqs8k4"
+
+[node name="TransitionAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_amiga")
+}
+
+[node name="current_scene" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="current_scene"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+
+[node name="target_scene" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="target_scene"]
+material = SubResource("ShaderMaterial_2af0h")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true

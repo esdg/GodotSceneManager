@@ -15,6 +15,26 @@ namespace MoF.Addons.ScenesManager.Constants
         public const string TransitionNone = "none";
 
         /// <summary>
+        /// Constants related to transition nodes and animations.
+        /// </summary>
+        public static partial class TransitionNode
+        {
+            public const string TransitionAnimationName = "TRANSITION";
+            public const string AnimationPlayerName = "TransitionAnimationPlayer";
+            public const string TargetSceneContainer = "%target_scene";
+            public const string CurrentSceneContainer = "%current_scene";
+            public const string SubViewportContainerName = "SubViewportContainer";
+            public const string SubViewportName = "SubViewport";
+            public const string TargetSceneVisibilityPath = "target_scene:visible";
+            public const string CurrentSceneVisibilityPath = "current_scene:visible";
+            public const float DefaultAnimationDuration = 2.0f;
+            public const float VisibilityToggleTime = 1.0f;
+            public const int DummySceneFontSize = 50;
+            public const string DummySceneAText = "Scene A";
+            public const string DummySceneBText = "Scene B";
+        }
+
+        /// <summary>
         /// Constants related to graph nodes.
         /// </summary>
         public static partial class GraphNode
