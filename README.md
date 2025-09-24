@@ -36,9 +36,9 @@
 ## 🚀 Key Highlights
 
 - **🎨 Visual Graph Editor**: Design scene flow without coding
-- **🎬 8+ Professional Transitions**: Cross-fade, diamond fade, curtain effects, and more
-- **⚡ Zero-Code Workflow**: Everything configured through visual interface
-- **🔧 Godot 4.5 .NET**: Built specifically for C# projects
+- **🎬 Built-in Transitions**: Cross fade, fade, diamond, curtain effects, chaotic fade, plus instant Jump Cut
+- **⚡ Zero-/Low-Code Workflow**: Configure transitions and wiring visually; often no code required
+- **🔧 Godot 4.5 .NET**: Built for the .NET/Mono editor/runtime
 - **🔗 Works with GDScript projects**: Use with the Godot .NET editor even if your game scripts are in GDScript
 - **📖 Open Source**: MIT licensed with comprehensive documentation
 
@@ -46,13 +46,13 @@
 
 | Requirement | Version |
 |-------------|---------|
-| **Godot Engine** | 4.5+ (.NET variant) |
-| **.NET SDK** | 6.0 or higher |
+| **Godot Engine** | 4.5+ (.NET/Mono) |
+| **.NET SDK** | 8.0 |
 | **Platform** | Windows, macOS, Linux |
 
 **Note**: Requires the Godot .NET editor/runtime. You can still write your game in GDScript; the plugin itself is implemented in C#.
 
-📖 **Detailed Requirements**: See [Installation Guide](addons/ScenesManager/Docs/installation.md#system-requirements) for complete specifications.
+📖 **Detailed Requirements**: See the [Installation Guide](addons/ScenesManager/Docs/installation.md) for complete specifications.
 
 ## 📦 Installation
 
@@ -62,6 +62,7 @@
 2. **Extract** and copy the `addons` folder to your project root
 3. **Build** your project: `Build > Build Solution` in Godot
 4. **Enable** the plugin: `Project > Project Settings > Plugins > SceneManager`
+5. The plugin adds the AutoLoad `ScenesManagerController` automatically
 
 ✅ **Verification**: You should see the Scene Manager tab in Godot's editor
 
@@ -77,11 +78,11 @@
 4. **Choose Effects**: Select transition effects for each connection
 5. **Save**: File → Save to create your scene graph (.tres file)
 
-![Scene Manager Editor](/addons/ScenesManager/Docs/imgs/screenshot-beta-1.png)
+![Scene Manager Editor](addons/ScenesManager/Docs/imgs/screenshot-beta-1.png)
 
 ### 2. That’s it!
 
-**No coding required!** Your scene transitions now work automatically based on your visual configuration.
+Often no coding required: your scene transitions work automatically based on your visual configuration and existing Godot signals (e.g., `Button.pressed`).
 
 📖 **Detailed Tutorial**: See our [Quick Start Guide](addons/ScenesManager/Docs/quick-start.md) for step-by-step instructions with examples.
 
@@ -100,31 +101,28 @@
 
 The Scene Manager includes a comprehensive library of professional transition effects:
 
-### Standard Transitions
+### Built-in Transitions
 | Transition | Description | Use Case |
 |------------|-------------|----------|
-| **Cross Fade** | Smooth alpha-based transition | General scene changes |
-| **Diamond Fade** | Diamond-shaped wipe effect | Dramatic scene transitions |
+| **Fade** | Simple alpha fade | Subtle scene changes |
+| **Cross Fade** | Smooth cross-dissolve | General scene changes |
+| **Diamond Fade** | Diamond-shaped wipe | Dramatic transitions |
 | **Horizontal Curtain** | Side-to-side curtain effect | Menu transitions |
 | **Vertical Curtain** | Top-to-bottom curtain effect | Level changes |
-| **Chaotic Fade** | Random fragment transition | Dynamic, energetic scenes |
+| **Chaotic Fade** | Random fragment transition | High-energy scenes |
 
-### Color-Enhanced Transitions
-| Transition | Description | Customization |
-|------------|-------------|---------------|
-| **Cross Fade to Color** | Fade through custom color | Configurable overlay color |
-| **Diamond Fade to Color** | Diamond transition with color | Color and timing control |
-| **Cloud Fade to Color** | Organic cloud-like transition | Color and pattern options |
+### Instant Transition
+- **Jump Cut**: Immediate scene change without animation (select “none” as transition)
 
 ## 💻 API Reference
 
 ### Graph-Driven Workflow
 
-The Scene Manager is entirely **graph-driven** — no programming required:
+The Scene Manager is **graph-driven** — typically no programming required:
 
 1. **Visual Configuration**: All scene flow is designed in the graph editor
-2. **Automatic Signal Generation**: The plugin creates all necessary signals from your graph data
-3. **Zero-Code Transitions**: Scene transitions happen automatically based on your configuration
+2. **Automatic Signal Wiring**: The plugin connects the signals you select from your scenes to their targets
+3. **Zero-/Low-Code Transitions**: Scene transitions happen automatically based on your configuration
 
 ### Graph Configuration
 
@@ -139,14 +137,15 @@ All functionality is configured through the visual graph editor:
 
 ### Plugin Settings
 
-Access plugin settings through `Project > Project Settings > Plugins > SceneManager`:
+Runtime configuration is intentionally minimal and file-based:
 
-| Setting | Description | Default |
-|---------|-------------|---------|
-| **Default Transition** | Fallback transition effect | Cross Fade |
-| **Transition Speed** | Global speed multiplier | 1.0 |
-| **Debug Mode** | Enable verbose logging | false |
-| **Auto-save Schemas** | Automatically save scene graphs | true |
+- `res://addons/ScenesManager/Settings/SceneManagerSettings.tres`
+	- `SceneManagerSchemaPath: string` — which schema to load at runtime
+
+Per-connection modifiers are stored in your schema and applied automatically at runtime:
+- Transition file (or “none” for Jump Cut)
+- Speed (0.0–2.0, default 1.0)
+- Color (only for color-capable transitions)
 
 ## 📖 Usage Examples
 
@@ -163,14 +162,14 @@ The Scene Manager provides a **100% visual workflow** for scene management:
 
 #### 2. Automatic Operation
 - The plugin reads your graph configuration
-- Automatically generates all necessary signals and connections
+- Automatically connects the selected signals and sets up transitions
 - Handles scene transitions based on your visual design
 - Applies transition effects as configured
 
 #### 3. Runtime Behavior
 - Your game runs exactly as designed in the graph
-- Scene transitions occur automatically based on triggers
-- No additional code or manual signal handling required
+- Scene transitions occur automatically based on triggers/signals
+- No additional code is required in typical UI-driven flows
 - All transition effects work seamlessly
 
 ### Example: Menu System
@@ -230,7 +229,7 @@ A: Yes! MIT licensed - use freely in any project.
 
 ### Current: v1.0.1 Alpha
 - ✅ Core scene management and visual editor
-- ✅ 8 built-in transition effects
+- ✅ 6 built-in animated transitions + Jump Cut
 - 🔄 Performance optimizations and bug fixes
 
 ### Upcoming: v1.0 Beta (Q1 2026)
