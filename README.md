@@ -16,20 +16,20 @@
 ## Table of Contents
 
 - [🚀 Key Highlights](#-key-highlights)
-- [⚙️ System Requirements](#system-requirements)
-- [📦 Installation](#installation)
-- [🚀 Quick Start](#quick-start)
-- [📚 Documentation](#documentation)
-- [🎨 Available Transitions](#available-transitions)
-- [💻 API Reference](#api-reference)
-- [🔧 Configuration](#configuration)
-- [📖 Usage Examples](#usage-examples)
-- [🛠️ Troubleshooting](#troubleshooting)
-- [❓ FAQ](#faq)
-- [🗺️ Roadmap](#roadmap)
-- [🤝 Contributing](#contributing)
-- [📄 License](#license)
-- [🔗 Links & Support](#links--support)
+- [⚙️ System Requirements](#%EF%B8%8F-system-requirements)
+- [📦 Installation](#-installation)
+- [🚀 Quick Start](#-quick-start)
+- [📚 Documentation](#-documentation)
+- [🎨 Available Transitions](#-available-transitions)
+- [💻 API Reference](#-api-reference)
+- [🔧 Configuration](#-configuration)
+- [📖 Usage Examples](#-usage-examples)
+- [🛠️ Troubleshooting](#%EF%B8%8F-troubleshooting)
+- [❓ FAQ](#-faq)
+- [🗺️ Roadmap](#%EF%B8%8F-roadmap)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [🔗 Links & Support](#-links--support)
 
 ---
 
@@ -42,9 +42,6 @@
 - **🔗 Works with GDScript projects**: Use with the Godot .NET editor even if your game scripts are in GDScript
 - **📖 Open Source**: MIT licensed with comprehensive documentation
 
-
-
-<a name="system-requirements"></a>
 ## ⚙️ System Requirements
 
 | Requirement | Version |
@@ -57,7 +54,6 @@
 
 📖 **Detailed Requirements**: See [Installation Guide](addons/ScenesManager/Docs/installation.md#system-requirements) for complete specifications.
 
-<a name="installation"></a>
 ## 📦 Installation
 
 ### Quick Installation
@@ -71,7 +67,6 @@
 
 📖 **Detailed Instructions**: See our [Installation Guide](addons/ScenesManager/Docs/installation.md) for alternative methods and troubleshooting.
 
-<a name="quick-start"></a>
 ## 🚀 Quick Start
 
 ### 1. Create Your Scene Graph
@@ -82,7 +77,7 @@
 4. **Choose Effects**: Select transition effects for each connection
 5. **Save**: File → Save to create your scene graph (.tres file)
 
-![Scene Manager Editor](https://raw.githubusercontent.com/esdg/GodotSceneManager/main/addons/ScenesManager/Docs/imgs/screenshot-beta-1.png)
+![Scene Manager Editor](/addons/ScenesManager/Docs/imgs/screenshot-beta-1.png)
 
 ### 2. That’s it!
 
@@ -90,7 +85,6 @@
 
 📖 **Detailed Tutorial**: See our [Quick Start Guide](addons/ScenesManager/Docs/quick-start.md) for step-by-step instructions with examples.
 
-<a name="documentation"></a>
 ## 📚 Documentation
 
 **Complete guides and references:**
@@ -102,7 +96,6 @@
 - **[🛠️ Troubleshooting](addons/ScenesManager/Docs/troubleshooting.md)** — Common issues and fixes
 - **[❓ FAQ](addons/ScenesManager/Docs/faq.md)** — Frequently asked questions
 
-<a name="available-transitions"></a>
 ## 🎨 Available Transitions
 
 The Scene Manager includes a comprehensive library of professional transition effects:
@@ -123,7 +116,6 @@ The Scene Manager includes a comprehensive library of professional transition ef
 | **Diamond Fade to Color** | Diamond transition with color | Color and timing control |
 | **Cloud Fade to Color** | Organic cloud-like transition | Color and pattern options |
 
-<a name="api-reference"></a>
 ## 💻 API Reference
 
 ### Graph-Driven Workflow
@@ -143,7 +135,6 @@ All functionality is configured through the visual graph editor:
 - **Triggers**: Configure what activates each transition
 - **Flow Logic**: Design your complete scene flow visually
 
-<a name="configuration"></a>
 ## 🔧 Configuration
 
 ### Plugin Settings
@@ -157,7 +148,6 @@ Access plugin settings through `Project > Project Settings > Plugins > SceneMana
 | **Debug Mode** | Enable verbose logging | false |
 | **Auto-save Schemas** | Automatically save scene graphs | true |
 
-<a name="usage-examples"></a>
 ## 📖 Usage Examples
 
 ### Complete Workflow - No Coding Required
@@ -207,7 +197,6 @@ Instead of writing complex scene management code, you simply:
 
 The plugin handles scene loading, transition effects, state management, and signal routing automatically based on your visual design.
 
-<a name="troubleshooting"></a>
 ## 🛠️ Troubleshooting
 
 📖 **Troubleshooting**: See [Troubleshooting](addons/ScenesManager/Docs/troubleshooting.md) for more information.
@@ -221,7 +210,6 @@ If you encounter issues not covered here:
 3. **Join the Community**: Connect with other users on our social platforms
 4. **Review Documentation**: Check the `/Docs` folder for additional guides
 
-<a name="faq"></a>
 ## ❓ FAQ
 
 **Q: Do I need to write any code?**
@@ -238,7 +226,6 @@ A: Yes! MIT licensed - use freely in any project.
 
 📖 **More Questions**: See our [complete FAQ](addons/ScenesManager/Docs/faq.md) for detailed answers.
 
-<a name="roadmap"></a>
 ## 🗺️ Roadmap
 
 ### Current: v1.0.1 Alpha
@@ -253,7 +240,6 @@ A: Yes! MIT licensed - use freely in any project.
 
 📖 **Detailed Roadmap**: See [complete roadmap](addons/ScenesManager/Docs/README.md#roadmap) with timelines and features.
 
-<a name="contributing"></a>
 ## 🤝 Contributing
 
 We welcome contributions! Whether you're fixing bugs, adding features, or improving documentation, your help makes the plugin better for everyone.
@@ -266,7 +252,6 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 
 📖 **Complete Guide**: See [Contributing Guidelines](CONTRIBUTING.md) for detailed instructions, coding standards, and development setup.
 
-<a name="license"></a>
 ## 📄 License
 
 **MIT License** - Use freely in personal and commercial projects.
@@ -277,7 +262,6 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 
 📖 **Full License**: See [LICENSE](LICENSE) file for complete terms.
 
-<a name="links--support"></a>
 ## 🔗 Links & Support
 
 ### 🌐 Official Channels
