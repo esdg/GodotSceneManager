@@ -34,6 +34,7 @@
 ---
 
 ## 🚀 Key Highlights
+<a name="key-highlights"></a>
 
 - **🎨 Visual Graph Editor**: Design scene flow without coding
 - **🎬 8+ Professional Transitions**: Cross-fade, diamond fade, curtain effects, and more
@@ -45,6 +46,7 @@
 
 
 ## ⚙️ System Requirements
+<a name="system-requirements"></a>
 
 | Requirement | Version |
 |-------------|---------|
@@ -57,6 +59,7 @@
 📖 **Detailed Requirements**: See [Installation Guide](addons/ScenesManager/Docs/installation.md#system-requirements) for complete specifications.
 
 ## 📦 Installation
+<a name="installation"></a>
 
 ### Quick Installation
 
@@ -70,6 +73,7 @@
 📖 **Detailed Instructions**: See our [Installation Guide](addons/ScenesManager/Docs/installation.md) for alternative methods and troubleshooting.
 
 ## 🚀 Quick Start
+<a name="quick-start"></a>
 
 ### 1. Create Your Scene Graph
 
@@ -88,6 +92,7 @@
 📖 **Detailed Tutorial**: See our [Quick Start Guide](addons/ScenesManager/Docs/quick-start.md) for step-by-step instructions with examples.
 
 ## 📚 Documentation
+<a name="documentation"></a>
 
 **Complete guides and references:**
 
@@ -99,6 +104,7 @@
 - **[❓ FAQ](addons/ScenesManager/Docs/faq.md)** — Frequently asked questions
 
 ## 🎨 Available Transitions
+<a name="available-transitions"></a>
 
 The Scene Manager includes a comprehensive library of professional transition effects:
 
@@ -119,6 +125,7 @@ The Scene Manager includes a comprehensive library of professional transition ef
 | **Cloud Fade to Color** | Organic cloud-like transition | Color and pattern options |
 
 ## 💻 API Reference
+<a name="api-reference"></a>
 
 ### Graph-Driven Workflow
 
@@ -138,6 +145,7 @@ All functionality is configured through the visual graph editor:
 - **Flow Logic**: Design your complete scene flow visually
 
 ## 🔧 Configuration
+<a name="configuration"></a>
 
 ### Plugin Settings
 
@@ -151,6 +159,7 @@ Access plugin settings through `Project > Project Settings > Plugins > SceneMana
 | **Auto-save Schemas** | Automatically save scene graphs | true |
 
 ## 📖 Usage Examples
+<a name="usage-examples"></a>
 
 ### Complete Workflow - No Coding Required
 
@@ -200,6 +209,7 @@ Instead of writing complex scene management code, you simply:
 The plugin handles scene loading, transition effects, state management, and signal routing automatically based on your visual design.
 
 ## 🛠️ Troubleshooting
+<a name="troubleshooting"></a>
 
 📖 **Troubleshooting**: See [Troubleshooting](addons/ScenesManager/Docs/troubleshooting.md) for more information.
 
@@ -213,6 +223,7 @@ If you encounter issues not covered here:
 4. **Review Documentation**: Check the `/Docs` folder for additional guides
 
 ## ❓ FAQ
+<a name="faq"></a>
 
 **Q: Do I need to write any code?**
 A: No! Everything is configured visually in the graph editor.
@@ -229,6 +240,7 @@ A: Yes! MIT licensed - use freely in any project.
 📖 **More Questions**: See our [complete FAQ](addons/ScenesManager/Docs/faq.md) for detailed answers.
 
 ## 🗺️ Roadmap
+<a name="roadmap"></a>
 
 ### Current: v1.0.1 Alpha
 - ✅ Core scene management and visual editor
@@ -243,6 +255,7 @@ A: Yes! MIT licensed - use freely in any project.
 📖 **Detailed Roadmap**: See [complete roadmap](addons/ScenesManager/Docs/README.md#roadmap) with timelines and features.
 
 ## 🤝 Contributing
+<a name="contributing"></a>
 
 We welcome contributions! Whether you're fixing bugs, adding features, or improving documentation, your help makes the plugin better for everyone.
 
@@ -255,6 +268,7 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 📖 **Complete Guide**: See [Contributing Guidelines](CONTRIBUTING.md) for detailed instructions, coding standards, and development setup.
 
 ## 📄 License
+<a name="license"></a>
 
 **MIT License** - Use freely in personal and commercial projects.
 
@@ -265,6 +279,7 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 📖 **Full License**: See [LICENSE](LICENSE) file for complete terms.
 
 ## 🔗 Links & Support
+<a name="links--support"></a>
 
 ### 🌐 Official Channels
 
