@@ -103,6 +103,9 @@
 ### Q: How much memory does the plugin use?
 **A**: The plugin has minimal overhead. Memory usage depends mainly on your scenes and transition effects, not the plugin itself.
 
+### Q: Can i delete the demo folder?
+**A**: Yes, the demo is not part of the plugin, you can also remove unused transition in transition library folder.
+
 ## 🎮 Game Development
 
 ### Q: Is this suitable for mobile games?
