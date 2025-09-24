@@ -104,6 +104,11 @@ While the plugin comes with 8 built-in transitions, you can create custom effect
 3. **Using the transition base classes** provided by the plugin
 4. **Adding your custom transitions** to the TransitionsLibrary folder
 
+### Video Tutorial
+
+[![Youtube video, quick tutorial: Custom transitions](imgs/youtube-video-quick-tutorial-custom-transitions.png)](https://studio.youtube.com/video/jBtL-dk0BqU/edit)
+
+
 ### Transition Structure (checklist)
 
 Create a new `.tscn` in `res://addons/ScenesManager/TransitionsLibrary/`:
