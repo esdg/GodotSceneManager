@@ -1,4 +1,8 @@
-[gd_resource type="Theme" load_steps=26 format=3 uid="uid://cnx3frmwk865e"]
+[gd_resource type="Theme" load_steps=29 format=3 uid="uid://cnx3frmwk865e"]
+
+[ext_resource type="FontFile" uid="uid://da5i7gw18uvxj" path="res://addons/ScenesManager/Assets/Fonts/JetBrainsMono-Regular.ttf" id="1_vhm5r"]
+[ext_resource type="FontFile" uid="uid://bawnit0sacx8i" path="res://addons/ScenesManager/Assets/Fonts/JetBrainsMono-Bold.ttf" id="2_1t60y"]
+[ext_resource type="FontFile" uid="uid://bxwvi4g4svr16" path="res://addons/ScenesManager/Assets/Fonts/JetBrainsMono-Italic.ttf" id="3_1588m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awsi3"]
 content_margin_left = 6.0
@@ -171,6 +175,8 @@ bg_color = Color(0.0862745, 0.105882, 0.145098, 1)
 color = Color(0.232468, 0.288331, 0.399888, 1)
 
 [resource]
+Button/font_sizes/font_size = 18
+Button/fonts/font = ExtResource("1_vhm5r")
 Button/styles/hover = SubResource("StyleBoxFlat_awsi3")
 Button/styles/normal = SubResource("StyleBoxFlat_sfh1i")
 Button/styles/pressed = SubResource("StyleBoxFlat_awsi3")
@@ -191,11 +197,16 @@ GraphEdit/styles/panel = SubResource("StyleBoxFlat_7o8l3")
 GraphEditMinimap/styles/panel = SubResource("StyleBoxFlat_j4ifx")
 GraphNode/styles/panel_selected = SubResource("StyleBoxFlat_2taf2")
 GraphNode/styles/titlebar_selected = SubResource("StyleBoxFlat_oc74h")
+Label/fonts/font = ExtResource("2_1t60y")
 OptionButton/colors/font_color = Color(0.5, 0.5, 0.5, 1)
 OptionButton/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 OptionButton/font_sizes/font_size = 12
+OptionButton/fonts/font = ExtResource("1_vhm5r")
 OptionButton/styles/hover = SubResource("StyleBoxFlat_hkfbh")
 OptionButton/styles/normal = SubResource("StyleBoxFlat_6si1d")
 PopupMenu/font_sizes/font_size = 12
+PopupMenu/fonts/font = ExtResource("1_vhm5r")
+PopupMenu/fonts/font_separator = ExtResource("3_1588m")
+PopupMenu/fonts/title_font = ExtResource("2_1t60y")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_xpsvt")
 PopupMenu/styles/separator = SubResource("StyleBoxLine_dsnn8")
