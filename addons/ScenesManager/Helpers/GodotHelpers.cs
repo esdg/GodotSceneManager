@@ -155,6 +155,19 @@ namespace MoF.Addons.ScenesManager.Helpers
 
             return mainContainer;
         }
+        
+        /// <summary>
+        /// Gets the project viewport size from project settings.
+        /// </summary>
+        /// <returns></returns>
+        public static Vector2 GetProjectViewportSize()
+        {
+            return new Vector2()
+            {
+                X = ProjectSettings.GetSetting("display/window/size/viewport_width", 1152).As<int>(),
+                Y = ProjectSettings.GetSetting("display/window/size/viewport_height", 648).As<int>(),
+            };
+        }
     }
 }
 #endif
