@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Godot;
 using MoF.Addons.ScenesManager.Scripts;
 using MoF.Addons.ScenesManager.Constants;
+using MoF.Addons.ScenesManager.Helpers;
 
 namespace MoF.Addons.ScenesManager
 {
@@ -387,6 +388,7 @@ namespace MoF.Addons.ScenesManager
 			}
 
 			_targetSceneRoot = GetNode<Control>(AddonConstants.TransitionNode.TargetSceneContainer);
+			_targetSceneRoot.SetSize(GodotHelpers.GetProjectViewportSize());
 
 			if (_targetPackedScene == null)
 			{
@@ -434,6 +436,7 @@ namespace MoF.Addons.ScenesManager
 			}
 
 			_currentSceneRoot = GetNode<Control>(AddonConstants.TransitionNode.CurrentSceneContainer);
+			_currentSceneRoot.SetSize(GodotHelpers.GetProjectViewportSize());
 
 			if (_currentSceneNode == null)
 			{
