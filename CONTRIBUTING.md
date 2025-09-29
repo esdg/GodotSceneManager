@@ -75,3 +75,4 @@ Thank you for contributing to the Scene Manager Plugin for Godot! Your help is i
 
 ### Github contributors
 - malachite23
+- haytham818
