@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=5 format=3 uid="uid://cx2v7gij36jvr"]
 
-[ext_resource type="FontFile" uid="uid://cwo7itfgiwtrg" path="res://Demo/Assets/Fonts/TT Fors Trial Light.ttf" id="1_1ceai"]
+[ext_resource type="FontFile" uid="uid://da5i7gw18uvxj" path="res://addons/ScenesManager/Assets/Fonts/JetBrainsMono-Regular.ttf" id="1_s2cns"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2cns"]
 content_margin_left = 1.0
@@ -20,9 +20,10 @@ bg_color = Color(0.13617927, 0.16339889, 0.23746878, 1)
 bg_color = Color(0.08627451, 0.105882354, 0.14509805, 1)
 
 [resource]
+ColorPickerButton/fonts/font = ExtResource("1_s2cns")
 ColorPickerButton/styles/normal = SubResource("StyleBoxFlat_s2cns")
 FoldableContainer/font_sizes/font_size = 12
-FoldableContainer/fonts/font = ExtResource("1_1ceai")
+FoldableContainer/fonts/font = ExtResource("1_s2cns")
 FoldableContainer/styles/panel = SubResource("StyleBoxFlat_vv6xi")
 FoldableContainer/styles/title_collapsed_hover_panel = SubResource("StyleBoxFlat_1ceai")
 FoldableContainer/styles/title_collapsed_panel = SubResource("StyleBoxFlat_1ceai")
@@ -30,5 +31,6 @@ FoldableContainer/styles/title_hover_panel = SubResource("StyleBoxFlat_1ceai")
 FoldableContainer/styles/title_panel = SubResource("StyleBoxFlat_1ceai")
 HBoxContainer/constants/separation = 12
 Label/font_sizes/font_size = 12
-Label/fonts/font = ExtResource("1_1ceai")
+Label/fonts/font = ExtResource("1_s2cns")
 TabBar/font_sizes/font_size = 11
+TabBar/fonts/font = ExtResource("1_s2cns")
