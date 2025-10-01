@@ -486,9 +486,6 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 		#endregion
 
-		#region UI Creation
-
-		#endregion
 
 		#region Event Handlers
 
