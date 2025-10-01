@@ -206,7 +206,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 			AddChild(outSignalNode);
 			_outSlotNodes.Add(outSignalNode);
-			GD.Print(outSignalNode.GetIndex());
+
 			SetSlot(outSignalNode.GetIndex(), false, 0, AddonConstants.GraphNode.SceneGraphNode.Color, true, 0, AddonConstants.GraphNode.SceneGraphNode.Color);
 
 			// Create initial container if there's a transition path
