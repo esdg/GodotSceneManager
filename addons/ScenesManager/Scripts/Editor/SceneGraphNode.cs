@@ -19,6 +19,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private Node _sceneRootNode;
 		private Node _inSlotNode;
 		private Array<Node> _outSlotNodes = new();
+		private Dictionary<OutSlotSceneGraphNode, FoldableContainer> _outSlotContainers = new();
 		private Button _addOutSlotButton;
 		private EditorResourcePicker _sceneResourcePicker;
 		private PackedScene _scene;
@@ -119,6 +120,7 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 			this.RemoveChildren(_outSlotNodes.ToArray());
 			_outSlotNodes.Clear();
+			_outSlotContainers.Clear();
 		}
 
 		/// <summary>
@@ -194,16 +196,56 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private void CreateOutSlotNode(string signalName = "", string transitionPath = "", TransitionModifier transitionModifiers = null)
 		{
 			var outSignalNode = new OutSlotSceneGraphNode(_sceneRootNode, _transitionNameList, signalName, transitionPath);
-			var outSignalModifiersContainer = CreateTransitionOptionsContainer(transitionPath);
 
-			outSignalNode.DeleteButtonPressed += () => OnDeleteOutSignalNode(outSignalNode, outSignalModifiersContainer);
+			outSignalNode.DeleteButtonPressed += () => OnDeleteOutSignalNode(outSignalNode);
 
 			outSignalNode.SelectTransitionChanged += (isTransitionSelect) =>
 			{
-				outSignalModifiersContainer.Visible = isTransitionSelect;
-				if (!isTransitionSelect)
-					SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
+				OnTransitionSelectionChanged(outSignalNode, isTransitionSelect, transitionModifiers);
 			};
+
+			AddChild(outSignalNode);
+			_outSlotNodes.Add(outSignalNode);
+			GD.Print(outSignalNode.GetIndex());
+			SetSlot(outSignalNode.GetIndex(), false, 0, AddonConstants.GraphNode.SceneGraphNode.Color, true, 0, AddonConstants.GraphNode.SceneGraphNode.Color);
+
+			// Create initial container if there's a transition path
+			if (!string.IsNullOrEmpty(transitionPath))
+			{
+				CreateTransitionContainer(outSignalNode, transitionModifiers);
+			}
+		}
+
+		/// <summary>
+		/// Handles transition selection changes by destroying and recreating containers.
+		/// </summary>
+		/// <param name="outSignalNode">The out slot node.</param>
+		/// <param name="isTransitionSelect">Whether a transition is selected.</param>
+		/// <param name="transitionModifiers">Initial transition modifiers.</param>
+		private void OnTransitionSelectionChanged(OutSlotSceneGraphNode outSignalNode, bool isTransitionSelect, TransitionModifier transitionModifiers = null)
+		{
+			// Destroy existing container if it exists
+			DestroyTransitionContainer(outSignalNode);
+
+			if (isTransitionSelect)
+			{
+				// Create new container
+				CreateTransitionContainer(outSignalNode, transitionModifiers);
+			}
+			else
+			{
+				SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
+			}
+		}
+
+		/// <summary>
+		/// Creates a transition container for the specified out slot node.
+		/// </summary>
+		/// <param name="outSignalNode">The out slot node.</param>
+		/// <param name="transitionModifiers">Initial transition modifiers.</param>
+		private void CreateTransitionContainer(OutSlotSceneGraphNode outSignalNode, TransitionModifier transitionModifiers = null)
+		{
+			var outSignalModifiersContainer = CreateTransitionOptionsContainer();
 
 			outSignalModifiersContainer.FoldingChanged += (folded) =>
 			{
@@ -211,11 +253,11 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 					SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
 			};
 
-			AddChild(outSignalNode);
-			_outSlotNodes.Add(outSignalNode);
-			SetSlot(outSignalNode.GetIndex(), false, 0, AddonConstants.GraphNode.SceneGraphNode.Color, true, 0, AddonConstants.GraphNode.SceneGraphNode.Color);
-
+			// Add the container right after the out slot node
+			var outSlotIndex = outSignalNode.GetIndex();
 			AddChild(outSignalModifiersContainer);
+			MoveChild(outSignalModifiersContainer, outSlotIndex + 1);
+			_outSlotContainers[outSignalNode] = outSignalModifiersContainer;
 
 			if (transitionModifiers?.Speed == 1.0f && transitionModifiers?.Color == Colors.Black)
 				outSignalModifiersContainer.Folded = true;
@@ -224,16 +266,28 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		}
 
 		/// <summary>
+		/// Destroys the transition container for the specified out slot node.
+		/// </summary>
+		/// <param name="outSignalNode">The out slot node.</param>
+		private void DestroyTransitionContainer(OutSlotSceneGraphNode outSignalNode)
+		{
+			if (_outSlotContainers.TryGetValue(outSignalNode, out var container))
+			{
+				RemoveChild(container);
+				container.QueueFree();
+				_outSlotContainers.Remove(outSignalNode);
+			}
+		}
+
+		/// <summary>
 		/// Creates a foldable container for transition options.
 		/// </summary>
-		/// <param name="transitionPath">Transition scene path.</param>
 		/// <returns>A new FoldableContainer instance.</returns>
-		private FoldableContainer CreateTransitionOptionsContainer(string transitionPath) =>
+		private FoldableContainer CreateTransitionOptionsContainer() =>
 			new()
 			{
 				Title = AddonConstants.GraphNode.SceneGraphNode.TransitionFolderContainerLabelText,
-				Theme = _foldablePanelStyleTitlebar,
-				Visible = !string.IsNullOrEmpty(transitionPath)
+				Theme = _foldablePanelStyleTitlebar
 			};
 
 		/// <summary>
@@ -354,18 +408,18 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		}
 
 		/// <summary>
-		/// Handles the deletion of an out signal node and its transition option node.
+		/// Handles the deletion of an out signal node and its transition container.
 		/// </summary>
 		/// <param name="node">The out slot node to remove.</param>
-		/// <param name="transitionOptionNode">The associated transition option node to remove.</param>
-		private void OnDeleteOutSignalNode(Node node, Node transitionOptionNode)
+		private void OnDeleteOutSignalNode(OutSlotSceneGraphNode node)
 		{
+			// Destroy the associated transition container
+			DestroyTransitionContainer(node);
+
+			// Remove and free the out slot node
 			RemoveChild(node);
-			RemoveChild(transitionOptionNode);
 			node.QueueFree();
-			transitionOptionNode.QueueFree();
 			_outSlotNodes.Remove(node);
-			_outSlotNodes.Remove(transitionOptionNode);
 			UpdateAddOutSlotButtonState();
 			SetSize(AddonConstants.GraphNode.SceneGraphNode.InitialSize);
 		}
