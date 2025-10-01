@@ -53,10 +53,65 @@ namespace MoF.Addons.ScenesManager.Extensions
         }
 
 #nullable enable
+        /// <summary>
+        /// Gets the index of a signal by name from a GodotObject.
+        /// </summary>
+        /// <param name="source">The GodotObject to search for the signal.</param>
+        /// <param name="name">The name of the signal to find.</param>
+        /// <returns>The index of the signal if found, otherwise -1.</returns>
         public static int GetSignalIndex(this GodotObject source, string name)
         {
-            var signal = source.GetSignalList().FirstOrDefault(s => (string)s.Values.First() == name);
-            return source.GetSignalList().IndexOf(signal);
+            if (source == null)
+            {
+                GD.PrintErr("[SceneManagerEditor] Source object cannot be null");
+                return -1;
+            }
+
+            if (string.IsNullOrEmpty(name))
+            {
+                GD.PrintErr("[SceneManagerEditor] Signal name cannot be null or empty");
+                return -1;
+            }
+
+            var signalList = source.GetSignalList();
+
+            for (int i = 0; i < signalList.Count; i++)
+            {
+                var signal = signalList[i];
+                var firstValue = signal.Values.FirstOrDefault();
+                if (firstValue.VariantType == Variant.Type.String && firstValue.AsString() == name)
+                {
+                    return i;
+                }
+            }
+
+            return -1; // Signal not found
+        }
+
+        /// <summary>
+        /// Gets the EventInfo for a signal from a GodotObject.
+        /// </summary>
+        /// <param name="source">The source GodotObject.</param>
+        /// <param name="signalName">The name of the signal.</param>
+        /// <returns>The EventInfo if found, otherwise null.</returns>
+        private static EventInfo? GetEventInfoFromSignal(GodotObject source, string signalName)
+        {
+            int? signalIndex = source.GetSignalIndex(signalName);
+
+            if (!signalIndex.HasValue || signalIndex.Value < 0)
+            {
+                GD.PrintErr($"[SceneManagerEditor] Signal '{signalName}' not found on source object");
+                return null;
+            }
+
+            EventInfo[] events = source.GetType().GetEvents();
+            if (signalIndex.Value >= events.Length)
+            {
+                GD.PrintErr($"[SceneManagerEditor] Signal index {signalIndex.Value} is out of range for events array (length: {events.Length})");
+                return null;
+            }
+
+            return events[signalIndex.Value];
         }
 
 
@@ -76,25 +131,16 @@ namespace MoF.Addons.ScenesManager.Extensions
         /// </remarks>
         public static void ConnectToStaticDelegate<T>(this GodotObject source, object targetInstance, string signalName, string staticTargetMethodName, params object?[]? args)
         {
-
-            //EventInfo? eventInfo = source?.GetType().GetEvent(signalName);
-            int? signalIndex = source?.GetSignalIndex(signalName);
-            EventInfo? eventInfo = null;
-
-            if (signalIndex.HasValue)
+            if (source == null)
             {
-                eventInfo = source?.GetType().GetEvents()[signalIndex.Value];
-            }
-            else
-            {
-                GD.PrintErr($"Signal '{signalName}' not found on source object");
+                GD.PrintErr("[SceneManagerEditor] Source object cannot be null");
+                return;
             }
 
-
+            EventInfo? eventInfo = GetEventInfoFromSignal(source, signalName);
             if (eventInfo == null)
             {
-                GD.PrintErr($"[SceneManagerEditor] Event '{signalName}' not found on source object");
-                return;
+                return; // Error already logged in GetEventInfoFromSignal
             }
 
             Type? handlerType = eventInfo.EventHandlerType;
