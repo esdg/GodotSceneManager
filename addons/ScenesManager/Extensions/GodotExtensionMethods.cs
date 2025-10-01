@@ -53,6 +53,13 @@ namespace MoF.Addons.ScenesManager.Extensions
         }
 
 #nullable enable
+        public static int GetSignalIndex(this GodotObject source, string name)
+        {
+            var signal = source.GetSignalList().FirstOrDefault(s => (string)s.Values.First() == name);
+            return source.GetSignalList().IndexOf(signal);
+        }
+
+
         /// <summary>
         /// Connects a signal to a static delegate method on a target instance.
         /// </summary>
@@ -69,7 +76,21 @@ namespace MoF.Addons.ScenesManager.Extensions
         /// </remarks>
         public static void ConnectToStaticDelegate<T>(this GodotObject source, object targetInstance, string signalName, string staticTargetMethodName, params object?[]? args)
         {
-            EventInfo? eventInfo = source?.GetType().GetEvent(signalName);
+
+            //EventInfo? eventInfo = source?.GetType().GetEvent(signalName);
+            int? signalIndex = source?.GetSignalIndex(signalName);
+            EventInfo? eventInfo = null;
+
+            if (signalIndex.HasValue)
+            {
+                eventInfo = source?.GetType().GetEvents()[signalIndex.Value];
+            }
+            else
+            {
+                GD.PrintErr($"Signal '{signalName}' not found on source object");
+            }
+
+
             if (eventInfo == null)
             {
                 GD.PrintErr($"[SceneManagerEditor] Event '{signalName}' not found on source object");
