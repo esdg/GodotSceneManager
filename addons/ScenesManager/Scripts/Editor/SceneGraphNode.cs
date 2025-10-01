@@ -39,11 +39,14 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 
 		/// <summary>
 		/// Gets the list of signal names for all out slots.
+		/// Only includes valid signals (excludes placeholder entries for nodes with no custom signals).
 		/// </summary>
 		public override Array<string> OutSignalsNames =>
 			[.. _outSlotNodes
 				.Cast<OutSlotSceneGraphNode>()
-				.Select(node => node.SignalSelect.GetItemText(node.SignalSelect.Selected))];
+				.Where(node => node.IsValidSignalSelected())
+				.Select(node => node.GetSelectedSignalName())
+				.Where(signalName => !string.IsNullOrEmpty(signalName))];
 
 		/// <summary>
 		/// Gets the list of transition PackedScene paths for all out slots.
