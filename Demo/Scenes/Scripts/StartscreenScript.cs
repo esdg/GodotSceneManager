@@ -19,6 +19,3 @@ public partial class StartscreenScript : Control
 		EmitSignal(SignalName.GoToGameMenu);
 	}
 }
-
-
-

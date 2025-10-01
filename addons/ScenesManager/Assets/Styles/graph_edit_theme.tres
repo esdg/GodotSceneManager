@@ -175,7 +175,7 @@ bg_color = Color(0.0862745, 0.105882, 0.145098, 1)
 color = Color(0.232468, 0.288331, 0.399888, 1)
 
 [resource]
-Button/font_sizes/font_size = 17
+Button/font_sizes/font_size = 14
 Button/fonts/font = ExtResource("1_vhm5r")
 Button/styles/hover = SubResource("StyleBoxFlat_awsi3")
 Button/styles/normal = SubResource("StyleBoxFlat_sfh1i")

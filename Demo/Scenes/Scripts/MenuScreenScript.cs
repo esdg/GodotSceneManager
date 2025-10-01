@@ -32,14 +32,3 @@ public partial class MenuScreenScript : Control
 		EmitSignal(SignalName.QuitGame);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
