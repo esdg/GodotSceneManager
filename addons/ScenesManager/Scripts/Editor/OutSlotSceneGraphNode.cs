@@ -1,11 +1,9 @@
 #if TOOLS
-using System;
 using System.IO;
 using System.Linq;
 using Godot;
 using Godot.Collections;
 using MoF.Addons.ScenesManager.Constants;
-using MoF.Addons.ScenesManager.Extensions;
 using MoF.Addons.ScenesManager.Helpers;
 using MoF.Addons.ScenesManager.Scripts.Resources;
 
@@ -123,85 +121,21 @@ namespace MoF.Addons.ScenesManager.Scripts.Editor
 		private static OptionButton CreateSignalSelectBox(Node sceneRootNode, string selectedSignalName = "")
 		{
 			OptionButton optionButton = GodotHelpers.CreateOptionButton();
-
-			// Get only user-defined signals (automatically excludes all built-in signals)
-			// The system dynamically detects built-in signals by analyzing the inheritance chain
-			// and comparing against known Godot base classes
-			var userSignals = sceneRootNode.GetUserDefinedSignals();
-
-			// Handle case when there are no user-defined signals
-			if (userSignals.Count == 0)
+			foreach (Dictionary signal in sceneRootNode.GetSignalList())
 			{
-				// Add a placeholder item to indicate no custom signals are available
-				optionButton.AddItem("(No custom signals found)");
-				optionButton.SetItemDisabled(0, true); // Make it non-selectable
-				return optionButton;
+				optionButton.AddIconItem(_signalIconTexture, (string)signal.Values.First());
 			}
 
-			// Add all user-defined signals
-			foreach (Dictionary signal in userSignals)
+			// select signal if empty change it for none
+			selectedSignalName = selectedSignalName == "" ? "non" : selectedSignalName;
+			for (int i = 0; i < optionButton.ItemCount; i++)
 			{
-				string signalName = (string)signal.Values.First();
-				optionButton.AddIconItem(_signalIconTexture, signalName);
-			}
-
-			// Handle signal selection
-			// If no valid signals are available, the placeholder is already selected
-			if (userSignals.Count > 0)
-			{
-				// select signal if empty change it for none, or find the matching signal
-				selectedSignalName = selectedSignalName == "" ? "none" : selectedSignalName;
-				bool signalFound = false;
-
-				for (int i = 0; i < optionButton.ItemCount; i++)
+				if (optionButton.GetItemText(i) == selectedSignalName)
 				{
-					if (optionButton.GetItemText(i) == selectedSignalName)
-					{
-						optionButton.Select(i);
-						signalFound = true;
-						break;
-					}
-				}
-
-				// If the selected signal wasn't found, select the first available signal
-				if (!signalFound && optionButton.ItemCount > 0)
-				{
-					optionButton.Select(0);
+					optionButton.Select(i);
 				}
 			}
-
 			return optionButton;
-		}
-
-		/// <summary>
-		/// Checks if the currently selected signal is valid (not a placeholder).
-		/// </summary>
-		/// <returns>True if a valid signal is selected, false if placeholder is selected or no signals available.</returns>
-		public bool IsValidSignalSelected()
-		{
-			if (_signalSelect == null || _signalSelect.ItemCount == 0)
-				return false;
-
-			int selectedIndex = _signalSelect.Selected;
-			if (selectedIndex < 0)
-				return false;
-
-			string selectedText = _signalSelect.GetItemText(selectedIndex);
-
-			// Check if it's the placeholder text
-			return !selectedText.StartsWith("(") || !selectedText.EndsWith(")");
-		}
-
-		/// <summary>
-		/// Gets the currently selected signal name, or null if no valid signal is selected.
-		/// </summary>
-		/// <returns>The signal name or null if placeholder is selected.</returns>
-		public string GetSelectedSignalName()
-		{
-			if (!IsValidSignalSelected())
-				return null;
-
-			return _signalSelect.GetItemText(_signalSelect.Selected);
 		}
 
 		private OptionButton CreateTransitionSelectBox(Array<string> transitionNameList, string selectedTransitionPath = "")
