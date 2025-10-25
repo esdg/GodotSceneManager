@@ -1,4 +1,3 @@
-#if TOOLS
 using System;
 using System.Globalization;
 using System.IO;
@@ -17,6 +16,20 @@ namespace MoF.Addons.ScenesManager.Helpers
     /// </summary>
     public static class GodotHelpers
     {
+        /// <summary>
+        /// Gets the project viewport size from project settings.
+        /// </summary>
+        /// <returns>The viewport size as a Vector2.</returns>
+        public static Vector2 GetProjectViewportSize()
+        {
+            return new Vector2()
+            {
+                X = ProjectSettings.GetSetting("display/window/size/viewport_width", 1152).As<int>(),
+                Y = ProjectSettings.GetSetting("display/window/size/viewport_height", 648).As<int>(),
+            };
+        }
+
+#if TOOLS
         /// <summary>
         /// Creates a <see cref="FileDialog"/> with specified settings.
         /// </summary>
@@ -155,19 +168,6 @@ namespace MoF.Addons.ScenesManager.Helpers
 
             return mainContainer;
         }
-        
-        /// <summary>
-        /// Gets the project viewport size from project settings.
-        /// </summary>
-        /// <returns></returns>
-        public static Vector2 GetProjectViewportSize()
-        {
-            return new Vector2()
-            {
-                X = ProjectSettings.GetSetting("display/window/size/viewport_width", 1152).As<int>(),
-                Y = ProjectSettings.GetSetting("display/window/size/viewport_height", 648).As<int>(),
-            };
-        }
+#endif
     }
 }
-#endif
