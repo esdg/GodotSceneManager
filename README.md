@@ -82,9 +82,20 @@ The Scene Manager includes a comprehensive library of professional transition ef
 
 ---
 
-## 🤝 Contributing
+## 🤝 Contributing & Porting
 
 We welcome contributions! Whether you're fixing bugs, adding features, or improving documentation, your help makes the plugin better for everyone. See our [Contributing Guidelines](CONTRIBUTING.md) to get started.
+
+As mentioned in Issue [#104](https://github.com/esdg/GodotSceneManager/issues/104), this plugin is currently written in C#. While C# offers great performance and a familiar syntax for many, I recognize that the current lack of C# support for Godot Web (WASM) exports is a limitation for some developers.
+
+Want to port this to GDScript?
+I am currently focusing on the C# version, but I am 100% open to a GDScript port! If you would like to translate the logic of this plugin into GDScript, please feel free to do so.
+
+Open Source: This project is licensed under [MIT](LICENSE), so you are free to fork and adapt it.
+
+Credit: If you release a GDScript version, all I ask is a small mention or link back to this original repository.
+
+Collaboration: If you start a port, feel free to open an issue or a Discussion here so we can link to your version and help users find the right tool for their needs.
 
 ## 📄 License
 
